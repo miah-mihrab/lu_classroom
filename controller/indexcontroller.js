@@ -10,13 +10,11 @@ module.exports = {
         User.findById(req.user._id, (_err, data) => {
           let _allClasses = data.Classes;
           if (_allClasses) {
-            console.log(_allClasses);
             let _allClassesArray = [];
             _allClasses.forEach(id => {
               _Class.findById(id, (_err, _class) => {
                 //console.log(_class)
                 if (_class) {
-                  //console.log(_class._id);
                   let author_id = _class.author[0];
                   User.findById(author_id, (_err, teacher) => {
                     _allClassesArray.push({
@@ -31,7 +29,7 @@ module.exports = {
                 }
               });
             });
-            //   console.log(_allClassesArray)
+            console.log(_allClassesArray)
             return res.render("profile", {
               allClass: _allClassesArray
             });

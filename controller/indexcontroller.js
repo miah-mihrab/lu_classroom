@@ -27,7 +27,7 @@ module.exports = {
                       classname: _class.classname,
                       section: _class.section,
                       subjectname: _class.subjectname
-                      // author: teacher.firstname + " " + teacher.lastname
+                      author: teacher.firstname + " " + teacher.lastname
                     });
                     //cb(_allClassesArray);
                     // console.log(_allClassesArray)
@@ -45,6 +45,8 @@ module.exports = {
             return res.render("profile", {
               allClass: _cls
             });
+
+
           } else {
             res.render("profile", {
               title: "Profile"

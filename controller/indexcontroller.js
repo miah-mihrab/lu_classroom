@@ -6,6 +6,7 @@ module.exports = {
   async getHome(req, res) {
     try {
       // IF STUDENT IN COOKIE
+      console.log(req.user.profession)
       if (req.user.profession === "Student") {
         await User.findById(req.user._id, (_err, data) => {
           if ((data.Classes).length > 0) {

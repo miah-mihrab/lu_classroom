@@ -18,17 +18,16 @@
     <div class="area">
         <aside>
             <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action">Profile</a>
-                <a href="http://localhost:5000/result" onclick="myFunction()"
-                    class="list-group-item list-group-item-action">Result</a>
-                <a href="http://localhost:5000/result" onclick="" class="list-group-item list-group-item-action">Digital
+                <a href="/profile" class="list-group-item list-group-item-action">Profile</a>
+                <a href="/result" onclick="myFunction()" class="list-group-item list-group-item-action">Result</a>
+                <a href="/digital-library" onclick="" class="list-group-item list-group-item-action">Digital
                     Library</a>
                 <a href="#" class="list-group-item list-group-item-action">Edit Profile</a>
             </div>
         </aside>
         <div class="class">
             {{#if allClass}}
-            <div class="row border border-primary">
+            <div class="row ">
                 {{#each allClass}}
                 <div class="col-5 mr-1 mt-3">
                     <div class="card" style="width: 18rem;">

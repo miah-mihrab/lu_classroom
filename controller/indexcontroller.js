@@ -19,19 +19,19 @@ module.exports = {
                   //console.log(_class)
                   if (_class) {
                     let author_id = _class.author[0];
-                    //  User.findById(author_id, (_err, teacher) => {
-                    //_allClassesArray.push
-                    cb({
-                      _id: `/classroom/${_class._id}`,
-                      students: _class.students,
-                      classname: _class.classname,
-                      section: _class.section,
-                      subjectname: _class.subjectname,
-                      author: teacher.firstname + " " + teacher.lastname
+                    User.findById(author_id, (_err, teacher) => {
+                      //_allClassesArray.push
+                      cb({
+                        _id: `/classroom/${_class._id}`,
+                        students: _class.students,
+                        classname: _class.classname,
+                        section: _class.section,
+                        subjectname: _class.subjectname,
+                        author: teacher.firstname + " " + teacher.lastname
+                      });
+                      //cb(_allClassesArray);
+                      // console.log(_allClassesArray)
                     });
-                    //cb(_allClassesArray);
-                    // console.log(_allClassesArray)
-                    //  });
                   }
                 });
 

@@ -110,10 +110,11 @@ module.exports = {
                     profession
                 });
                 try {
-                    console.log(user);
-                    await user.save();
-                    console.log("Saved");
-                    const token = jwt.sign({
+                    await user.save().then(() => {
+                        console.log("Saved");
+                    });
+
+                    const token = await jwt.sign({
                             _id: user._id,
                             name: user.firstname + " " + user.lastname,
                             profession: user.profession
@@ -124,7 +125,7 @@ module.exports = {
                         //res.header("x-auth-token", token);
                         await res.cookie("jwt", token);
 
-                        await res.redirect("/");
+                        return res.redirect("/");
                         // res.redirect('/');
                     }
                     res.redirect("/");

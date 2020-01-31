@@ -10,9 +10,9 @@ module.exports = {
         User.findById(req.user._id, async (_err, data) => {
           let _allClasses = data.Classes;
           if (_allClasses) {
+            let _allClassesArray = [];
 
             async function sendClasses(cb) {
-              let _allClassesArray = [];
               _allClasses.forEach(id => {
                 _Class.findById(id, (_err, _class) => {
                   //console.log(_class)
@@ -27,12 +27,12 @@ module.exports = {
                         subjectname: _class.subjectname,
                         author: teacher.firstname + " " + teacher.lastname
                       });
-                      console.log(_allClassesArray)
+                      // console.log(_allClassesArray)
                     });
                   }
                 });
               });
-              console.log(_allClassesArray);
+
               return cb(_allClassesArray);
             }
 

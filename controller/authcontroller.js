@@ -66,6 +66,7 @@ module.exports = {
 
     // VERIFY & REGISTER
     async postReg(req, res) {
+        console.log(req.body)
         let {
             firstname,
             lastname,

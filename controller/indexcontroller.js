@@ -30,8 +30,8 @@ module.exports = {
                     });
                   }
                 });
-                cb(_allClassesArray);
-              })
+              });
+              return cb(_allClassesArray);
             }
 
             sendClasses(allClass => {

@@ -21,7 +21,6 @@ app.engine(
   })
 );
 app.set("view engine", "handlebars");
-//mongodb+srv://Leading-University:holahola@luclassroom-fak5g.mongodb.net/lu-classroom
 //static folder
 app.use(express.static("public"));
 

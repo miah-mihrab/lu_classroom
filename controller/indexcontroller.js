@@ -3,40 +3,38 @@ const User = require("../model/usermodel");
 
 module.exports = {
   // GET HOME
-  async getHome(req, res) {
+  getHome(req, res) {
     try {
       // IF STUDENT IN COOKIE
-      console.log(req.user.profession)
+      console.log(req.user.profession || "CHECKING")
       if (req.user.profession === "Student") {
-        await User.findById(req.user._id, (_err, data) => {
-          if ((data.Classes).length > 0) {
-            let _allClasses = data.Classes;
-            if (_allClasses) {
-              let _allClassesArray = [];
-              _allClasses.forEach(id => {
-                _Class.findById(id, (_err, _class) => {
-                  //console.log(_class)
-                  if (_class) {
-                    //console.log(_class._id);
-                    let author_id = _class.author[0];
-                    User.findById(author_id, (_err, teacher) => {
-                      _allClassesArray.push({
-                        _id: `/classroom/${_class._id}`,
-                        students: _class.students,
-                        classname: _class.classname,
-                        section: _class.section,
-                        subjectname: _class.subjectname,
-                        author: teacher.firstname + " " + teacher.lastname
-                      });
+        User.findById(req.user._id, (_err, data) => {
+          let _allClasses = data.Classes;
+          if (_allClasses) {
+            let _allClassesArray = [];
+            _allClasses.forEach(id => {
+              _Class.findById(id, (_err, _class) => {
+                //console.log(_class)
+                if (_class) {
+                  //console.log(_class._id);
+                  let author_id = _class.author[0];
+                  User.findById(author_id, (_err, teacher) => {
+                    _allClassesArray.push({
+                      _id: `/classroom/${_class._id}`,
+                      students: _class.students,
+                      classname: _class.classname,
+                      section: _class.section,
+                      subjectname: _class.subjectname,
+                      author: teacher.firstname + " " + teacher.lastname
                     });
-                  }
-                });
+                  });
+                }
               });
-              //   console.log(_allClassesArray)
-              return res.render("profile", {
-                allClass: _allClassesArray
-              });
-            }
+            });
+            //   console.log(_allClassesArray)
+            return res.render("profile", {
+              allClass: _allClassesArray
+            });
           } else {
             res.render("profile", {
               title: "Profile"

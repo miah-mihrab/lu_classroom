@@ -7,7 +7,7 @@ module.exports = {
     try {
       // IF STUDENT IN COOKIE
       if ((req.user.profession).trim() === "Student") {
-        User.findById(req.user._id, (_err, data) => {
+        User.findById(req.user._id, async (_err, data) => {
           let _allClasses = data.Classes;
           if (_allClasses) {
 
@@ -31,6 +31,7 @@ module.exports = {
                   }
                 });
               });
+              console.log(_allClassesArray);
               return cb(_allClassesArray);
             }
 

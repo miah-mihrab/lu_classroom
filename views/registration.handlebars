@@ -1,0 +1,76 @@
+<title>{{title}}</title>
+
+<header class="v-header cont">
+    <div class="fullscreen-video-wrap">
+        <video src="../images/lu1.mp4" autoplay muted loop></video>
+    </div>
+    <div class="header-overlay"></div>
+    <div class="header-content col-lg-6 col-md-8 col-sm-12">
+
+        <form autocomplete="off" method="POST" action="/registration">
+            <h1>Sign Up</h1>
+            <h6 class="lead">Please fill the form correctly</h6>
+            {{> message}}
+            <hr>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <input type="text" class="form-control" name="firstname" placeholder="First Name" id="fname"
+                        data-toggle="tooltip" title="First Name should not contain number or special characters">
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="text" class="form-control" name="lastname" placeholder="Last Name" id="lname"
+                        data-toggle="tooltip" title="Last Name should not contain number or special characters">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6 ">
+                    <input type="email" class="form-control" data-toggle="tooltip" name="email" placeholder="Email"
+                        autocomplete="off" id="email" data-toggle="tooltip" title="Format: example@host.com">
+                </div>
+                <div class="form-group col-md-6 ">
+                    <input type="text" class="form-control" name="id" placeholder="ID number" autocomplete="off"
+                        id="id_number" data-toggle="tooltip" title="Provide your university ID number">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6 ">
+                    <input type="password" class="form-control" name="password" placeholder="Password"
+                        autocomplete="off" id="password" data-toggle="tooltip"
+                        title="Password should contain at least - 1 capital letter, 1 small letter, 1 special character, 1 number with length of at least 6">
+                </div>
+                <div class="form-group col-md-6 ">
+                    <input type="password" class="form-control" name="confirmpassword" placeholder="Confirm Password"
+                        autocomplete="off" id="password2" data-toggle="tooltip"
+                        title="Password should match with given password">
+                </div>
+            </div>
+
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <select class="form-control" name="department" id="department">
+                        <option selected>Department...</option>
+                        <option>CSE</option>
+                        <option>EEE</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <select class="form-control" name="profession" id="profession">
+                        <option selected>Choose...</option>
+                        <option>Teacher</option>
+                        <option>Student</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <input type="date" class="form-control" name="birth_date" placeholder="" autocomplete="off"
+                        id="dob">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="reg-button">Sign Up</button>
+        </form> <br>
+        <a href="/signin">Already have an account? Sign in</a>
+
+    </div>
+
+</header>

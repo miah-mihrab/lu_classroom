@@ -1,0 +1,77 @@
+.container .area {
+  display: flex;
+  min-height: 70vh;
+}
+
+.area aside {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2%;
+  border-right: 0.5px solid #ddd;
+}
+
+.area aside ul {
+}
+
+.area aside ul li {
+  text-align: center;
+}
+
+.area aside ul li:nth-child(odd) {
+  background-color: #eee;
+}
+
+.area .class {
+  width: 75%;
+  padding: 2%;
+}
+
+.class .card .card-head {
+  position: relative;
+}
+
+.class .card .card-head .card-head-content {
+  width: 100%;
+  position: absolute;
+  color: white;
+  top: 0;
+  z-index: 1;
+}
+
+.class .card .card-head .card-head-content h5 {
+  width: 100%;
+  padding-left: 5%;
+}
+
+.class .card .card-head::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 50.2, 50.2, 0.5);
+}
+
+.class .card .card-head .card-head-content .lst-group {
+}
+
+.class .card .card-head .card-head-content .lst-group .lst-group-item {
+  padding-left: 5%;
+  margin-left: -16%;
+  margin-top: 1%;
+}
+
+.close {
+  cursor: pointer;
+}
+
+form {
+  background-color: transparent;
+}
+
+input:focus {
+  background-color: transparent !important;
+}

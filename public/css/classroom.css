@@ -1,0 +1,48 @@
+.banner {
+    overflow: hidden;
+    height: 30vw;
+    width: 100%;
+    margin-top: 5%;
+    border-radius: 16px;
+    border: 0.55px solid #dddddd;
+}
+
+.banner-body {
+
+    background-image: url("../images/classroom-banner.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 80%;
+    overflow: hidden;
+    position: relative;
+    padding: 2%;
+    border: 1px solid green;
+}
+
+.banner-body .top-left {
+    color: white;
+}
+
+.banner-body .bottom-right {
+    position: absolute;
+    float: right;
+    bottom: 10px;
+    right: 10px;
+    color: white;
+}
+
+.bottom-right a {
+    color: white;
+}
+
+.banner-foot {
+    height: 20%;
+    padding: 2%;
+}
+
+form {
+    box-shadow: 0px 0px 7px 0px #dddddd;
+    padding: 2%;
+    border-radius: 16px;
+}

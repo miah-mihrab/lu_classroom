@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-center border border-bt-primary p-3">
+    <a class="nav-item nav-link active text-secondary" href="#">Stream <span class="sr-only">(current)</span></a>
+    <a class="nav-item nav-link text-secondary" href="#">Classwork</a>
+    <a class="nav-item nav-link text-secondary" href="#">People</a>
+    <a class="nav-item nav-link text-secondary" href="#">Grades</a>
+</div>
+
+
+<div class="container">
+    <div class="banner">
+        <div class="banner-body">
+            <div class="content">
+                <div class="top-left">
+                    <h1>{{classname}}</h1>
+                    <h3>section</h3>
+                    <span>Room Code:{{_id}}</span>
+                </div>
+                <div class="bottom-right">
+                    <a href="">Change Banner</a>
+                </div>
+            </div>
+        </div>
+        <div class="banner-foot">
+            <span><b>Subject:</b> </span>{{subjectname}}<span></span><br>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5 mb-3">
+    <form class="" style="overflow: hidden;" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Class Post</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="file" id="uploadFile" hidden>
+            <div id="file-to-upload" class="mb-3"
+                style="display: none; overflow: hidden; height: 70px;  border: 0.5px solid #dddddd; border-radius: 16px;">
+                <div class="fileLogo" style="float: left;width: 8%; height: 100%;overflow: hidden; ">
+                    <img src="" alt="" style="width: 100%; height: 100%;"></div>
+                <div class="fileName" style="float:left;"></div>
+            </div>
+            <span class="float-left" type="file" id="attach-file"><i class="fas fa-paperclip text-secondary"
+                    style="font-size: 1.5rem; cursor: pointer;"></i></span>
+            <input type="submit" class="btn btn-secondary float-right">
+        </div>
+    </form>
+</div>
+</div>
+
+
+<div class="container allPosts"></div>

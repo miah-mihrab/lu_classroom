@@ -1,0 +1,202 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.v-header {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.cont {
+  max-width: 960px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin: auto;
+  text-align: center;
+}
+
+.fullscreen-video-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.fullscreen-video-wrap video {
+  min-height: 100%;
+  min-width: 100%;
+}
+
+.header-overlay {
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+  opacity: 0.75;
+}
+
+.header-content {
+  z-index: 4 !important;
+  /* width: 40%; */
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+form {
+  background: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 23px 0 rgba(0, 0, 0, 0.4);
+  padding: 10px;
+  color: white;
+}
+
+h6 {
+  font-size: 70% !important;
+}
+
+/* .form {
+    width: 100%;
+}
+
+input[type=text],
+input[type=password] {
+    width: 100%;
+    margin: 5px 0 10px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
+
+/* Add a background color when the inputs get focus */
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="password"]:focus {
+  background-color: #ddd;
+  color: white;
+  outline: none;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #4caf50;
+  color: white;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+button:hover {
+  opacity: 1;
+}
+
+.header-content a {
+  padding: 2px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.header-content a:hover {
+  color: #ddd;
+  text-decoration: none;
+}
+
+.errormsg {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  box-sizing: border-box;
+}
+
+.errormsg h6 {
+  margin-top: 2%;
+  font-size: 100% !important;
+}
+
+.errormsg span {
+  color: red;
+  font-size: 150%;
+  cursor: pointer;
+}
+
+
+/* Classroom */
+li {
+  list-style-type: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 150px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+#nav-right {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 10%;
+  margin-left: auto;
+  margin-right: 5%
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+.navbar-brand span {
+  color: teal;
+}
+
+.add {
+  font-size: 140%;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 780px) {
+  .fullscreen-video-wrap {
+    height: 130%;
+  }
+
+  .fullscreen-video-wrap video {
+    transform: translateX(-45%);
+  }
+
+  .header-overlay {
+    height: 130vh;
+  }
+
+  #nav-right {
+    width: 40% !important;
+  }
+
+}

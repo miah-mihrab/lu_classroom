@@ -1,0 +1,32 @@
+{
+  "name": "luclassroom",
+  "version": "1.0.0",
+  "description": "This is a cloud classroom for Leading University Sylhet",
+  "main": "app.js",
+  "scripts": {
+    "start": "npm run build && node app",
+    "nodemon": "nodemon app.js"
+  },
+  "engines": {
+    "node": "10.16.3"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "cookie-parser": "^1.4.4",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "express-session": "^1.17.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.7.5",
+    "multer": "^1.4.2",
+    "nodemon": "^1.19.3",
+    "sharp": "^0.23.1",
+    "socket.io": "^2.3.0",
+    "validator": "^11.1.0",
+    "xmlhttprequest": "^1.8.0"
+  }
+}

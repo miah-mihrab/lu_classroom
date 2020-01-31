@@ -1,0 +1,124 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <a href="/" class="navbar-brand" style="margin-left: 5%;"><span> LU </span>Classroom</a>
+
+    <div id="nav-right">
+        <div class="dropdown">
+            <span class='add'>+</span>
+            <ul class="list-group dropdown-content">
+                <li class="list-group-item" data-toggle="modal" data-target="#createClass">Create Class</li>
+                <li class="list-group-item" data-toggle="modal" data-target="#joinClass">Join Class</li>
+            </ul>
+        </div>
+        <img src="" alt="ProfileImg" width="50" height="50" style="border-radius: 50%;">
+
+    </div>
+</nav>
+<div class="container">
+    <div class="area">
+        <aside>
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action">Profile</a>
+                <a href="http://localhost:5000/result" onclick="myFunction()"
+                    class="list-group-item list-group-item-action">Result</a>
+                <a href="http://localhost:5000/result" onclick="" class="list-group-item list-group-item-action">Digital
+                    Library</a>
+                <a href="#" class="list-group-item list-group-item-action">Edit Profile</a>
+            </div>
+        </aside>
+        <div class="class">
+            {{#if allClass}}
+            <div class="row border border-primary">
+                {{#each allClass}}
+                <div class="col-5 mr-1 mt-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-head">
+                            <img src="../images/lu1.jpg" class="card-img-top" alt="...">
+                            <div class="card-head-content">
+                                <h5 class="card-title">{{this.classname}}</h5>
+                                <ul class="lst-group">
+                                    <li class="lst-group-item">Teacher: {{this.author}}</li>
+                                    <li class="lst-group-item">Total Student: {{this.students}}</li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                        <hr>
+                        <div class="card-body">
+
+                            <a href="#" class="btn btn-danger float-right">Delete</a>
+                            <a href="{{this._id}}" class="btn btn-primary float-right mr-2">Enter</a>
+                        </div>
+                    </div>
+                </div>
+
+                {{/each}}
+            </div>
+
+            {{else}}
+            <h1>You Have No Classroom Yet</h1>
+            {{/if}}
+        </div>
+
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="joinClass" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="joinClassLabel">Room Code</h5>
+                    {{!-- <button class="close" data-dismiss="modal" aria-label="Close">  </button> --}}
+                    <span class="close" data-dismiss="modal">&times;</span>
+
+                </div>
+                <div class="body">
+                    <form action="" method="POST">
+                        <input type="text" class="form-control" placeholder="Room Code" name="roomcode">
+
+                        <button type="submit" class="btn btn-primary">Join Class</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="createClass" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createClassLabel">Create Class</h5>
+                    {{!-- <button class="close" data-dismiss="modal" aria-label="Close">  </button> --}}
+                    <span class="close" data-dismiss="modal">&times;</span>
+
+                </div>
+                <div class="body">
+                    <form action="" method="POST">
+                        <div class="form-group">
+                            <label for="classname">Class Name (required)</label>
+                            <input type="text" class="form-control" name="classname" placeholder="Class Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="section">Section</label>
+                            <input type="text" class="form-control" name="section" placeholder="Section">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" class="form-control" name="subject" placeholder="Subject">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function myFunction() {
+        console.log("clicked")
+    }
+</script>

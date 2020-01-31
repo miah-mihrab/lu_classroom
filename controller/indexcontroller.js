@@ -6,8 +6,8 @@ module.exports = {
   getHome(req, res) {
     try {
       // IF STUDENT IN COOKIE
-      console.log(req.user.profession + "| CHECKING")
-      if (req.user.profession === "Student") {
+      if ((req.user.profession).trim() === "Student") {
+        console.log(req.user.profession + "| CHECKING")
         User.findById(req.user._id, (_err, data) => {
           let _allClasses = data.Classes;
           if (_allClasses) {

@@ -10,9 +10,9 @@ module.exports = {
         User.findById(req.user._id, (_err, data) => {
           let _allClasses = data.Classes;
           if (_allClasses) {
-            let _allClassesArray = [];
 
             async function sendClasses(cb) {
+              let _allClassesArray = [];
               _allClasses.forEach(id => {
                 _Class.findById(id, (_err, _class) => {
                   //console.log(_class)

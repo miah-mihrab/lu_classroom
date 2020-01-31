@@ -131,7 +131,7 @@ module.exports = {
                     res.redirect("/");
                     //console.log("New User Saved");
                 } catch (err) {
-                    console.log(err);
+                    console.log(err)
                 }
             });
         });

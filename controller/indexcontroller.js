@@ -3,37 +3,39 @@ const User = require("../model/usermodel");
 
 module.exports = {
   // GET HOME
-  getHome(req, res) {
+  async getHome(req, res) {
     try {
       // IF STUDENT IN COOKIE
       if (req.user.profession === "Student") {
-        User.findById(req.user._id, (_err, data) => {
-          let _allClasses = data.Classes;
-          if (_allClasses) {
-            let _allClassesArray = [];
-            _allClasses.forEach(id => {
-              _Class.findById(id, (_err, _class) => {
-                //console.log(_class)
-                if (_class) {
-                  //console.log(_class._id);
-                  let author_id = _class.author[0];
-                  User.findById(author_id, (_err, teacher) => {
-                    _allClassesArray.push({
-                      _id: `/classroom/${_class._id}`,
-                      students: _class.students,
-                      classname: _class.classname,
-                      section: _class.section,
-                      subjectname: _class.subjectname,
-                      author: teacher.firstname + " " + teacher.lastname
+        await User.findById(req.user._id, (_err, data) => {
+          if ((data.Classes).length > 0) {
+            let _allClasses = data.Classes;
+            if (_allClasses) {
+              let _allClassesArray = [];
+              _allClasses.forEach(id => {
+                _Class.findById(id, (_err, _class) => {
+                  //console.log(_class)
+                  if (_class) {
+                    //console.log(_class._id);
+                    let author_id = _class.author[0];
+                    User.findById(author_id, (_err, teacher) => {
+                      _allClassesArray.push({
+                        _id: `/classroom/${_class._id}`,
+                        students: _class.students,
+                        classname: _class.classname,
+                        section: _class.section,
+                        subjectname: _class.subjectname,
+                        author: teacher.firstname + " " + teacher.lastname
+                      });
                     });
-                  });
-                }
+                  }
+                });
               });
-            });
-            //   console.log(_allClassesArray)
-            return res.render("profile", {
-              allClass: _allClassesArray
-            });
+              //   console.log(_allClassesArray)
+              return res.render("profile", {
+                allClass: _allClassesArray
+              });
+            }
           } else {
             res.render("profile", {
               title: "Profile"
@@ -105,7 +107,11 @@ module.exports = {
         }
       });
     } else {
-      const { classname, section, subject } = req.body;
+      const {
+        classname,
+        section,
+        subject
+      } = req.body;
       const author = req.user._id;
       const cls = new _Class({
         classname: classname,
@@ -133,7 +139,13 @@ module.exports = {
     // console.log(id);
     try {
       const _class = await _Class.findById(id);
-      const { _id, students, classname, section, subjectname } = _class;
+      const {
+        _id,
+        students,
+        classname,
+        section,
+        subjectname
+      } = _class;
       // console.log(_class)
       await res.render("classroom", {
         _id,

@@ -27,6 +27,7 @@ module.exports = {
                         subjectname: _class.subjectname,
                         author: teacher.firstname + " " + teacher.lastname
                       });
+                      console.log(_allClassesArray)
                     });
                   }
                 });

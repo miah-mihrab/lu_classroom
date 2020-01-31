@@ -17,7 +17,7 @@ module.exports = {
                 if (_class) {
                   let author_id = _class.author[0];
                   User.findById(author_id, (_err, teacher) => {
-                    _allClassesArray.push({
+                    this._allClassesArray.push({
                       _id: `/classroom/${_class._id}`,
                       students: _class.students,
                       classname: _class.classname,
@@ -28,12 +28,10 @@ module.exports = {
                   });
                 }
               })
-            }).then(() => {
-              console.log(_allClassesArray)
             });
-            //console.log(_allClassesArray)
+            console.log(this._allClassesArray)
             return res.render("profile", {
-              allClass: _allClassesArray
+              allClass: this._allClassesArray
             });
           } else {
             res.render("profile", {

@@ -27,9 +27,11 @@ module.exports = {
                     });
                   });
                 }
-              });
+              })
+            }).then(() => {
+              console.log(_allClassesArray)
             });
-            console.log(_allClassesArray)
+            //console.log(_allClassesArray)
             return res.render("profile", {
               allClass: _allClassesArray
             });

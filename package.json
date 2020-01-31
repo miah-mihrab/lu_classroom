@@ -4,12 +4,12 @@
   "description": "This is a cloud classroom for Leading University Sylhet",
   "main": "app.js",
   "scripts": {
-    "start": "npm run build && node app",
+    "start": "node app.js",
     "nodemon": "nodemon app.js"
   },
   "engines": {
     "node": "10.16.3"
-    
+
   },
   "keywords": [],
   "author": "",

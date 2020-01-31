@@ -7,8 +7,8 @@ module.exports = {
     try {
       // IF STUDENT IN COOKIE
       if ((req.user.profession).trim() === "Student") {
-        console.log(req.user.profession + "| CHECKING")
         User.findById(req.user._id, (_err, data) => {
+          console.log(data);
           let _allClasses = data.Classes;
           if (_allClasses) {
             let _allClassesArray = [];

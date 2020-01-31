@@ -10,39 +10,41 @@ module.exports = {
         User.findById(req.user._id, async (_err, data) => {
           let _allClasses = data.Classes;
           if (_allClasses) {
-            let _allClassesArray = [];
 
+            let _allClassesArray = [];
+            let _cls = [];
             async function sendClasses(cb) {
               _allClasses.forEach(id => {
                 _Class.findById(id, (_err, _class) => {
                   //console.log(_class)
                   if (_class) {
                     let author_id = _class.author[0];
-                    User.findById(author_id, (_err, teacher) => {
-                      _allClassesArray.push({
-                        _id: `/classroom/${_class._id}`,
-                        students: _class.students,
-                        classname: _class.classname,
-                        section: _class.section,
-                        subjectname: _class.subjectname,
-                        author: teacher.firstname + " " + teacher.lastname
-                      });
-                      // console.log(_allClassesArray)
+                    //  User.findById(author_id, (_err, teacher) => {
+                    //_allClassesArray.push
+                    cb({
+                      _id: `/classroom/${_class._id}`,
+                      students: _class.students,
+                      classname: _class.classname,
+                      section: _class.section,
+                      subjectname: _class.subjectname
+                      // author: teacher.firstname + " " + teacher.lastname
                     });
+                    //cb(_allClassesArray);
+                    // console.log(_allClassesArray)
+                    //  });
                   }
                 });
-              });
 
-              return cb(_allClassesArray);
+              });
             }
 
-            sendClasses(allClass => {
-              console.log(allClass)
-              return res.render("profile", {
-                allClass: allClass
-              });
+            await sendClasses(allClass => {
+              _cls.push(allClass);
+              console.log(_cls)
             });
-
+            return res.render("profile", {
+              allClass: _cls
+            });
           } else {
             res.render("profile", {
               title: "Profile"

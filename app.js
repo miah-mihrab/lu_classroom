@@ -1,10 +1,11 @@
 require("./mongoose/mongoose");
+const winston = require("winston");
 const express = require("express");
 const exphbs = require("express-handlebars");
 const app = express();
 const cookieparser = require("cookie-parser");
-const PORT = process.env.PORT | 5000;
-
+const PORT = process.env.PORT || 5000;
+//winston.add(winston.transports.File, { filename: "logfile.log" });
 //Body parse middleware
 app.use(express.json());
 app.use(

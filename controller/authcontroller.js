@@ -130,8 +130,8 @@ module.exports = {
                     }
                     res.redirect("/");
                     //console.log("New User Saved");
-                } catch (e) {
-                    res.send(e);
+                } catch (err) {
+                    console.log(err);
                 }
             });
         });

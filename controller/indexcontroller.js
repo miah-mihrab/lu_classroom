@@ -11,28 +11,36 @@ module.exports = {
           let _allClasses = data.Classes;
           if (_allClasses) {
             let _allClassesArray = [];
-            _allClasses.forEach(id => {
-              _Class.findById(id, (_err, _class) => {
-                //console.log(_class)
-                if (_class) {
-                  let author_id = _class.author[0];
-                  User.findById(author_id, (_err, teacher) => {
-                    this._allClassesArray.push({
-                      _id: `/classroom/${_class._id}`,
-                      students: _class.students,
-                      classname: _class.classname,
-                      section: _class.section,
-                      subjectname: _class.subjectname,
-                      author: teacher.firstname + " " + teacher.lastname
+
+            async function sendClasses(cb) {
+              _allClasses.forEach(id => {
+                _Class.findById(id, (_err, _class) => {
+                  //console.log(_class)
+                  if (_class) {
+                    let author_id = _class.author[0];
+                    User.findById(author_id, (_err, teacher) => {
+                      _allClassesArray.push({
+                        _id: `/classroom/${_class._id}`,
+                        students: _class.students,
+                        classname: _class.classname,
+                        section: _class.section,
+                        subjectname: _class.subjectname,
+                        author: teacher.firstname + " " + teacher.lastname
+                      });
                     });
-                  });
-                }
+                  }
+                });
+                cb(_allClassesArray);
               })
+            }
+
+            sendClasses(allClass => {
+              console.log(allClass)
+              return res.render("profile", {
+                allClass: allClass
+              });
             });
-            console.log(this._allClassesArray)
-            return res.render("profile", {
-              allClass: this._allClassesArray
-            });
+
           } else {
             res.render("profile", {
               title: "Profile"

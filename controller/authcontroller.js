@@ -66,7 +66,6 @@ module.exports = {
 
     // VERIFY & REGISTER
     async postReg(req, res) {
-        console.log(req.body)
         let {
             firstname,
             lastname,
@@ -78,25 +77,25 @@ module.exports = {
             profession
         } = await req.body;
         //console.log(department);
-        if (
-            !firstname ||
-            !lastname ||
-            !id ||
-            !email ||
-            !password ||
-            !confirmpassword ||
-            department === "Department..." ||
-            profession === "Choose..."
-        ) {
-            return res.render("registration", {
-                message: "Please fill the form completely!"
-            });
-        }
-        if (!(password === confirmpassword)) {
-            return res.render("registration", {
-                message: "Password does not match"
-            });
-        }
+        // if (
+        //     !firstname ||
+        //     !lastname ||
+        //     !id ||
+        //     !email ||
+        //     !password ||
+        //     !confirmpassword ||
+        //     department === "Department..." ||
+        //     profession === "Choose..."
+        // ) {
+        //     return res.render("registration", {
+        //         message: "Please fill the form completely!"
+        //     });
+        // }
+        // if (!(password === confirmpassword)) {
+        //     return res.render("registration", {
+        //         message: "Password does not match"
+        //     });
+        // }
 
         await bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(password, 10, async (err, hash) => {
@@ -111,7 +110,9 @@ module.exports = {
                     profession
                 });
                 try {
+                    console.log(user);
                     await user.save();
+                    console.log("Saved");
                     const token = jwt.sign({
                             _id: user._id,
                             name: user.firstname + " " + user.lastname,

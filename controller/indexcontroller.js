@@ -26,7 +26,7 @@ module.exports = {
                       students: _class.students,
                       classname: _class.classname,
                       section: _class.section,
-                      subjectname: _class.subjectname
+                      subjectname: _class.subjectname,
                       author: teacher.firstname + " " + teacher.lastname
                     });
                     //cb(_allClassesArray);

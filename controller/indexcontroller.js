@@ -6,12 +6,12 @@ module.exports = {
   getHome(req, res) {
     try {
       // IF STUDENT IN COOKIE
+      const userID = req.user._id;
       if ((req.user.profession).trim() === "Student") {
-        User.findById(req.user._id, async (_err, data) => {
+        User.findById(userID, async (_err, data) => {
           let _allClasses = data.Classes;
           if (_allClasses) {
 
-            let _allClassesArray = [];
             let _cls = [];
             async function sendClasses(cb) {
               _allClasses.forEach(id => {
@@ -29,9 +29,6 @@ module.exports = {
                       subjectname: _class.subjectname,
                       author: _class.author_name
                     });
-                    //cb(_allClassesArray);
-                    // console.log(_allClassesArray)
-                    //   });
                   }
                 });
 
@@ -46,13 +43,11 @@ module.exports = {
               if (_cls.length === _allClasses.length) {
                 console.log(_cls.length)
                 res.render("profile", {
-                  allClass: _cls
+                  allClass: _cls,
+                  userID: `/profile-edit/${userID}`
                 });
               }
             });
-
-
-
 
           } else {
             res.render("profile", {
@@ -64,9 +59,9 @@ module.exports = {
         // IF TEACHER
         _Class.find({}, (_err, allClass) => {
           if (allClass) {
-            const teacher = req.user._id;
+            //const teacher = req.user._id;
             let filteredByAuthor = allClass.filter(
-              value => value.author == teacher
+              value => value.author == userID
             );
             if (filteredByAuthor.length > 0) {
               User.findById(
@@ -176,5 +171,35 @@ module.exports = {
     } catch (err) {
       res.send(err);
     }
+  },
+
+
+  //GET USER EDIT PROFILE
+  getEditProfile(req, res) {
+    const user_id = req.user._id;
+
+    User.findById(user_id, (err, user) => {
+      if (!err) {
+        const {
+          firstname,
+          lastname,
+          dob,
+          batch,
+          section
+        } = user;
+        res.render('profile-edit', {
+          firstname,
+          lastname,
+          dob,
+          batch,
+          section
+        });
+      }
+    })
+  },
+
+  async postEditProfile(req, res) {
+    console.log(req.body);
   }
+
 };

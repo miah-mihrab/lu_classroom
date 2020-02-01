@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const {
   MONGO_URL
 } = require("../config/secrets");
-console.log(MONGO_URL);
 mongoose.connect(
   MONGO_URL, {
     useNewUrlParser: true,

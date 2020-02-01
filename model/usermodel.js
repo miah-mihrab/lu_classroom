@@ -38,9 +38,16 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    batch: {
+        type: String
+    },
+    section: {
+        type: String
+    },
     Classes: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: Classes
+        ref: Classes,
+        unique: true
     }]
 })
 

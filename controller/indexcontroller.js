@@ -40,9 +40,9 @@ module.exports = {
 
             await sendClasses(allClass => {
               _cls.push(allClass);
-              console.log(_cls)
+              return;
             });
-            return res.render("profile", {
+            await res.render("profile", {
               allClass: _cls
             });
 

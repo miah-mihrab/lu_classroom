@@ -21,7 +21,7 @@ module.exports = {
                     let author_id = _class.author[0];
                     //  User.findById(author_id, (_err, teacher) => {
                     //_allClassesArray.push
-                    _cls.push({
+                    cb({
                       _id: `/classroom/${_class._id}`,
                       students: _class.students,
                       classname: _class.classname,

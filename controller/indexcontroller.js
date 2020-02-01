@@ -42,6 +42,7 @@ module.exports = {
             //   _cls.push(allClass);
             //   return;
             // });
+            console.log(_cls);
             await res.render("profile", {
               allClass: _cls
             });

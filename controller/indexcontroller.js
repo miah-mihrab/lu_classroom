@@ -38,14 +38,20 @@ module.exports = {
               });
             }
 
-            // await sendClasses(allClass => {
-            //   _cls.push(allClass);
-            //   return;
-            // });
-            console.log(_cls);
-            await res.render("profile", {
-              allClass: _cls
+
+
+            await sendClasses(allClass => {
+              _cls.push(allClass);
+
+              if (_cls.length === _allClasses.length) {
+                console.log(_cls.length)
+                res.render("profile", {
+                  allClass: _cls
+                });
+              }
             });
+
+
 
 
           } else {

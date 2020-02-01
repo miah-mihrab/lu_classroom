@@ -21,7 +21,7 @@ module.exports = {
                     let author_id = _class.author[0];
                     //  User.findById(author_id, (_err, teacher) => {
                     //_allClassesArray.push
-                    cb({
+                    _cls.push({
                       _id: `/classroom/${_class._id}`,
                       students: _class.students,
                       classname: _class.classname,
@@ -38,10 +38,10 @@ module.exports = {
               });
             }
 
-            await sendClasses(allClass => {
-              _cls.push(allClass);
-              return;
-            });
+            // await sendClasses(allClass => {
+            //   _cls.push(allClass);
+            //   return;
+            // });
             await res.render("profile", {
               allClass: _cls
             });

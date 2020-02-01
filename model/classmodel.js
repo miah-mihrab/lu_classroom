@@ -22,7 +22,11 @@ const Clas = mongoose.model("Class", new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: User,
         required: true
-    }]
+    }],
+    author_name: {
+        type: String,
+        required: true
+    }
 }))
 
 module.exports = Clas;

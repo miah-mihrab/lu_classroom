@@ -6,8 +6,12 @@
         <div class="dropdown">
             <span class='add'>+</span>
             <ul class="list-group dropdown-content">
+                {{#if teacher}}
                 <li class="list-group-item" data-toggle="modal" data-target="#createClass">Create Class</li>
+                {{else}}
                 <li class="list-group-item" data-toggle="modal" data-target="#joinClass">Join Class</li>
+                {{/if}}
+
             </ul>
         </div>
         <img src="" alt="ProfileImg" width="50" height="50" style="border-radius: 50%;">
@@ -19,9 +23,13 @@
         <aside>
             <div class="list-group">
                 <a href="/profile" class="list-group-item list-group-item-action">Profile</a>
-                <a href="/result" onclick="myFunction()" class="list-group-item list-group-item-action">Result</a>
+                {{#if teacher}}
                 <a href="/digital-library" onclick="" class="list-group-item list-group-item-action">Digital
                     Library</a>
+
+                {{else}}
+                <a href="/result" onclick="myFunction()" class="list-group-item list-group-item-action">Result</a>
+                {{/if}}
                 <a href="{{userID}}" class="list-group-item list-group-item-action">Edit Profile</a>
             </div>
         </aside>

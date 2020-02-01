@@ -20,7 +20,10 @@ router.post("", auth, postHome);
 router.get("/result", auth, getResult);
 
 router.get('/profile-edit/:id', auth, getEditProfile);
-router.post('/profile-edit/:id', auth, postEditProfile)
+router.post('/profile-edit/:id', postEditProfile);
 
 router.get("/classroom/:id", auth, getClassroom);
+router.post("/classroom/:id", auth, (req, res) => {
+  console.log(req.params)
+});
 module.exports = router;

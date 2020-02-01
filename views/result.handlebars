@@ -6,23 +6,23 @@
                     name="aboutme" class="rounded" style="width: 100%; height:100%">
 
             </div>
-            <h3>John Hawking</h3>
+            <h4>{{name}}</h4>
         </div>
         <div class="float-lg-right mt-4 clearfix">
             <span><strong>Department: </strong></span>
-            <span class="label label-info">Computer Science & Engineering</span><br>
+            <span class="label label-info" id="department"></span><br>
             <span><strong>Degree: </strong></span>
-            <span class="label label-info">B.Sc. (Honours) in Computer Science & Engineering</span><br>
+            <span class="label label-info" id="degree"></span><br>
             <span><strong>Id: </strong></span>
             <span class="label label-warning" id="id">{{id}}</span><br>
 
             <span><strong>CGPA: </strong></span>
-            <span class="label label-info">3.71</span><br>
+            <span class="label label-info" id="cgpa"></span><br>
             <span><strong>Credit: </strong></span>
-            <span class="label label-info">138</span><br>
+            <span class="label label-info" id="credit"></span><br>
             <span><strong>Grade: </strong></span>
-            <span class="label label-info">A</span><br>
-            <span id="birth_date" style="visibility: hidden;">1992-08-10</span>
+            <span class="label label-info" id="grade"></span><br>
+            <span id="birth_date" style="visibility: hidden;">{{dob}}</span>
         </div>
 
     </div>
@@ -35,12 +35,12 @@
 </div>
 <script>
     const id = (document.querySelector('#id').innerHTML).trim;
-    const birth_date = (document.querySelector('#birth_date').innerHTML).trim;
+    const birth_date = (document.querySelector('#birth_date').innerHTML + " " + document.querySelector('#birth_date').innerHTML).trim;
     let semester_name = document.querySelector('h4');
-
+    console.log(document.querySelector('#id').innerHTML)
     async function get_sem(cb) {
         let three_sem_result = [];
-        let data = 'action=get-result&student_id=1622020028&birth_date=1996-04-26'
+        let data = `action=get-result&student_id=${document.querySelector('#id').innerHTML}&birth_date=${document.querySelector('#birth_date').innerHTML}`
         let xhr = await new XMLHttpRequest();
         await xhr.open('post', 'https://www.lus.ac.bd/wp-admin/admin-ajax.php', true);
         await xhr.setRequestHeader('Content-type', "application/x-www-form-urlencoded");
@@ -54,6 +54,12 @@
             }
             if (obj) {
                 let results = JSON.parse(obj);
+                let student = results.student;
+                document.querySelector('#department').innerHTML = student.department;
+                document.querySelector('#degree').innerHTML = student.degree;
+                document.querySelector('#cgpa').innerHTML = student.cgpa;
+                document.querySelector('#credit').innerHTML = student.credit;
+                document.querySelector('#grade').innerHTML = student.grade;
                 let years = Object.keys(results.results);
                 years = years.reverse();
                 let k = 1;

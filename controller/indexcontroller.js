@@ -3,6 +3,7 @@ const User = require("../model/usermodel");
 
 module.exports = {
   // GET HOME
+  // GET HOME
   getHome(req, res) {
     try {
       // IF STUDENT IN COOKIE
@@ -10,8 +11,7 @@ module.exports = {
       if ((req.user.profession).trim() === "Student") {
         User.findById(userID, async (_err, data) => {
           let _allClasses = data.Classes;
-          if (_allClasses) {
-
+          if (_allClasses.length > 0) {
             let _cls = [];
             async function sendClasses(cb) {
               _allClasses.forEach(id => {
@@ -34,14 +34,10 @@ module.exports = {
 
               });
             }
-
-
-
             await sendClasses(allClass => {
               _cls.push(allClass);
 
               if (_cls.length === _allClasses.length) {
-                console.log(_cls.length)
                 res.render("profile", {
                   allClass: _cls,
                   userID: `/profile-edit/${userID}`
@@ -51,7 +47,8 @@ module.exports = {
 
           } else {
             res.render("profile", {
-              title: "Profile"
+              title: "Profile",
+              userID: `/profile-edit/${userID}`
             });
           }
         });
@@ -83,7 +80,9 @@ module.exports = {
                       });
                     });
                     res.render("profile", {
-                      allClass: _allClasses
+                      allClass: _allClasses,
+                      userID: `/profile-edit/${userID}`,
+                      teacher: true
                     });
                   } else {
                     res.send(err);
@@ -92,7 +91,9 @@ module.exports = {
               );
             } else {
               res.render("profile", {
-                title: "Profile"
+                title: "Profile",
+                userID: `/profile-edit/${userID}`,
+                teacher: true
               });
             }
           }
@@ -111,10 +112,14 @@ module.exports = {
         if (!err) {
           User.findById(req.user._id, (err, data) => {
             if (!err) {
-              data.Classes.push(roomcode);
-              data.save().then(() => {
-                res.redirect("/");
-              });
+              if (!(data.Classes).includes(roomcode)) {
+                data.Classes.push(roomcode);
+                data.save().then(() => {
+                  res.redirect("/");
+                });
+              } else {
+                res.redirect('/');
+              }
             }
           });
         }
@@ -140,10 +145,20 @@ module.exports = {
   },
 
   // GET RESULT
-  getResult(_req, res) {
-    res.render("result", {
-      id: "1622020026"
-    });
+  getResult(req, res) {
+    const id = req.user._id;
+    User.findById(id, (err, data) => {
+      if (!err) {
+        res.render("result", {
+          name: `${data.firstname} ${data.lastname}`,
+          id: data.id,
+          dob: data.dob
+        });
+      } else {
+        res.send(err);
+      }
+    })
+
   },
 
   // GET CLASSROOM
@@ -176,13 +191,15 @@ module.exports = {
 
   //GET USER EDIT PROFILE
   getEditProfile(req, res) {
-    const user_id = req.user._id;
-
-    User.findById(user_id, (err, user) => {
+    const userID = req.user._id;
+    User.findById(userID, (err, user) => {
       if (!err) {
+
         const {
           firstname,
           lastname,
+          email,
+          id,
           dob,
           batch,
           section
@@ -190,16 +207,52 @@ module.exports = {
         res.render('profile-edit', {
           firstname,
           lastname,
+          email,
+          id,
           dob,
           batch,
-          section
+          section,
+          userID
         });
       }
     })
   },
 
   async postEditProfile(req, res) {
-    console.log(req.body);
+    const userID = await req.params.id;
+    // console.log(userID)
+    let {
+      firstname,
+      lastname,
+      email,
+      id,
+      dob,
+      batch,
+      section
+    } = req.body;
+    let date = dob.split('-');
+    dob = date.join('/')
+    await User.findOneAndUpdate({
+      _id: userID
+    }, {
+      $set: {
+        firstname,
+        lastname,
+        email,
+        id,
+        batch,
+        section,
+        dob
+      }
+    }, async (err, data) => {
+      if (!err) {
+        await data.save();
+        console.log("Profile Updated");
+        res.redirect('/');
+      } else {
+        res.send(err);
+      }
+    });
   }
 
 };

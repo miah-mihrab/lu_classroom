@@ -1,17 +1,28 @@
-<div class="container">
-    <form method="POST" action="/profile-edit/:id" class="text-secondary">
+<div class="container mt-5">
+    <h4 class="text-warning p-3">Update your profile correctly to use the full feature of the app!</h4>
+    <form method="POST" class="text-secondary">
         <div class="form-group">
             <label for="fname">First Name</label>
-            <input type="text" class="form-control" name="fname" id="fname" value={{firstname}}>
+            <input type="text" class="form-control" name="firstname" id="fname" value={{firstname}}>
         </div>
 
         <div class="form-group">
             <label for="lname">Last Name</label>
-            <input type="text" class="form-control" name="lname" id="lname" value={{lastname}}>
+            <input type="text" class="form-control" name="lastname" id="lname" value={{lastname}}>
         </div>
         <div class="form-group">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" name="id" id="id" value={{id}}>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" name="email" id="email" value={{email}}>
+        </div>
+
+        <div class="form-group">
             <label for="dob">Date Of Birth</label>
-            <input type="date" class="form-control" name="dob" placeholder="" autocomplete="off" id="dob">
+            <input type="text" class="form-control" name="dob" placeholder="Format: yyyy/mm/dd" autocomplete="off"
+                id="dob" value={{dob}}>
 
         </div>
         <div class="form-group">
@@ -24,5 +35,4 @@
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
-
 </div>

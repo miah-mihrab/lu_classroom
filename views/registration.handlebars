@@ -7,7 +7,7 @@
     <div class="header-overlay"></div>
     <div class="header-content col-lg-6 col-md-8 col-sm-12">
 
-        <form autocomplete="off" method="POST" action="/registration">
+        <form autocomplete="off" method="POST" action="/registration" id="auth-form">
             <h1>Sign Up</h1>
             <h6 class="lead">Please fill the form correctly</h6>
             {{> message}}
@@ -62,8 +62,8 @@
                     </select>
                 </div>
                 <div class="form-group col-md-4">
-                    <input type="date" class="form-control" name="birth_date" placeholder="" autocomplete="off"
-                        id="dob">
+                    <input type="text" class="form-control" name="birth_date" placeholder="Format: yyyy/mm/dd"
+                        autocomplete="off" id="dob">
                 </div>
             </div>
 

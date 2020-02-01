@@ -33,10 +33,10 @@ module.exports = {
             });
         } else {
             const user = await User.findByCredentials(email, password);
-            //console.log(user);
+            // console.log(user);
             try {
                 if (user) {
-                    //console.log(user);
+                    console.log(user);
                     const token = jwt.sign({
                             _id: user._id,
                             name: user.firstname + " " + user.lastname,
@@ -47,9 +47,8 @@ module.exports = {
                     if (token) {
                         //res.header("x-auth-token", token);
                         await res.cookie("jwt", token);
-
-                        await res.redirect("/");
-                        // res.redirect('/');
+                        console.log(token)
+                        res.redirect('/');
                     }
                 } else {
                     res.json({
@@ -73,7 +72,8 @@ module.exports = {
             password,
             id,
             department,
-            profession
+            profession,
+            dob
         } = await req.body;
 
         await bcrypt.genSalt(10, (err, salt) => {
@@ -86,7 +86,8 @@ module.exports = {
                     email,
                     password,
                     department,
-                    profession
+                    profession,
+                    dob
                 });
                 try {
                     await user.save().then(() => {

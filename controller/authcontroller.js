@@ -8,6 +8,9 @@ module.exports = {
 
     //GET SIGNIN PAGE
     getSignIn(req, res) {
+        if (res.cookie('jwt')) {
+            res.clearCookie('jwt');
+        }
         res.render("signin", {
             title: "Sign In"
         });
@@ -15,6 +18,10 @@ module.exports = {
 
     //GET REGISTRATION PAGE
     getReg(req, res) {
+        if (res.cookie('jwt')) {
+            res.clearCookie('jwt');
+
+        }
         res.render("registration", {
             title: "Register Here"
         });
@@ -36,7 +43,6 @@ module.exports = {
             // console.log(user);
             try {
                 if (user) {
-                    console.log(user);
                     const token = jwt.sign({
                             _id: user._id,
                             name: user.firstname + " " + user.lastname,
@@ -47,7 +53,6 @@ module.exports = {
                     if (token) {
                         //res.header("x-auth-token", token);
                         await res.cookie("jwt", token);
-                        console.log(token)
                         res.redirect('/');
                     }
                 } else {

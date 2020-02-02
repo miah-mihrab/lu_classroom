@@ -22,7 +22,7 @@ module.exports = {
                     //  User.findById(author_id, (_err, teacher) => {
                     //_allClassesArray.push
                     cb({
-                      _id: `/classroom/${_class._id}`,
+                      _id: `${_class._id}`,
                       students: _class.students,
                       classname: _class.classname,
                       section: _class.section,
@@ -40,7 +40,7 @@ module.exports = {
               if (_cls.length === _allClasses.length) {
                 res.render("profile", {
                   allClass: _cls,
-                  userID: `/profile-edit/${userID}`
+                  userID: `${userID}`
                 });
               }
             });
@@ -48,7 +48,7 @@ module.exports = {
           } else {
             res.render("profile", {
               title: "Profile",
-              userID: `/profile-edit/${userID}`
+              userID: `${userID}`
             });
           }
         });
@@ -71,7 +71,7 @@ module.exports = {
                     let _allClasses = [];
                     filteredByAuthor.forEach(e => {
                       _allClasses.push({
-                        _id: `/classroom/${e._id}`,
+                        _id: `${e._id}`,
                         students: e.students,
                         classname: e.classname,
                         section: e.section,
@@ -81,7 +81,7 @@ module.exports = {
                     });
                     res.render("profile", {
                       allClass: _allClasses,
-                      userID: `/profile-edit/${userID}`,
+                      userID: `${userID}`,
                       teacher: true
                     });
                   } else {
@@ -92,7 +92,7 @@ module.exports = {
             } else {
               res.render("profile", {
                 title: "Profile",
-                userID: `/profile-edit/${userID}`,
+                userID: `${userID}`,
                 teacher: true
               });
             }
@@ -253,6 +253,35 @@ module.exports = {
         res.send(err);
       }
     });
+  },
+
+  deleteClass(req, res) {
+    if (req.user.profession === "Student") {
+      User.update({
+        "_id": req.user._id
+      }, {
+        $pull: {
+          "Classes": req.params.id
+        }
+      }, (err, data) => {
+        if (err) {
+          console.log(err)
+        } else {
+          return res.redirect('/')
+        }
+      })
+    } else {
+      _Class.findOneAndRemove({
+        author: req.user._id
+      }, (err, data) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.redirect('/')
+        }
+      });
+    }
+
   }
 
 };

@@ -10,7 +10,8 @@ const {
   getResult,
   getEditProfile,
   postEditProfile,
-  getClassroom
+  getClassroom,
+  deleteClass
 } = require('../controller/indexcontroller');
 
 router.get("", auth, getHome);
@@ -26,4 +27,5 @@ router.get("/classroom/:id", auth, getClassroom);
 router.post("/classroom/:id", auth, (req, res) => {
   console.log(req.params)
 });
+router.get('/delete/:id', auth, deleteClass)
 module.exports = router;

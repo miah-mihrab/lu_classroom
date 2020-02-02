@@ -18,11 +18,11 @@ const Clas = mongoose.model("Class", new mongoose.Schema({
         default: 0,
         required: true
     },
-    author: [{
+    author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: User,
         required: true
-    }],
+    },
     author_name: {
         type: String,
         required: true

@@ -11,6 +11,8 @@
                 {{else}}
                 <li class="list-group-item" data-toggle="modal" data-target="#joinClass">Join Class</li>
                 {{/if}}
+                <a href="/signin" class="list-group-item list-group-item-action">Logout</a>
+
 
             </ul>
         </div>
@@ -30,7 +32,7 @@
                 {{else}}
                 <a href="/result" onclick="myFunction()" class="list-group-item list-group-item-action">Result</a>
                 {{/if}}
-                <a href="{{userID}}" class="list-group-item list-group-item-action">Edit Profile</a>
+                <a href="/profile-edit/{{userID}}" class="list-group-item list-group-item-action">Edit Profile</a>
             </div>
         </aside>
         <div class="class">
@@ -54,8 +56,8 @@
                         <hr>
                         <div class="card-body">
 
-                            <a href="#" class="btn btn-danger float-right">Delete</a>
-                            <a href="{{this._id}}" class="btn btn-primary float-right mr-2">Enter</a>
+                            <a href="/delete/{{this._id}}" class="btn btn-danger float-right">Delete</a>
+                            <a href="/classroom/{{this._id}}" class="btn btn-primary float-right mr-2">Enter</a>
                         </div>
                     </div>
                 </div>

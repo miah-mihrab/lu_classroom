@@ -4,108 +4,119 @@ const User = require("../model/usermodel");
 module.exports = {
   // GET HOME
   // GET HOME
-  getHome(req, res) {
-    try {
-      // IF STUDENT IN COOKIE
-      const userID = req.user._id;
-      if ((req.user.profession).trim() === "Student") {
-        User.findById(userID, async (_err, data) => {
-          let _allClasses = data.Classes;
-          if (_allClasses.length > 0) {
-            let _cls = [];
-            async function sendClasses(cb) {
-              _allClasses.forEach(id => {
-                _Class.findById(id, (_err, _class) => {
-                  //console.log(_class)
-                  if (_class) {
-                    let author_id = _class.author[0];
-                    //  User.findById(author_id, (_err, teacher) => {
-                    //_allClassesArray.push
-                    cb({
-                      _id: `${_class._id}`,
-                      students: _class.students,
-                      classname: _class.classname,
-                      section: _class.section,
-                      subjectname: _class.subjectname,
-                      author: _class.author_name
-                    });
-                  }
-                });
+  getHome(req, res, next) {
+    const userID = req.user._id;
+    if ((req.user.profession).trim() === "Student") {
+      User.findById(userID, async (_err, data) => {
+        let _allClasses = data.Classes;
+        if (_allClasses.length > 0) {
+          let _cls = [];
+          async function sendClasses(cb) {
+            _allClasses.forEach(id => {
+              _Class.findById(id, (_err, _class) => {
+                //console.log(_class)
+                if (_class) {
+                  let author_id = _class.author[0];
+                  //  User.findById(author_id, (_err, teacher) => {
+                  //_allClassesArray.push
+                  cb({
+                    _id: `${_class._id}`,
+                    students: _class.students,
+                    classname: _class.classname,
+                    section: _class.section,
+                    subjectname: _class.subjectname,
+                    author: _class.author_name
+                  });
+                }
+              });
 
+            });
+          }
+          await sendClasses(allClass => {
+            _cls.push(allClass);
+
+            if (_cls.length === _allClasses.length) {
+              res.render("profile", {
+                allClass: _cls,
+                userID: `${userID}`
               });
             }
-            await sendClasses(allClass => {
-              _cls.push(allClass);
+          });
 
-              if (_cls.length === _allClasses.length) {
-                res.render("profile", {
-                  allClass: _cls,
-                  userID: `${userID}`
-                });
+        } else if (_err) {
+          const err = new Error("User may not be authorized!");
+          err.status = "Unauthorized";
+          err.statusCode = 401;
+          next(err);
+        } else {
+          res.render("profile", {
+            title: "Profile",
+            userID: `${userID}`
+          });
+        }
+      });
+    } else {
+      // IF TEACHER
+
+      _Class.find({}, (_err, allClass) => {
+        if (allClass) {
+          //const teacher = req.user._id; 
+          let filteredByAuthor = allClass.filter(
+            value => value.author == userID
+          );
+          if (filteredByAuthor.length > 0) {
+            User.findById(
+              filteredByAuthor[0].author,
+              "firstname lastname",
+              (err, data) => {
+                if (!err) {
+                  let name = data.firstname + " " + data.lastname;
+                  filteredByAuthor[0].authorname = name;
+                  let _allClasses = [];
+                  filteredByAuthor.forEach(e => {
+                    _allClasses.push({
+                      _id: `${e._id}`,
+                      students: e.students,
+                      classname: e.classname,
+                      section: e.section,
+                      subjectname: e.subjectname,
+                      author: name
+                    });
+                  });
+                  res.render("profile", {
+                    allClass: _allClasses,
+                    userID: `${userID}`,
+                    teacher: true
+                  });
+                } else {
+                  res.send(err);
+                }
               }
-            });
-
+            );
           } else {
             res.render("profile", {
-              title: "Profile",
-              userID: `${userID}`
+              userID: `${userID}`,
+              teacher: true
             });
           }
-        });
-      } else {
-        // IF TEACHER
-        _Class.find({}, (_err, allClass) => {
-          if (allClass) {
-            //const teacher = req.user._id;
-            let filteredByAuthor = allClass.filter(
-              value => value.author == userID
-            );
-            if (filteredByAuthor.length > 0) {
-              User.findById(
-                filteredByAuthor[0].author,
-                "firstname lastname",
-                (err, data) => {
-                  if (!err) {
-                    let name = data.firstname + " " + data.lastname;
-                    filteredByAuthor[0].authorname = name;
-                    let _allClasses = [];
-                    filteredByAuthor.forEach(e => {
-                      _allClasses.push({
-                        _id: `${e._id}`,
-                        students: e.students,
-                        classname: e.classname,
-                        section: e.section,
-                        subjectname: e.subjectname,
-                        author: name
-                      });
-                    });
-                    res.render("profile", {
-                      allClass: _allClasses,
-                      userID: `${userID}`,
-                      teacher: true
-                    });
-                  } else {
-                    res.send(err);
-                  }
-                }
-              );
-            } else {
-              res.render("profile", {
-                title: "Profile",
-                userID: `${userID}`,
-                teacher: true
-              });
-            }
-          }
-        });
-      }
-    } catch (err) {
-      throw new Error(err);
+        } else if (_err) {
+          const err = new Error("User may not authorized!");
+          err.status = "Unauthorized";
+          err.statusCode = 401;
+          next(err);
+        } else {
+          res.render("profile", {
+            title: "Profile",
+            userID: `${userID}`,
+            teacher: true
+          });
+        }
+      });
     }
   },
 
   // POST FROM HOME
-  async postHome(req, res) {
+  async postHome(req, res, next) {
     if (req.body.roomcode) {
       const roomcode = req.body.roomcode;
       _Class.findById(roomcode, (err, _data) => {
@@ -120,8 +131,18 @@ module.exports = {
               } else {
                 res.redirect('/');
               }
+            } else {
+              const err = new Error("User may not authorized!");
+              err.status = "Unauthorized";
+              err.statusCode = 401;
+              next(err);
             }
           });
+        } else {
+          const err = new Error("Room may not available");
+          err.status = "Not Found";
+          err.statusCode = 404;
+          next(err);
         }
       });
     } else {
@@ -131,31 +152,44 @@ module.exports = {
         subject
       } = req.body;
       const author = req.user._id;
-      const cls = new _Class({
-        classname: classname,
-        section: section,
-        subjectname: subject,
-        author: author,
-        author_name: req.user.name
-      });
-      cls.save().then(() => {
-        res.redirect("/");
-      });
+      try {
+        const cls = new _Class({
+          classname: classname,
+          section: section,
+          subjectname: subject,
+          author: author,
+          author_name: req.user.name
+        });
+        await cls.save();
+        await res.redirect("/");
+      } catch {
+        const err = new Error("Class not saved");
+        err.status = "Database Error";
+        err.statusCode = 500;
+        next(err);
+      }
     }
   },
 
   // GET RESULT
-  getResult(req, res) {
+  getResult(req, res, next) {
     const id = req.user._id;
     User.findById(id, (err, data) => {
       if (!err) {
-        res.render("result", {
-          name: `${data.firstname} ${data.lastname}`,
-          id: data.id,
-          dob: data.dob
-        });
+        if (data.id == null || data.dob === null) {
+          // HANDLE THIS
+        } else {
+          res.render("result", {
+            name: `${data.firstname} ${data.lastname}`,
+            id: data.id,
+            dob: data.dob
+          });
+        }
       } else {
-        res.send(err);
+        const err = new Error("User not found!");
+        err.status = "Not Found";
+        err.statusCode = 404;
+        next(err);
       }
     })
 

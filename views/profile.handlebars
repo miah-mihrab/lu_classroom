@@ -26,9 +26,35 @@
             <div class="list-group">
                 <a href="/profile" class="list-group-item list-group-item-action">Profile</a>
                 {{#if teacher}}
-                <a href="/digital-library" onclick="" class="list-group-item list-group-item-action">Digital
-                    Library</a>
+                <div class="dropdown">
+                    <button class="btn list-group-item list-group-item-action  dropdown-toggle" type="button"
+                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Digital Library
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="https://dl.acm.org/">ACM Digital Library</a>
+                        <a class="dropdown-item" href="https://ieeexplore.ieee.org/Xplore/home.jsp">IEE Xplore</a>
+                        <a class="dropdown-item" href="https://dblp.uni-trier.de/">DBLP</a>
+                        <a class="dropdown-item" href="https://www.sciencedirect.com/">Science Direct</a>
+                    </div>
+                </div>
 
+                <div class="dropdown">
+                    <button class="btn list-group-item list-group-item-action  dropdown-toggle" type="button"
+                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Accademic Search Engine
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="https://scholar.google.com/">Google Scholar</a>
+                        <a class="dropdown-item" href="https://academic.microsoft.com/">Microsoft Academic</a>
+                        <a class="dropdown-item" href="https://www.base-search.net/">BASE</a>
+                        <a class="dropdown-item" href="https://core.ac.uk/">CORE</a>
+                        <a class="dropdown-item" href="https://www.science.gov/">Science.gov</a>
+                        <a class="dropdown-item" href="https://www.semanticscholar.org/">Semantic Scholar</a>
+                        <a class="dropdown-item" href="https://xueshu.baidu.com/">Baidu Scholar</a>
+
+                    </div>
+                </div>
                 {{else}}
                 <a href="/result" onclick="myFunction()" class="list-group-item list-group-item-action">Result</a>
                 {{/if}}

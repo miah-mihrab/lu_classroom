@@ -11,7 +11,7 @@ module.exports = {
         if (res.cookie('jwt')) {
             res.clearCookie('jwt');
         }
-        res.render("signin", {
+        res.status(200).render("signin", {
             title: "Sign In"
         });
     },
@@ -22,13 +22,13 @@ module.exports = {
             res.clearCookie('jwt');
 
         }
-        res.render("registration", {
+        res.status(200).render("registration", {
             title: "Register Here"
         });
     },
 
     // POST CREDENTIALS & VERIFY
-    async postSignIn(req, res) {
+    async postSignIn(req, res, next) {
         let {
             email,
             password
@@ -41,29 +41,27 @@ module.exports = {
         } else {
             const user = await User.findByCredentials(email, password);
             // console.log(user);
-            try {
-                if (user) {
-                    const token = jwt.sign({
-                            _id: user._id,
-                            name: user.firstname + " " + user.lastname,
-                            profession: user.profession
-                        },
-                        JWT_SECRET
-                    );
-                    if (token) {
-                        //res.header("x-auth-token", token);
-                        await res.cookie("jwt", token);
-                        res.redirect('/');
-                    }
-                } else {
-                    res.json({
-                        error: "Something gone wrong. Please provide correct info!"
-                    });
+            if (user) {
+                const token = jwt.sign({
+                        _id: user._id,
+                        name: user.firstname + " " + user.lastname,
+                        profession: user.profession
+                    },
+                    JWT_SECRET
+                );
+                if (token) {
+                    //res.header("x-auth-token", token);
+                    await res.cookie("jwt", token);
+                    return res.status(200).redirect('/');
                 }
-            } catch (e) {
-                res.json({
-                    error: e
-                });
+                res.status(307).redirect('/'); //Temporary Redirected
+
+
+            } else {
+                const err = new Error("Please provide correct info!");
+                err.status = "Unauthorized";
+                err.statusCode = 401;
+                next(err);
             }
         }
     },
@@ -110,13 +108,16 @@ module.exports = {
                         //res.header("x-auth-token", token);
                         await res.cookie("jwt", token);
 
-                        return res.redirect("/");
+                        return res.status(200).redirect("/");
                         // res.redirect('/');
                     }
-                    res.redirect("/");
+                    res.status(307).redirect("/"); //Temporary Redirected
                     //console.log("New User Saved");
-                } catch (err) {
-                    console.log(err)
+                } catch {
+                    const err = new Error("Something gone wrong on user registration");
+                    err.status = "No Response";
+                    err.statusCode = 444;
+                    next(err);
                 }
             });
         });

@@ -40,7 +40,7 @@ firstname.addEventListener('keyup', e => {
     const fname = firstname.value;
 
     if (!fname.match((/^[A-Za-z]+$/))) {
-        firstname.style.border = "1px solid red";
+        firstname.style.borderBottom = "1px solid red";
         formValidate = false;
     } else {
         firstname.style.border = "none";
@@ -58,7 +58,7 @@ lastname.addEventListener('keyup', e => {
         lastname.style.border = "1px solid red";
         formValidate = false;
     } else {
-        lastname.style.border = "none";
+        lastname.style.borderBottom = "none";
         formValidate = true;
     }
     submitEnable();
@@ -73,7 +73,7 @@ email.addEventListener('keyup', e => {
         email.style.border = "1px solid red";
         formValidate = false;
     } else {
-        email.style.border = "none";
+        email.style.borderBottom = "none";
         formValidate = true;
     }
     submitEnable();
@@ -85,7 +85,7 @@ id_number.addEventListener('keyup', e => {
         id_num_count++;
     }
     if (!id.match((/^[0-9]+$/))) {
-        id_number.style.border = "1px solid red";
+        id_number.style.borderBottom = "1px solid red";
         formValidate = false;
     } else {
         id_number.style.border = "none";
@@ -100,7 +100,7 @@ password.addEventListener('keyup', e => {
         pass_count++;
     }
     if (!pass.match((/^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/))) {
-        password.style.border = "1px solid red";
+        password.style.borderBottom = "1px solid red";
         formValidate = false;
     } else {
         password.style.border = "none";
@@ -115,7 +115,7 @@ password2.addEventListener('keyup', e => {
         pass2_count++;
     }
     if (!pass.match(password.value)) {
-        password2.style.border = "1px solid red";
+        password2.style.borderBottom = "1px solid red";
         formValidate = false;
     } else {
         password2.style.border = "none";

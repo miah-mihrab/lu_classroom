@@ -7,68 +7,140 @@
     <div class="header-overlay"></div>
     <div class="header-content col-lg-6 col-md-8 col-sm-12">
 
-        <form autocomplete="off" method="POST" action="/registration" id="auth-form">
+        {{!-- <form autocomplete="off" method="POST" action="/registration" id="auth-form">
             <h1>Sign Up</h1>
             <h6 class="lead">Please fill the form correctly</h6>
-            {{> message}}
             <hr>
             <div class="form-row">
-                <div class="form-group col-md-6">
-                    <input type="text" class="form-control" name="firstname" placeholder="First Name" id="fname"
-                        data-toggle="tooltip" title="First Name should not contain number or special characters">
-                </div>
-                <div class="form-group col-md-6">
-                    <input type="text" class="form-control" name="lastname" placeholder="Last Name" id="lname"
-                        data-toggle="tooltip" title="Last Name should not contain number or special characters">
-                </div>
+                <input type="text" class="form-control shadow-none col-md-6 mt-3 mr-1" name="firstname"
+                    placeholder="First Name" id="fname" data-toggle="tooltip"
+                    title="First Name should not contain number or special characters">
+
+                <input type="text" class="form-control shadow-none col-md-6 mt-3 mr-1" name="lastname"
+                    placeholder="Last Name" id="lname" data-toggle="tooltip"
+                    title="Last Name should not contain number or special characters">
+
             </div>
             <div class="form-row">
-                <div class="form-group col-md-6 ">
-                    <input type="email" class="form-control" data-toggle="tooltip" name="email" placeholder="Email"
-                        autocomplete="off" id="email" data-toggle="tooltip" title="Format: example@host.com">
-                </div>
-                <div class="form-group col-md-6 ">
-                    <input type="text" class="form-control" name="id" placeholder="ID number" autocomplete="off"
-                        id="id_number" data-toggle="tooltip" title="Provide your university ID number">
-                </div>
+                <input type="email" class="form-control shadow-none col-md-6 mt-3 mr-1" data-toggle="tooltip"
+                    name="email" placeholder="Email" autocomplete="off" id="email" data-toggle="tooltip"
+                    title="Format: example@host.com">
+
+                <input type="text" class="form-control shadow-none col-md-6 mt-3 mr-1" name="id" placeholder="ID number"
+                    autocomplete="off" id="id_number" data-toggle="tooltip" title="Provide your university ID number">
+
             </div>
             <div class="form-row">
-                <div class="form-group col-md-6 ">
-                    <input type="password" class="form-control" name="password" placeholder="Password"
-                        autocomplete="off" id="password" data-toggle="tooltip"
-                        title="Password should contain at least - 1 capital letter, 1 small letter, 1 special character, 1 number with length of at least 6">
-                </div>
-                <div class="form-group col-md-6 ">
-                    <input type="password" class="form-control" name="confirmpassword" placeholder="Confirm Password"
-                        autocomplete="off" id="password2" data-toggle="tooltip"
-                        title="Password should match with given password">
-                </div>
+                <input type="password" class="form-control shadow-none col-md-6 mt-3 mr-1" name="password"
+                    placeholder="Password" autocomplete="off" id="password" data-toggle="tooltip"
+                    title="Password should contain at least - 1 capital letter, 1 small letter, 1 special character, 1 number with length of at least 6">
+
+                <input type="password" class="form-control shadow-none col-md-6 mt-3 mr-1" name="confirmpassword"
+                    placeholder="Confirm Password" autocomplete="off" id="password2" data-toggle="tooltip"
+                    title="Password should match with given password">
+
             </div>
 
 
             <div class="form-row">
-                <div class="form-group col-md-4">
-                    <select class="form-control" name="department" id="department">
-                        <option selected>Department...</option>
-                        <option>CSE</option>
-                        <option>EEE</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <select class="form-control" name="profession" id="profession">
-                        <option selected>Choose...</option>
-                        <option>Teacher</option>
-                        <option>Student</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <input type="text" class="form-control" name="birth_date" placeholder="Format: yyyy/mm/dd"
-                        autocomplete="off" id="dob">
-                </div>
+                <select class="form-control col-md-4" name="department" id="department">
+                    <option selected>Department...</option>
+                    <option>CSE</option>
+                    <option>EEE</option>
+                </select>
+                <select class="form-control col-md-4" name="profession" id="profession">
+                    <option selected>Choose...</option>
+                    <option>Teacher</option>
+                    <option>Student</option>
+                </select>
+                <input type="text" class="form-control col-md-4" name="birth_date" placeholder="Format: yyyy/mm/dd"
+                    autocomplete="off" id="dob">
             </div>
 
             <button type="submit" class="btn btn-primary" id="reg-button">Sign Up</button>
-        </form> <br>
+        </form> <br> --}}
+
+
+        <div class="signup-form">
+            <h2 class="heading-secondary ma-bt-lg">Please sign up here</h2>
+
+            <form action="" class="form form--login" autocomplete="off" method="POST" action="/registration"
+                id="auth-form">
+                <div class="form__group row">
+                    <div class="col-md-6" style="float: left;">
+                        <label for="fname" class="form__label">First Name</label>
+                        <input type="text" id="fname" data-toggle="tooltip" class="form__input" placeholder="First Name"
+                            title="First Name should not contain number or special characters" name="firstname"
+                            required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="lname" class="form__label">Last Name</label>
+                        <input type="text" id="lname" data-toggle="tooltip" class="form__input" placeholder="Last Name"
+                            title="Last Name should not contain number or special characters" name="lastname" required>
+                    </div>
+
+                </div>
+                <div class="form__group row">
+                    <div class="col-md-6"><label for="email" class="form__label">Email address</label>
+                        <input type="text" id="email" class="form__input" type="email" placeholder="you@example.com" ,
+                            name="email" required></div>
+                    <div class="col-md-6">
+                        <label for="id" class="form__label">Universy Id</label>
+                        <input type="text" data-toggle="tooltip" class="form__input" name="id" placeholder="ID number"
+                            autocomplete="off" id="id_number" data-toggle="tooltip"
+                            title="Provide your university ID number" name="id" required>
+
+                    </div>
+                </div>
+                {{!-- ma-bt-md --}}
+                <div class="form__group row">
+                    <div class="col-md-6">
+                        <label for="password" class="form__label">Password</label>
+                        <input type="password" id="password" class="form__input" placeholder="********" minlength="8"
+                            name="password" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="confirmPassword" class="form__label">Confirm Password</label>
+                        <input type="password" id="password2" class="form__input" placeholder="********" minlength="8"
+                            name="confirmPassword" required>
+                    </div>
+                </div>
+
+
+
+                <div class="form__group row">
+
+                    <div class="col-md-6">
+                        <label for="department" class="form__label">Department</label>
+
+                        <select class="form__input" name="department" id="department">
+                            <option>Select Department...</option>
+                            <option>CSE</option>
+                            <option>EEE</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="profession" class="form__label">Profession</label>
+                        <select class="form__input" name="profession" id="profession">
+                            <option selected>Choose...</option>
+                            <option>Teacher</option>
+                            <option>Student</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="form__group">
+                    <button class="btn btn--green">
+                        Sign Up
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
+
         <a href="/signin">Already have an account? Sign in</a>
 
     </div>

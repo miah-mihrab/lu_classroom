@@ -67,7 +67,7 @@ module.exports = {
     },
 
     // VERIFY & REGISTER
-    async postReg(req, res) {
+    async postReg(req, res, next) {
         let {
             firstname,
             lastname,
@@ -113,10 +113,11 @@ module.exports = {
                     }
                     res.status(307).redirect("/"); //Temporary Redirected
                     //console.log("New User Saved");
-                } catch {
-                    const err = new Error("Something gone wrong on user registration");
-                    err.status = "No Response";
-                    err.statusCode = 444;
+                } catch (err) {
+                    console.log(req.body)
+                    // const err = new Error("Something gone wrong on user registration");
+                    // err.status = "No Response";
+                    // err.statusCode = 444;
                     next(err);
                 }
             });

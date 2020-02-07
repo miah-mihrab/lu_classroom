@@ -8,21 +8,18 @@ const {
   getHome,
   postHome,
   getResult,
-  getEditProfile,
-  postEditProfile,
+  patchAccount,
   getClassroom,
   deleteClass,
-  account
+  getAccount,
+  postAccount
 } = require('../controller/indexcontroller');
 
 router.get("", auth, getHome);
 
 router.post("", auth, postHome);
 
-router.get("/result", auth, getResult);
-
-router.get('/profile-edit/:id', auth, getEditProfile);
-router.post('/profile-edit/:id', postEditProfile);
+router.get("/result/:id", auth, getResult);
 
 router.get("/classroom/:id", auth, getClassroom);
 router.post("/classroom/:id", auth, (req, res) => {
@@ -31,5 +28,6 @@ router.post("/classroom/:id", auth, (req, res) => {
 router.get('/delete/:id', auth, deleteClass);
 
 
-router.get('/account/:id', auth, account);
+
+router.get('/account/:id', auth, getAccount);
 module.exports = router;

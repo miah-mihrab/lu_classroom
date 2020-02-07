@@ -42,3 +42,21 @@
 .personal__info {
     padding: 10%;
 }
+
+
+.form__user-photo {
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    margin-right: 2rem;
+}
+
+.overview_section h4,
+.password_portion h4 {
+    color: #28b487;
+    font-size: 1.3rem;
+    font-weight: 700;
+    display: inline;
+    padding: 5px 0 5px;
+    border-bottom: 0.5px solid #7dd56f;
+}

@@ -1,0 +1,83 @@
+{{> account}}
+<div class="personal__info">
+    <div class="overview_section mb-4">
+        <h4>Basic Information</h4>
+        <form method="POST" class="text-secondary" style="margin-top: 15px;">
+            <div class="form-group">
+                <label for="fname">First Name</label>
+                <input type="text" class="form-control" name="firstname" id="fname" value="{{firstname}}">
+            </div>
+
+            <div class="form-group">
+                <label for="lname">Last Name</label>
+                <input type="text" class="form-control" name="lastname" id="lname" value="{{lastname}}">
+            </div>
+            <div class="form-group">
+                <label for="id">ID</label>
+                <input type="text" class="form-control" name="id" id="id" value="{{id}}">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" name="email" id="email" value="{{email}}">
+            </div>
+
+            {{#unless teacher}}
+            <div class="form-group">
+                <label for="dob">Date Of Birth</label>
+                <input type="text" class="form-control" name="dob" placeholder="Format: yyyy/mm/dd" autocomplete="off"
+                    id="dob" value="{{dob}}">
+
+            </div>
+            <div class="form-group">
+                <label for="batch">Batch</label>
+                <input type="text" class="form-control" name="batch" id="batch" value="{{batch}}">
+            </div>
+            <div class="form-group">
+                <label for="section">Section</label>
+                <input type="text" class="form-control" name="section" id="section" value="{{section}}">
+            </div>
+            {{/unless}}
+
+            <div class="form-group form__photo-upload">
+                <img alt="user_photo" class="form__user-photo" src="../images/default.jpg" , alt='User photo'>
+                <label for="photo">Choose Profile Image</label>
+                <input hidden class="form__upload" type='file' , accept='image/*' , id='photo' , name='photo'>
+            </div>
+            <div class="form__group" style="overflow: hidden;">
+                <button class="btn btn--green float-right clearfix" style="width: 100px;">
+                    Update
+                </button>
+            </div>
+        </form>
+
+    </div>
+    <hr>
+    <div class="password_portion mt-4">
+        <h4>Secret Information</h4>
+        <form method="POST" class="text-secondary" style="margin-top: 15px;">
+            <div class="form-group">
+                <label for="old password">Old Password</label>
+                <input type="password" class="form-control" name="oldpassword" id="old_pass" placeholder="******"
+                    minlength="8">
+            </div>
+
+            <div class="form-group">
+                <label for="new password">New Password</label>
+                <input type="password" class="form-control" name="newpass" id="new_pass" placeholder="******"
+                    minlength="8">
+            </div>
+
+            <div class="form-group">
+                <label for="confirm new password">Confirm Password</label>
+                <input type="password" class="form-control" name="confirm_newpass" id="confirm_newpass"
+                    placeholder="******" minlength="8">
+            </div>
+            <div class="form__group">
+                <button class="btn btn--green float-right clearfix" style="width: 100px;">
+                    Update
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>

@@ -9,7 +9,10 @@ module.exports = {
     //GET SIGNIN PAGE
     getSignIn(req, res) {
         if (res.cookie('jwt')) {
-            res.clearCookie('jwt');
+            res.cookie('jwt', undefined, {
+                maxAge: 10000
+            });
+
         }
         res.status(200).render("signin", {
             title: "Sign In"
@@ -19,7 +22,9 @@ module.exports = {
     //GET REGISTRATION PAGE
     getReg(req, res) {
         if (res.cookie('jwt')) {
-            res.clearCookie('jwt');
+            res.cookie('jwt', undefined, {
+                expire: Date.now() + 10 * 1000
+            });
 
         }
         res.status(200).render("registration", {
@@ -42,6 +47,7 @@ module.exports = {
             const user = await User.findByCredentials(email, password);
             // console.log(user);
             if (user) {
+                // console.log(user)
                 const token = jwt.sign({
                         _id: user._id,
                         name: user.firstname + " " + user.lastname,
@@ -52,6 +58,7 @@ module.exports = {
                 if (token) {
                     //res.header("x-auth-token", token);
                     await res.cookie("jwt", token);
+                    console.log(token)
                     return res.status(200).redirect('/');
                 }
                 res.status(307).redirect('/'); //Temporary Redirected
@@ -93,9 +100,8 @@ module.exports = {
                     dob
                 });
                 try {
-                    await user.save().then(() => {
-                        console.log("Saved");
-                    });
+                    await user.save()
+                    console.log("Saved");
 
                     const token = await jwt.sign({
                             _id: user._id,
@@ -107,7 +113,7 @@ module.exports = {
                     if (token) {
                         //res.header("x-auth-token", token);
                         await res.cookie("jwt", token);
-
+                        console.log(token)
                         return res.status(200).redirect("/");
                         // res.redirect('/');
                     }

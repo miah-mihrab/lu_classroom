@@ -1,8 +1,10 @@
 <h1 class="heading-secondary text-center mt-5">Account Settings</h1>
 <div class="acnt_container ">
     <div class="side-menu">
-        <ul class="items">
+        <ul class="items" style="margin:0; padding:10px 20px">
             <li class="nav_el"><a href="">Settings</a></li>
+            <hr style="width
+            100px">
             {{#if teacher}}
             <div class="dropdown">
                 <li class="nav_el dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown">
@@ -34,58 +36,8 @@
             </div>
 
             {{else}}
-            <li class="nav_el"><a href="">Result</a></li>
+            <li class="nav_el"><a href="/result/{{userID}}" id="results">Results</a></li>
             <li class="nav_el"><a href="">Routine</a></li>
             {{/if}}
         </ul>
     </div>
-    <div class="personal__info">
-        <div class="overview_section">
-            <form method="POST" class="text-secondary">
-                <div class="form-group">
-                    <label for="fname">First Name</label>
-                    <input type="text" class="form-control" name="firstname" id="fname" value="First Name">
-                </div>
-
-                <div class="form-group">
-                    <label for="lname">Last Name</label>
-                    <input type="text" class="form-control" name="lastname" id="lname" value="Last Name">
-                </div>
-                <div class="form-group">
-                    <label for="id">ID</label>
-                    <input type="text" class="form-control" name="id" id="id" value="123456">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="text" class="form-control" name="email" id="email" value="email">
-                </div>
-
-                {{#unless teacher}}
-                <div class="form-group">
-                    <label for="dob">Date Of Birth</label>
-                    <input type="text" class="form-control" name="dob" placeholder="Format: yyyy/mm/dd"
-                        autocomplete="off" id="dob" value="dob">
-
-                </div>
-                <div class="form-group">
-                    <label for="batch">Batch</label>
-                    <input type="text" class="form-control" name="batch" id="batch" value="batch">
-                </div>
-                <div class="form-group">
-                    <label for="section">Section</label>
-                    <input type="text" class="form-control" name="section" id="section" value="section">
-                </div>
-                {{/unless}}
-
-
-                <div class="form__group">
-                    <button class="btn btn--green">
-                        Update
-                    </button>
-                </div>
-            </form>
-
-        </div>
-        <div class="password_portion"></div>
-    </div>
-</div>

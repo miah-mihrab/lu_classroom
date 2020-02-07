@@ -41,7 +41,7 @@ app.use((err, req, res, next) => {
     "status code": err.statusCode,
     "status": err.status,
     "message": err.message
-  })
+  });
 });
 
 module.exports = app;

@@ -84,27 +84,17 @@ input[type=password] {
 
 /* Add a background color when the inputs get focus */
 
-#auth-form input[type="text"]:focus,
+/* #auth-form input[type="text"]:focus,
 #auth-form input[type="email"]:focus,
 #auth-form input[type="number"]:focus,
 #auth-form input[type="password"]:focus {
   color: white;
   outline: none;
   position: relative;
-}
+} */
 
-.form-group {}
+/* .form-group {} */
 
-.shadow-none::before {
-  z-index: 100 !important;
-  display: block;
-  position: absolute;
-  content: '';
-  background: red;
-  height: 3px;
-  width: 100%;
-  bottom: 0;
-}
 
 /* Set a style for all buttons */
 button {

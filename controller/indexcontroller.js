@@ -38,7 +38,9 @@ module.exports = {
             if (_cls.length === _allClasses.length) {
               res.render("profile", {
                 allClass: _cls,
-                userID: `${userID}`
+                userID: `${userID}`,
+                userName: req.user.name
+
               });
             }
           });
@@ -51,7 +53,8 @@ module.exports = {
         } else {
           res.render("profile", {
             title: "Profile",
-            userID: `${userID}`
+            userID: `${userID}`,
+            userName: req.user.name
           });
         }
       });
@@ -86,7 +89,8 @@ module.exports = {
                   res.render("profile", {
                     allClass: _allClasses,
                     userID: `${userID}`,
-                    teacher: true
+                    teacher: true,
+                    userName: req.user.name
                   });
                 } else {
                   res.send(err);
@@ -96,7 +100,8 @@ module.exports = {
           } else {
             res.render("profile", {
               userID: `${userID}`,
-              teacher: true
+              teacher: true,
+              userName: req.user.name
             });
           }
         } else if (_err) {
@@ -108,7 +113,8 @@ module.exports = {
           res.render("profile", {
             title: "Profile",
             userID: `${userID}`,
-            teacher: true
+            teacher: true,
+            userName: req.user.name
           });
         }
       });
@@ -316,6 +322,11 @@ module.exports = {
       });
     }
 
-  }
+  },
 
+  account(req, res) {
+    res.render('account', {
+      teacher: req.user.profession === 'Teacher' ? true : false
+    })
+  }
 };

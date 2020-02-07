@@ -96,13 +96,16 @@
                 <div class="form__group row">
                     <div class="col-md-6">
                         <label for="password" class="form__label">Password</label>
-                        <input type="password" id="password" class="form__input" placeholder="********" minlength="8"
-                            name="password" required>
+                        <input type="password" id="password" class="form__input" placeholder="********" minlength="6"
+                            name="password" data-toggle="tooltip"
+                            title="Password should contain at least - 1 capital letter, 1 small letter, 1 special character, 1 number with length of at least 6"
+                            required>
                     </div>
                     <div class="col-md-6">
                         <label for="confirmPassword" class="form__label">Confirm Password</label>
-                        <input type="password" id="password2" class="form__input" placeholder="********" minlength="8"
-                            name="confirmPassword" required>
+                        <input type="password" id="password2" class="form__input" placeholder="********" minlength="6"
+                            name="confirmPassword" data-toggle="tooltip"
+                            title="Password should match with first password" required>
                     </div>
                 </div>
 
@@ -114,7 +117,7 @@
                         <label for="department" class="form__label">Department</label>
 
                         <select class="form__input" name="department" id="department">
-                            <option>Select Department...</option>
+                            <option selected> Department</option>
                             <option>CSE</option>
                             <option>EEE</option>
                         </select>
@@ -123,7 +126,7 @@
                     <div class="col-md-6">
                         <label for="profession" class="form__label">Profession</label>
                         <select class="form__input" name="profession" id="profession">
-                            <option selected>Choose...</option>
+                            <option selected>Profession</option>
                             <option>Teacher</option>
                             <option>Student</option>
                         </select>
@@ -131,7 +134,7 @@
 
                 </div>
                 <div class="form__group">
-                    <button class="btn btn--green">
+                    <button class="btn btn--green" id="reg-button">
                         Sign Up
                     </button>
                 </div>

@@ -1,93 +1,48 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+{{!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
     <a href="/" class="navbar-brand" style="margin-left: 5%;"><span> LU </span>Classroom</a>
 
     <div id="nav-right">
-        <div class="dropdown">
-            <span class='add'>+</span>
-            <ul class="list-group dropdown-content">
-                {{#if teacher}}
-                <li class="list-group-item" data-toggle="modal" data-target="#createClass">Create Class</li>
-                {{else}}
-                <li class="list-group-item" data-toggle="modal" data-target="#joinClass">Join Class</li>
-                {{/if}}
-                <a href="/signin" class="list-group-item list-group-item-action">Logout</a>
+        <ul class="list-group">
+            {{#if teacher}}
+            <li class="" data-toggle="modal" data-target="#createClass">Create Class</li>
+            {{else}}
+            <li class="" data-toggle="modal" data-target="#joinClass">Join Class</li>
+            {{/if}}
+            <a href="/signin" class="">Logout</a>
 
 
-            </ul>
-        </div>
+        </ul>
         <img src="" alt="ProfileImg" width="50" height="50" style="border-radius: 50%;">
 
     </div>
-</nav>
+</nav> --}}
+
+{{> header}}
 <div class="container">
+    {{log userName}}
     <div class="area">
-        <aside>
-            <div class="list-group">
-                <a href="/profile" class="list-group-item list-group-item-action">Profile</a>
-                {{#if teacher}}
-                <div class="dropdown">
-                    <button class="btn list-group-item list-group-item-action  dropdown-toggle" type="button"
-                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Digital Library
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" target="_blank" href="https://dl.acm.org/">ACM Digital Library</a>
-                        <a class="dropdown-item" target="_blank" href="https://ieeexplore.ieee.org/Xplore/home.jsp">IEE
-                            Xplore</a>
-                        <a class="dropdown-item" target="_blank" href="https://dblp.uni-trier.de/">DBLP</a>
-                        <a class="dropdown-item" target="_blank" href="https://www.sciencedirect.com/">Science
-                            Direct</a>
-                    </div>
-                </div>
 
-                <div class="dropdown">
-                    <button class="btn list-group-item list-group-item-action  dropdown-toggle" type="button"
-                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Accademic Search Engine
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" target="_blank" href="https://scholar.google.com/">Google Scholar</a>
-                        <a class="dropdown-item" target="_blank" href="https://academic.microsoft.com/">Microsoft
-                            Academic</a>
-                        <a class="dropdown-item" target="_blank" href="https://www.base-search.net/">BASE</a>
-                        <a class="dropdown-item" target="_blank" href="https://core.ac.uk/">CORE</a>
-                        <a class="dropdown-item" target="_blank" href="https://www.science.gov/">Science.gov</a>
-                        <a class="dropdown-item" target="_blank" href="https://www.semanticscholar.org/">Semantic
-                            Scholar</a>
-                        <a class="dropdown-item" target="_blank" href="https://xueshu.baidu.com/">Baidu Scholar</a>
-                    </div>
-                </div>
-                {{else}}
-                <a href="/result" onclick="myFunction()" class="list-group-item list-group-item-action">Result</a>
-                {{/if}}
-                <a href="/profile-edit/{{userID}}" class="list-group-item list-group-item-action">Edit Profile</a>
-            </div>
-        </aside>
-        <div class="class">
+        <div class="class mt-5">
+
             {{#if allClass}}
-            <div class="row ">
+            <div class="row">
                 {{#each allClass}}
-                <div class="col-5 mr-1 mt-3">
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-head">
-                            <img src="../images/lu1.jpg" class="card-img-top" alt="...">
-                            <div class="card-head-content">
-                                <h5 class="card-title">{{this.classname}}</h5>
-                                <ul class="lst-group">
-                                    <li class="lst-group-item">Teacher: {{this.author}}</li>
-                                    <li class="lst-group-item">Total Student: {{this.students}}</li>
-                                </ul>
-                            </div>
-
+                <div class="card" style="width: 18rem; margin:auto">
+                    <div class="card-head">
+                        <img src="../images/lu1.jpg" class="card-img-top" alt="...">
+                        <div class="card-head-content">
+                            <h5 class="card-title" style="max-width: 200px;">{{this.classname}}</h5>
                         </div>
-
-                        <hr>
-                        <div class="card-body">
-
-                            <a href="/delete/{{this._id}}" class="btn btn-danger float-right">Delete</a>
-                            <a href="/classroom/{{this._id}}" class="btn btn-primary float-right mr-2">Enter</a>
-                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="mt-3"><i class="fas fa-chalkboard-teacher mr-2"></i>{{this.author}}</div>
+                        <div class="mt-2"><i class="fas fa-users mr-2"></i>{{this.students}} students</div>
+                        <div class="mt-2"><i class="fas fa-key mr-2"></i>{{this._id}}</div>
+                    </div>
+                    <div class="card-foot p-2">
+                        <a href="/delete/{{this._id}}" class="btn btn-danger float-right">Delete</a>
+                        <a href="/classroom/{{this._id}}" class="btn btn-primary float-right mr-2">Enter</a>
                     </div>
                 </div>
 
@@ -95,7 +50,12 @@
             </div>
 
             {{else}}
-            <h1>You Have No Classroom Yet</h1>
+            <div class="noClass">
+                <h1>You have no class yet 😐</h1>
+                <div class="info">
+                    <span>Care to create/join </span><span class="bounceEmoji">🙄</span>
+                </div>
+            </div>
             {{/if}}
         </div>
 

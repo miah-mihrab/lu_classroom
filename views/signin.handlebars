@@ -7,7 +7,7 @@
     <div class="header-overlay"></div>
     <div class="header-content col-lg-6 col-md-8 col-sm-12">
 
-        <form autocomplete="off" method="POST" action="/signin" id="auth-form">
+        {{!-- <form autocomplete="off" method="POST" action="/signin" id="auth-form">
             <h1>Sign In</h1>
             <h6 class="lead">Please authenticate yourself</h6>
             {{> message}}
@@ -23,7 +23,36 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Sign In</button>
-        </form> <br>
+        </form> <br> --}}
+
+
+
+        <div class="signup-form">
+            <h2 class="heading-secondary ma-bt-lg">Enter your credentials</h2>
+
+            <form action="" class="form form--login" autocomplete="off" method="POST" action="/registration"
+                id="auth-form">
+
+                {{!-- ma-bt-md --}}
+                <div class="form__group row">
+                    <div class="col-md-6"><label for="email" class="form__label">Email address</label>
+                        <input type="text" id="email" class="form__input" type="email" placeholder="you@example.com" ,
+                            name="email" required></div>
+                    <div class="col-md-6">
+                        <label for="password" class="form__label">Password</label>
+                        <input type="password" id="password" class="form__input" placeholder="********" minlength="6"
+                            name="password" required>
+                    </div>
+                </div>
+
+                <div class="form__group" style="margin-top: 2rem;">
+                    <button class="btn btn--green">Sign In</button>
+                </div>
+
+            </form>
+
+        </div>
+
         <a href="/registration">Not Registered? Sign up</a>
     </div>
 

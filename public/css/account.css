@@ -1,0 +1,44 @@
+.acnt_container {
+    width: 80%;
+    margin: 2% auto;
+    display: grid;
+    padding: 0;
+    grid-template-columns: 1.5fr 3fr;
+    border-radius: 16px;
+    border: 0.5px solid #dddddd;
+}
+
+.side-menu {
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    margin-right: 15px;
+    padding-top: 10px;
+    background-image: linear-gradient(to bottom, #7dd56f, #28b487);
+}
+
+.nav_el {
+    display: block;
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: white;
+}
+
+.nav_el a {
+    color: white !important;
+    text-decoration: none !important;
+    font-size: 1.3rem;
+}
+
+.nav_el:hover a {
+    margin-left: 10px;
+    transition: 0.2s all ease-in-out;
+}
+
+.nav_el a:active .nav_el {
+    border-right: 1px solid red;
+}
+
+.personal__info {
+    padding: 10%;
+}

@@ -1,17 +1,45 @@
-<div class="container">
+<h1 class="heading-secondary text-center mt-5">Account Settings</h1>
+<div class="acnt_container ">
     <div class="side-menu">
         <ul class="items">
-            //TEACHER
-            <li><a href="">Settings</a></li>
-            <li><a href="">Digital Library</a></li>
-            <li><a href="">Accademic Search Engine</a></li>
+            <li class="nav_el"><a href="">Settings</a></li>
+            {{#if teacher}}
+            <div class="dropdown">
+                <li class="nav_el dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown">
+                    <a href=""></a> Digital Library </li>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" target="_blank" href="https://dl.acm.org/">ACM Digital Library</a>
+                    <a class="dropdown-item" target="_blank" href="https://ieeexplore.ieee.org/Xplore/home.jsp">IEE
+                        Xplore</a>
+                    <a class="dropdown-item" target="_blank" href="https://dblp.uni-trier.de/">DBLP</a>
+                    <a class="dropdown-item" target="_blank" href="https://www.sciencedirect.com/">Science
+                        Direct</a>
+                </div>
+            </div>
 
-            //STUDENT
-            <li><a href="">Result</a></li>
-            <li><a href=""></a>Routine</li>
+            <div class="dropdown">
+                <li class="nav_el dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown">
+                    <a href=""></a>Accademic Search Engine </li>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" target="_blank" href="https://scholar.google.com/">Google Scholar</a>
+                    <a class="dropdown-item" target="_blank" href="https://academic.microsoft.com/">Microsoft
+                        Academic</a>
+                    <a class="dropdown-item" target="_blank" href="https://www.base-search.net/">BASE</a>
+                    <a class="dropdown-item" target="_blank" href="https://core.ac.uk/">CORE</a>
+                    <a class="dropdown-item" target="_blank" href="https://www.science.gov/">Science.gov</a>
+                    <a class="dropdown-item" target="_blank" href="https://www.semanticscholar.org/">Semantic
+                        Scholar</a>
+                    <a class="dropdown-item" target="_blank" href="https://xueshu.baidu.com/">Baidu Scholar</a>
+                </div>
+            </div>
+
+            {{else}}
+            <li class="nav_el"><a href="">Result</a></li>
+            <li class="nav_el"><a href="">Routine</a></li>
+            {{/if}}
         </ul>
     </div>
-    <div class="contents">
+    <div class="personal__info">
         <div class="overview_section">
             <form method="POST" class="text-secondary">
                 <div class="form-group">
@@ -32,6 +60,7 @@
                     <input type="text" class="form-control" name="email" id="email" value="email">
                 </div>
 
+                {{#unless teacher}}
                 <div class="form-group">
                     <label for="dob">Date Of Birth</label>
                     <input type="text" class="form-control" name="dob" placeholder="Format: yyyy/mm/dd"
@@ -46,7 +75,14 @@
                     <label for="section">Section</label>
                     <input type="text" class="form-control" name="section" id="section" value="section">
                 </div>
-                <button type="submit" class="btn btn-primary">Update</button>
+                {{/unless}}
+
+
+                <div class="form__group">
+                    <button class="btn btn--green">
+                        Update
+                    </button>
+                </div>
             </form>
 
         </div>

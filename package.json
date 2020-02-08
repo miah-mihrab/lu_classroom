@@ -2,9 +2,9 @@
   "name": "luclassroom",
   "version": "1.0.0",
   "description": "This is a cloud classroom for Leading University Sylhet",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node app",
+    "start": "node server",
     "nodemon": "nodemon app.js"
   },
   "engines": {

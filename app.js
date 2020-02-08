@@ -37,11 +37,12 @@ app.use("/", require("./routes/indexroute"));
 app.use((err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
-  res.status(err.statusCode).json({
-    "status code": err.statusCode,
-    "status": err.status,
-    "message": err.message
-  });
+  console.log(err)
+  res.locals.errMessage = err.message || "Something went wrong";
+  //console.log(err)
+  res.render('result')
+  //next();
+
 });
 
 module.exports = app;

@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
-    "nodemon": "nodemon app.js"
+    "nodemon": "nodemon app.js",
+    "watch:js": "parcel watch ./public/index.js --out-dir ./public/ --out-file bundle.js",
+    "build:js": "parcel watch ./public/index.js --out-dir ./public/ --out-file bundle.js"
   },
   "engines": {
     "node": "10.16.3"
@@ -14,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/polyfill": "^7.8.3",
     "bcrypt": "^3.0.6",
     "cookie-parser": "^1.4.4",
     "dotenv": "^8.2.0",
@@ -24,6 +27,7 @@
     "mongoose": "^5.7.5",
     "multer": "^1.4.2",
     "nodemon": "^1.19.3",
+    "parcel-bundler": "^1.12.4",
     "sharp": "^0.23.1",
     "socket.io": "^2.3.0",
     "validator": "^11.1.0",

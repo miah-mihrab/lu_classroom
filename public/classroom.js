@@ -23,18 +23,15 @@ uploadFile.addEventListener('change', () => {
     }
     fileName.innerHTML = uploadFile.files[0].name
     //file_to_upload.innerHTML = uploadFile.files[0].name
-})
+});
 
-
-document.querySelector('form').addEventListener('submit', (e) => {
+document.querySelector('#classroomForm').addEventListener('submit', (e) => {
     e.preventDefault();
     let div = document.createElement('div');
     div.classList.add('container');
     let p = document.createElement('p');
     p.innerHTML = document.querySelector('textarea').value;
-
     div.appendChild(p);
     document.querySelector('.allPosts').appendChild(div);
-
 
 });

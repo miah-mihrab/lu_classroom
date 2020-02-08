@@ -1,6 +1,9 @@
 {{> account}}
 <div class="container-fill p-4">
     <div style="overflow:hidden">
+        {{#if errMessage}}
+        <div class="error">{{errMessage}}</div>
+        {{else}}
         <div class="profile-img float-lg-left float-md-none ">
             <div class="rounded mt-3 border border-danger " style="width: 150px; height: 180px;">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRgRj4zEmoJQX3OmMre1rCgLtUe1uBpG5u0ORhOs26GBSoaZe99"
@@ -23,6 +26,8 @@
             <span class="label label-info" id="grade"></span><br>
             <span id="birth_date" style="visibility: hidden;">{{dob}}</span>
         </div>
+        {{/if}}
+
 
     </div>
     <hr>
@@ -31,6 +36,10 @@
 </div>
 
 <script>
+
+    if (document.querySelector('.error')) {
+        const error = document.querySelector('.error');
+    }
     const id = (document.querySelector('#id').innerHTML).trim;
     const birth_date = (document.querySelector('#birth_date').innerHTML + " " + document.querySelector('#birth_date').innerHTML).trim;
     let semester_name = document.querySelector('h4');

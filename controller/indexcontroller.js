@@ -1,6 +1,9 @@
 const _Class = require("../model/classmodel");
 const User = require("../model/usermodel");
-
+const jwt = require('jsonwebtoken');
+const {
+  JWT_SECRET
+} = require('../config/secrets');
 module.exports = {
   // GET HOME
   async getHome(req, res, next) {
@@ -26,8 +29,7 @@ module.exports = {
           }
         }
         if (classFound.length > 0) {
-          console.log(classFound.length);
-          console.log("CLASS FOUND");
+          // CLASS FOUND
           return res.render("profile", {
             allClass: classFound,
             userID: `${userID}`,
@@ -157,36 +159,19 @@ module.exports = {
     const id = req.user._id;
     const user = await User.findById(id);
     if (user.id == null || user.dob == null) {
-      const err = new Error("Please provide valid University ID & Date of Birth!");
+      const err = await new Error("Please provide valid University ID & Date of Birth!");
       err.statusCode = 401;
       err.status = "Unable to fetch!"
-      next(err);
+      // next(err);
+      return next(err);
     } else {
       res.render("result", {
         name: `${user.firstname} ${user.lastname}`,
         id: user.id,
-        dob: user.dob
+        dob: user.dob,
+        userID: req.user._id
       });
     }
-    // User.findById(id, (err, data) => {
-
-    //   if (!err) {
-    //     if (data.id == null || data.dob === null) {
-    //       // HANDLE THIS
-    //     } else {
-    //       res.render("result", {
-    //         name: `${data.firstname} ${data.lastname}`,
-    //         id: data.id,
-    //         dob: data.dob
-    //       });
-    //     }
-    //   } else {
-    //     const err = new Error("User not found!");
-    //     err.status = "Not Found";
-    //     err.statusCode = 404;
-    //     next(err);
-    //   }
-    // })
   },
 
   // GET CLASSROOM
@@ -263,7 +248,7 @@ module.exports = {
   },
 
   async patchAccount(req, res) {
-    const userID = await req.params.id;
+    const userID = await req.user._id
     let {
       firstname,
       lastname,
@@ -273,30 +258,45 @@ module.exports = {
       batch,
       section
     } = req.body;
-    let date = dob.split("-");
-    dob = date.join("/");
-    await User.findOneAndUpdate({
-        _id: userID
-      }, {
-        $set: {
-          firstname,
-          lastname,
-          email,
-          id,
-          batch,
-          section,
-          dob
-        }
+    let date = dob ? dob.split("-") : null;
+    dob = date ? date.join("/") : null;
+    await User.findByIdAndUpdate({
+      _id: userID
+    }, {
+      firstname,
+      lastname,
+      email,
+      id,
+      batch,
+      section,
+      dob
+    });
+    const token = await jwt.sign({
+        _id: userID,
+        name: firstname + " " + lastname,
+        profession: req.user.profession
       },
-      async (err, data) => {
-        if (!err) {
-          await data.save();
-          console.log("Profile Updated");
-          res.redirect("/");
-        } else {
-          res.send(err);
-        }
-      }
+      JWT_SECRET
     );
+    if (token) {
+      //res.header("x-auth-token", token);
+      await res.clearCookie('jwt');
+      await res.cookie("jwt", token);
+      //console.log(token);
+      return res.status(200).render('accountInfos', {
+        title: "Profile",
+        firstname,
+        lastname,
+        email,
+        id,
+        batch,
+        section,
+        dob,
+        userID,
+        teacher: req.user.profession === "Teacher" ? true : false
+      });
+    }
+    //res.status(307).redirect('/'); //Temporary Redirected
+
   }
 };

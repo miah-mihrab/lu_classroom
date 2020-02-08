@@ -1,14 +1,15 @@
 <h1 class="heading-secondary text-center mt-5">Account Settings</h1>
-<div class="acnt_container ">
+<div class="acnt_container " style="min-height: 50vh;">
     <div class="side-menu">
         <ul class="items" style="margin:0; padding:10px 20px">
-            <li class="nav_el"><a href="">Settings</a></li>
+            <li class="nav_el"><i class="fas fa-home"></i><a href="http://localhost:5000/"> Home</a></li>
+            <li class="nav_el"><i class="fas fa-user-cog"></i><a href=""> Settings</a></li>
             <hr style="width
             100px">
             {{#if teacher}}
             <div class="dropdown">
                 <li class="nav_el dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown">
-                    <a href=""></a> Digital Library </li>
+                    <i class="fas fa-book-open"></i><a href=""></a> Digital Library </li>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" target="_blank" href="https://dl.acm.org/">ACM Digital Library</a>
                     <a class="dropdown-item" target="_blank" href="https://ieeexplore.ieee.org/Xplore/home.jsp">IEE
@@ -21,7 +22,7 @@
 
             <div class="dropdown">
                 <li class="nav_el dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown">
-                    <a href=""></a>Accademic Search Engine </li>
+                    <i class="fab fa-searchengin"></i><a href=""></a> Accademic Search Engine </li>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" target="_blank" href="https://scholar.google.com/">Google Scholar</a>
                     <a class="dropdown-item" target="_blank" href="https://academic.microsoft.com/">Microsoft
@@ -36,8 +37,8 @@
             </div>
 
             {{else}}
-            <li class="nav_el"><a href="/result/{{userID}}" id="results">Results</a></li>
-            <li class="nav_el"><a href="">Routine</a></li>
+            <li class="nav_el"><i class="fas fa-poll-h"></i><a href="/result/{{userID}}" id="results"> Results</a></li>
+            <li class="nav_el"><i class="fas fa-calendar-alt"></i><a href=""> Routine</a></li>
             {{/if}}
         </ul>
     </div>

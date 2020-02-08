@@ -30,4 +30,6 @@ router.get('/delete/:id', auth, deleteClass);
 
 
 router.get('/account/:id', auth, getAccount);
+router.patch('/account/update', auth, patchAccount);
+
 module.exports = router;

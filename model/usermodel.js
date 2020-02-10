@@ -2,6 +2,7 @@ const Classes = require('./classroommodel')
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
+const AppError = require('../utils/appError');
 
 const UserSchema = mongoose.Schema({
     firstname: {
@@ -63,11 +64,12 @@ const UserSchema = mongoose.Schema({
 UserSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({
         email
-    });
+    }).select('+password');
     if (!user)
         return false;
 
     const matchPass = await bcrypt.compare(password, user.password)
+    console.log(matchPass)
     if (!matchPass)
         return false;
 

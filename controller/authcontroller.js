@@ -1,13 +1,25 @@
 const User = require("../model/usermodel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const AppError = require('../utils/appError');
 const {
     JWT_SECRET
 } = require('../config/secrets');
-module.exports = {
 
-    //GET SIGNIN PAGE
-    getSignIn(req, res) {
+
+
+const catchErrorAsync = fn => {
+
+    return ((req, res, next) => {
+        fn(req, res, next).catch(next);
+    });
+
+}
+
+//module.exports = {
+
+//GET SIGNIN PAGE
+exports.getSignIn = async (req, res) => {
         if (res.cookie('jwt')) {
             res.cookie('jwt', undefined, {
                 maxAge: 10000
@@ -20,90 +32,37 @@ module.exports = {
     },
 
     //GET REGISTRATION PAGE
-    getReg(req, res) {
-        if (res.cookie('jwt')) {
-            res.cookie('jwt', undefined, {
-                expire: Date.now() + 10 * 1000
+    exports.getReg = async (req, res) => {
+            if (res.cookie('jwt')) {
+                res.cookie('jwt', undefined, {
+                    expire: Date.now() + 10 * 1000
+                });
+
+            }
+            res.status(200).render("registration", {
+                title: "Register Here"
             });
+        },
 
-        }
-        res.status(200).render("registration", {
-            title: "Register Here"
-        });
-    },
-
-    // POST CREDENTIALS & VERIFY
-    async postSignIn(req, res, next) {
-        let {
-            email,
-            password
-        } = await req.body;
-        //console.log(password);
-        if (!email || !password) {
-            res.render("signin", {
-                message: "Please fill your info."
-            });
-        } else {
-            const user = await User.findByCredentials(email, password);
-            // console.log(user);
-            if (user) {
-                // console.log(user)
-                const token = jwt.sign({
-                        _id: user._id,
-                        name: user.firstname + " " + user.lastname,
-                        profession: user.profession
-                    },
-                    JWT_SECRET
-                );
-                if (token) {
-                    //res.header("x-auth-token", token);
-                    await res.cookie("jwt", token);
-                    console.log(token)
-                    return res.status(200).redirect('/');
-                }
-                res.status(307).redirect('/'); //Temporary Redirected
-
+        // POST CREDENTIALS & VERIFY
+        exports.postSignIn = catchErrorAsync(async (req, res, next) => {
+            let {
+                email,
+                password
+            } = await req.body;
+            //console.log(password);
+            if (!email || !password) {
+                res.render("signin", {
+                    message: "Please fill your info."
+                });
+                return next(new AppError('Please provide email and password!', 400));
 
             } else {
-                const err = new Error("Please provide correct info!");
-                err.status = "Unauthorized";
-                err.statusCode = 401;
-                next(err);
-            }
-        }
-    },
-
-    // VERIFY & REGISTER
-    async postReg(req, res, next) {
-        let {
-            firstname,
-            lastname,
-            email,
-            password,
-            id,
-            department,
-            profession,
-            dob
-        } = await req.body;
-
-        await bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(password, 10, async (err, hash) => {
-                password = hash;
-                const user = await new User({
-                    firstname,
-                    lastname,
-                    id,
-                    email,
-                    password,
-                    department,
-                    profession,
-                    dob
-                });
-                try {
-                    await user.save()
-                    console.log("Saved");
-
-                    const token = await jwt.sign({
+                const user = await User.findByCredentials(email, password);
+                if (!user) {
+                    return next(new AppError('Please provide valid information', 401));
+                } else if (user) {
+                    const token = jwt.sign({
                             _id: user._id,
                             name: user.firstname + " " + user.lastname,
                             profession: user.profession
@@ -111,22 +70,65 @@ module.exports = {
                         JWT_SECRET
                     );
                     if (token) {
-                        //res.header("x-auth-token", token);
                         await res.cookie("jwt", token);
-                        console.log(token)
-                        return res.status(200).redirect("/");
-                        // res.redirect('/');
+                        return res.status(200).redirect('/');
                     }
-                    res.status(307).redirect("/"); //Temporary Redirected
-                    //console.log("New User Saved");
-                } catch (err) {
-                    console.log(req.body)
-                    // const err = new Error("Something gone wrong on user registration");
-                    // err.status = "No Response";
-                    // err.statusCode = 444;
-                    next(err);
+                    res.status(307).redirect('/'); //Temporary Redirected
+
+
+                } else {
+                    next(new AppError("Please provide correct info", 401));
                 }
+            }
+        }),
+
+        // VERIFY & REGISTER
+        exports.postReg = async (req, res, next) => {
+            let {
+                firstname,
+                lastname,
+                email,
+                password,
+                id,
+                department,
+                profession,
+                dob
+            } = await req.body;
+
+            await bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(password, 10, async (err, hash) => {
+                    password = hash;
+                    const user = await new User({
+                        firstname,
+                        lastname,
+                        id,
+                        email,
+                        password,
+                        department,
+                        profession,
+                        dob
+                    });
+                    try {
+                        await user.save()
+                        console.log("Saved");
+
+                        const token = await jwt.sign({
+                                _id: user._id,
+                                name: user.firstname + " " + user.lastname,
+                                profession: user.profession
+                            },
+                            JWT_SECRET
+                        );
+                        if (token) {
+                            await res.cookie("jwt", token);
+                            return res.status(200).redirect("/");
+                            // res.redirect('/');
+                        }
+                        res.status(307).redirect("/"); //Temporary Redirected
+                    } catch (err) {
+                        next(err);
+                    }
+                });
             });
-        });
-    }
-}
+        }
+//}

@@ -26,13 +26,13 @@
         </form> <br> --}}
 
 
-
+        {{#if errMessage}}
+        <h3>{{errMessage}}</h3>
+        {{/if}}
         <div class="signup-form">
             <h2 class="heading-secondary ma-bt-lg">Enter your credentials</h2>
 
-            <form action="" class="form form--login" autocomplete="off" method="POST" action="/registration"
-                id="auth-form">
-
+            <form action="" class="form form--login" autocomplete="off" id="auth-form">
                 {{!-- ma-bt-md --}}
                 <div class="form__group row">
                     <div class="col-md-6"><label for="email" class="form__label">Email address</label>

@@ -8,7 +8,7 @@ module.exports = {
   // GET HOME
   async getHome(req, res, next) {
     const userID = req.user._id;
-    if (req.user.profession.trim() === "Student") {
+    if (req.user.profession && req.user.profession.trim() === "Student") {
       const UserData = await User.findById(userID);
       if (UserData) {
         let _allClasses = UserData.Classes;

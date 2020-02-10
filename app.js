@@ -3,6 +3,8 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const app = express();
 const cookieparser = require("cookie-parser");
+const AppError = require('./utils/appError');
+const globarErrorControl = require('./controller/globalErrorController');
 //winston.add(winston.transports.File, { filename: "logfile.log" });
 
 //Body parse middleware
@@ -34,17 +36,6 @@ app.use("/", require("./routes/indexroute"));
 // app.use('/', require("./routes/profileroute"));
 
 // Error Handling Middleware
-app.use((err, req, res, next) => {
-  err.statusCode = err.statusCode || 500;
-  err.status = err.status || "error";
-  console.log(err)
-  res.locals.errMessage = err.message || "Something went wrong";
-  //console.log(err)
-  res.render('result')
-  //next();
-
-});
+app.use(globarErrorControl);
 
 module.exports = app;
-
-//app.listen(PORT, () => console.log(`Server up & running at port: ${PORT}`));

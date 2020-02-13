@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
-    "nodemon": "nodemon app.js",
+    "nodemon": "set NODE_ENV=development&&nodemon server.js",
     "watch:js": "parcel watch ./public/index.js --out-dir ./public/ --out-file bundle.js",
     "build:js": "parcel watch ./public/index.js --out-dir ./public/ --out-file bundle.js"
   },
@@ -25,6 +25,7 @@
     "express-session": "^1.17.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.5",
+    "morgan": "^1.9.1",
     "multer": "^1.4.2",
     "nodemon": "^1.19.3",
     "parcel-bundler": "^1.12.4",

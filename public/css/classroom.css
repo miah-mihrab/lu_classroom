@@ -41,6 +41,61 @@
     padding: 2%;
 }
 
+.post {
+    border: 0.5px solid #dddddd;
+    border-radius: 16px;
+    margin-bottom: 3%;
+    position: relative;
+}
+
+.post-number {
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-head {
+    background-color: #444444;
+    padding: 2%;
+    color: #dddddd;
+}
+
+.post-body {
+    padding: 2%;
+    background-color: #eeeeee;
+}
+
+.comment-section {
+    padding: 2%;
+    background-color: #eeeeee;
+}
+
+.input-comment {
+    height: 10vh;
+}
+
+.btn-comment {
+    margin-top: 2%;
+    position: relative;
+    left: 80% !important;
+    width: 20%;
+
+}
+
+@media screen and (max-width: 768px) {
+    .btn-comment {
+        font-size: 0.7rem !important;
+        text-align: center;
+    }
+}
+
 /* form {
     box-shadow: 0px 0px 7px 0px #dddddd;
     padding: 2%;

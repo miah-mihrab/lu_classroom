@@ -27,7 +27,7 @@
 </div>
 
 <div class="container mt-5 mb-3">
-    <form class="" id="classroomForm" method="POST" style="overflow: hidden;" enctype="multipart/form-data">
+    <form class="" id="classroomForm" style="overflow: hidden;" enctype="multipart/form-data" data-id="{{_id}}">
         <div class="form-group">
             <label for="exampleFormControlTextarea1">Class Post</label>
             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
@@ -49,4 +49,24 @@
 </div>
 
 
-<div class="container allPosts"></div>
+<div class="container allPosts">
+    {{#if ClassPosts}}
+    {{#each ClassPosts}}
+    <div class="post">
+        <div class="post-number">{{@index}}</div>
+        <div class="post-head">
+            <span>Author: </span><span>Person</span>&nbsp;&nbsp; <span>Time: </span><span>{{this.time}}</span>
+        </div>
+        <div class="post-body">
+            <p>{{this.content}}</p>
+        </div>
+        <div class="comment-section">
+            <form action="" class="comment-form">
+                <textarea class="input-group input-comment"></textarea>
+                <button class="btn btn--green btn-comment" data-id="{{this._id}}">Comment</button>
+            </form>
+        </div>
+    </div>
+    {{/each}}
+    {{/if}}
+</div>

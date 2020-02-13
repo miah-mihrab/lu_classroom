@@ -1,10 +1,12 @@
 const winston = require("winston");
+const morgan = require('morgan');
 const express = require("express");
 const exphbs = require("express-handlebars");
 const app = express();
 const cookieparser = require("cookie-parser");
 const AppError = require('./utils/appError');
 const globarErrorControl = require('./controller/globalErrorController');
+
 //winston.add(winston.transports.File, { filename: "logfile.log" });
 
 //Body parse middleware
@@ -25,10 +27,14 @@ app.engine(
   })
 );
 app.set("view engine", "handlebars");
+
+
 //static folder
 app.use(express.static("public"));
 
-
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'))
+}
 
 // app.use("/", require("./routes/authroute"));
 app.use("/", require("./routes/authroute"));

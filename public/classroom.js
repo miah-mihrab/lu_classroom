@@ -25,13 +25,22 @@ uploadFile.addEventListener('change', () => {
     //file_to_upload.innerHTML = uploadFile.files[0].name
 });
 
+
+
+const createPost = async (content, id) => {
+    const newPost = await axios({
+        method: "POST",
+        url: `/classroom/${id}`,
+        data: {
+            content
+        }
+    });
+
+    console.log(newPost);
+}
+
+
 document.querySelector('#classroomForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    let div = document.createElement('div');
-    div.classList.add('container');
-    let p = document.createElement('p');
-    p.innerHTML = document.querySelector('textarea').value;
-    div.appendChild(p);
-    document.querySelector('.allPosts').appendChild(div);
-
+    createPost(document.querySelector('textarea').value, document.querySelector('#classroomForm').dataset.id);
 });

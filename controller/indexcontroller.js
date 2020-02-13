@@ -1,4 +1,5 @@
 const _Class = require("../model/classmodel");
+const _ClassPosts = require('../model/classroommodel');
 const User = require("../model/usermodel");
 const jwt = require('jsonwebtoken');
 const {
@@ -187,12 +188,17 @@ module.exports = {
         section,
         subjectname
       } = _class;
+      const ClassPosts = await _ClassPosts.find({
+        class: id
+      });
+      // console.log(ClassPosts)
       await res.render("classroom", {
         _id,
         students,
         classname,
         section,
-        subjectname
+        subjectname,
+        ClassPosts
       });
     } catch (err) {
       res.send(err);

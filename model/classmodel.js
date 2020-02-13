@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('./usermodel');
-const Clas = mongoose.model("Class", new mongoose.Schema({
+const _Class = mongoose.model("Class", new mongoose.Schema({
     classname: {
         type: String,
         required: true
@@ -29,4 +29,4 @@ const Clas = mongoose.model("Class", new mongoose.Schema({
     }
 }))
 
-module.exports = Clas;
+module.exports = _Class;

@@ -52,6 +52,10 @@ const UserSchema = mongoose.Schema({
         type: String,
         default: null
     },
+    photo: {
+        type: Buffer,
+        default: null
+    },
     Classes: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: Classes

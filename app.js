@@ -6,6 +6,7 @@ const app = express();
 const cookieparser = require("cookie-parser");
 const AppError = require('./utils/appError');
 const globarErrorControl = require('./controller/globalErrorController');
+const methodOverride = require('method-override');
 
 //winston.add(winston.transports.File, { filename: "logfile.log" });
 
@@ -17,7 +18,7 @@ app.use(
   })
 );
 app.use(cookieparser());
-
+app.use(methodOverride('_method'))
 
 //Set View Engine
 app.engine(

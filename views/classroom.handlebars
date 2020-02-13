@@ -29,8 +29,8 @@
 <div class="container mt-5 mb-3">
     <form class="" id="classroomForm" style="overflow: hidden;" enctype="multipart/form-data" data-id="{{_id}}">
         <div class="form-group">
-            <label for="exampleFormControlTextarea1">Class Post</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <label for="createPost" class="text-secondary" style="font-weight: 700;">Create Post</label>
+            <textarea class="form-control" id="post" rows="3"></textarea>
         </div>
         <div class="form-group">
             <input class="form-control" type="file" id="uploadFile" hidden>
@@ -55,16 +55,31 @@
     <div class="post">
         <div class="post-number">{{@index}}</div>
         <div class="post-head">
-            <span>Author: </span><span>Person</span>&nbsp;&nbsp; <span>Time: </span><span>{{this.time}}</span>
+            <span>Author: </span><span>{{this.author}}</span>&nbsp;&nbsp; <span>Posted At:
+            </span><span>{{this.time}}</span>
         </div>
         <div class="post-body">
             <p>{{this.content}}</p>
         </div>
         <div class="comment-section">
             <form action="" class="comment-form">
-                <textarea class="input-group input-comment"></textarea>
-                <button class="btn btn--green btn-comment" data-id="{{this._id}}">Comment</button>
+                <textarea class="input-group input-comment" placeholder="Comment"></textarea>
+                <button class="btn btn--green btn-comment" type="submit" data-id="{{this._id}}">Comment</button>
             </form>
+
+            <div class="all-comments">
+                {{#if this.comments}}
+                <h4 class="text-secondary pl-2">Comments</h4>
+                {{#each this.comments}}
+                <div class="comment">
+                    <div class="comment-body"><span class="comment-author">{{this.author}}: </span>&nbsp;&nbsp;
+                        {{this.comment}}
+                    </div>
+                    <div class="comment-time"><span>Commented At: </span><span>{{this.time}}</span></div>
+                </div>
+                {{/each}}
+                {{/if}}
+            </div>
         </div>
     </div>
     {{/each}}

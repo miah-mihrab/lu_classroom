@@ -46,6 +46,7 @@ exports.getSignIn = async (req, res) => {
 
         // POST CREDENTIALS & VERIFY
         exports.postSignIn = catchErrorAsync(async (req, res, next) => {
+            console.log(req.body + " " + "SIGNIN")
             let {
                 email,
                 password
@@ -84,6 +85,7 @@ exports.getSignIn = async (req, res) => {
 
         // VERIFY & REGISTER
         exports.postReg = async (req, res, next) => {
+            console.log(req.body)
             let {
                 firstname,
                 lastname,

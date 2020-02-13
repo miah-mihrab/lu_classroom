@@ -15,33 +15,25 @@
                 <input type="text" class="form-control shadow-none col-md-6 mt-3 mr-1" name="firstname"
                     placeholder="First Name" id="fname" data-toggle="tooltip"
                     title="First Name should not contain number or special characters">
-
                 <input type="text" class="form-control shadow-none col-md-6 mt-3 mr-1" name="lastname"
                     placeholder="Last Name" id="lname" data-toggle="tooltip"
                     title="Last Name should not contain number or special characters">
-
             </div>
             <div class="form-row">
                 <input type="email" class="form-control shadow-none col-md-6 mt-3 mr-1" data-toggle="tooltip"
                     name="email" placeholder="Email" autocomplete="off" id="email" data-toggle="tooltip"
                     title="Format: example@host.com">
-
                 <input type="text" class="form-control shadow-none col-md-6 mt-3 mr-1" name="id" placeholder="ID number"
                     autocomplete="off" id="id_number" data-toggle="tooltip" title="Provide your university ID number">
-
             </div>
             <div class="form-row">
                 <input type="password" class="form-control shadow-none col-md-6 mt-3 mr-1" name="password"
                     placeholder="Password" autocomplete="off" id="password" data-toggle="tooltip"
                     title="Password should contain at least - 1 capital letter, 1 small letter, 1 special character, 1 number with length of at least 6">
-
                 <input type="password" class="form-control shadow-none col-md-6 mt-3 mr-1" name="confirmpassword"
                     placeholder="Confirm Password" autocomplete="off" id="password2" data-toggle="tooltip"
                     title="Password should match with given password">
-
             </div>
-
-
             <div class="form-row">
                 <select class="form-control col-md-4" name="department" id="department">
                     <option selected>Department...</option>
@@ -56,7 +48,6 @@
                 <input type="text" class="form-control col-md-4" name="birth_date" placeholder="Format: yyyy/mm/dd"
                     autocomplete="off" id="dob">
             </div>
-
             <button type="submit" class="btn btn-primary" id="reg-button">Sign Up</button>
         </form> <br> --}}
 
@@ -64,8 +55,7 @@
         <div class="signup-form">
             <h2 class="heading-secondary ma-bt-lg">Please sign up here</h2>
 
-            <form action="" class="form form--login" autocomplete="off" method="POST" action="/registration"
-                id="auth-form">
+            <form class="form form--signup" autocomplete="off" method="POST" action="/registration" id="auth-form">
                 <div class="form__group row">
                     <div class="col-md-6" style="float: left;">
                         <label for="fname" class="form__label">First Name</label>

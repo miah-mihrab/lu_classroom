@@ -2,7 +2,8 @@
 <div class="personal__info">
     <div class="overview_section mb-4">
         <h4>Basic Information</h4>
-        <form class="text-secondary" style="margin-top: 15px;" id="updateForm">
+        <form class="text-secondary" style="margin-top: 15px;" id="update_form" method="POST"
+            enctype="multipart/form-data" action="/account/{{userID}}?_method=PATCH">
             <div class="form-group">
                 <label for="fname">First Name</label>
                 <input type="text" class="form-control" name="firstname" id="fname" value="{{firstname}}">
@@ -38,10 +39,18 @@
             </div>
             {{/unless}}
 
-            <div class="form-group form__photo-upload">
+
+            <div class="form-group">
                 <img alt="user_photo" class="form__user-photo" src="../images/default.jpg" , alt='User photo'>
-                <label for="photo">Choose Profile Image</label>
-                <input hidden class="form__upload" type='file' , accept='image/*' , id='photo' , name='photo'>
+                <br><br>
+                <input type="file" class="form-control-file" id="exampleFormControlFile1" accept="image/*" name="photo">
+            </div>
+            <div class="custom-file">
+                {{!-- <img alt="user_photo" class="form__user-photo" src="../images/default.jpg" , alt='User photo'> --}}
+
+                {{!-- <label for="photo" class="">Choose Profile Image</label> <input type="file"
+                    class="custom-file-input border border-primary"> --}}
+                {{!-- <input hidden class="form__upload" type='file' , accept='image/*' , id='photo' , name='photo'> --}}
             </div>
             <div class="form__group" style="overflow: hidden;">
                 <button class="btn btn--green float-right clearfix" type="submit" id="updateBasic"

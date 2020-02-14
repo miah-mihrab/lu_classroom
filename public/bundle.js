@@ -6713,7 +6713,7 @@ function _signInCredentials() {
             _context.next = 4;
             return axios({
               method: "POST",
-              url: "http://localhost:5000/signin",
+              url: "/signin",
               data: {
                 email: email,
                 password: password
@@ -6724,7 +6724,7 @@ function _signInCredentials() {
             loginResponse = _context.sent;
             (0, _alertMessage.showAlert)('success', "Logged in successfully");
             window.setTimeout(function () {
-              window.location.href = "http://localhost:5000/";
+              window.location.href = "/";
             }, 1500);
             _context.next = 12;
             break;

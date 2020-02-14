@@ -7,7 +7,7 @@ export async function signInCredentials(email, password) {
     try {
         const loginResponse = await axios({
             method: "POST",
-            url: "http://localhost:5000/signin",
+            url: "/signin",
             data: {
                 email,
                 password
@@ -15,7 +15,7 @@ export async function signInCredentials(email, password) {
         });
         showAlert('success', "Logged in successfully")
         window.setTimeout(() => {
-            window.location.href = "http://localhost:5000/";
+            window.location.href = "/";
         }, 1500)
 
     } catch (err) {

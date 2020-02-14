@@ -46,7 +46,8 @@ exports.getSignIn = async (req, res) => {
 
         // POST CREDENTIALS & VERIFY
         exports.postSignIn = catchErrorAsync(async (req, res, next) => {
-            console.log(req.body + " " + "SIGNIN")
+
+            console.log(req.body)
             let {
                 email,
                 password
@@ -60,6 +61,7 @@ exports.getSignIn = async (req, res) => {
 
             } else {
                 const user = await User.findByCredentials(email, password);
+                console.log(user)
                 if (!user) {
                     return next(new AppError('Please provide valid information', 401));
                 } else if (user) {

@@ -185,6 +185,12 @@ li {
   cursor: pointer;
 }
 
+
+td,
+th {
+  border-right: 0.5px solid #ddd;
+}
+
 @media screen and (max-width: 780px) {
   .fullscreen-video-wrap {
     height: 130%;

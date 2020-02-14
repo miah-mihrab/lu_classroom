@@ -1,9 +1,10 @@
 <h1 class="heading-secondary text-center mt-5">Account Settings</h1>
 <div class="acnt_container " style="min-height: 50vh;">
     <div class="side-menu">
+        {{log userID}}
         <ul class="items" style="margin:0; padding:10px 20px">
-            <li class="nav_el"><i class="fas fa-home"></i><a href="http://localhost:5000/"> Home</a></li>
-            <li class="nav_el"><i class="fas fa-user-cog"></i><a href=""> Settings</a></li>
+            <li class="nav_el"><i class="fas fa-home"></i><a href="/"> Home</a></li>
+            <li class="nav_el"><i class="fas fa-user-cog"></i><a href="/account/{{userID}}"> Settings</a></li>
             <hr style="width
             100px">
             {{#if teacher}}
@@ -38,7 +39,7 @@
 
             {{else}}
             <li class="nav_el"><i class="fas fa-poll-h"></i><a href="/result/{{userID}}" id="results"> Results</a></li>
-            <li class="nav_el"><i class="fas fa-calendar-alt"></i><a href=""> Routine</a></li>
+            <li class="nav_el"><i class="fas fa-calendar-alt"></i><a href="/routine/{{userID}}"> Routine</a></li>
             {{/if}}
         </ul>
     </div>

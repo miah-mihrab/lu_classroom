@@ -34,27 +34,33 @@
                 <input type="text" class="form-control" name="batch" id="batch" value="{{batch}}">
             </div>
             <div class="form-group">
+                <label for="semester">Semester</label>
+                <input type="text" class="form-control" name="semester" id="semester" value="{{semester}}">
+            </div>
+            <div class="form-group">
                 <label for="section">Section</label>
                 <input type="text" class="form-control" name="section" id="section" value="{{section}}">
             </div>
             {{/unless}}
 
 
-            <div class="form-group">
+            <div class="form-group form__photo-upload">
                 {{#if userPhoto}}
                 <img alt="user_photo" class="form__user-photo" src="data:image/jpg;base64,{{userPhoto}}" ,
                     alt='User photo'>
                 {{else}}
                 <img alt="user_photo" class="form__user-photo" src="../images/default.jpg" , alt='User photo'>
                 {{/if}}
-                <br><br>
-                <input type="file" class="form-control-file" id="exampleFormControlFile1" accept="image/*" name="photo">
+                <input type="file" class="form__upload" id="photo" accept="image/*" name="photo" hidden>
+                <label for="photo" class="">Choose Profile Image</label>
+                {{!-- <input type="file" class="custom-file-input border border-primary"> --}}
+
+
             </div>
             <div class="custom-file">
                 {{!-- <img alt="user_photo" class="form__user-photo" src="../images/default.jpg" , alt='User photo'> --}}
 
-                {{!-- <label for="photo" class="">Choose Profile Image</label> <input type="file"
-                    class="custom-file-input border border-primary"> --}}
+
                 {{!-- <input hidden class="form__upload" type='file' , accept='image/*' , id='photo' , name='photo'> --}}
             </div>
             <div class="form__group" style="overflow: hidden;">

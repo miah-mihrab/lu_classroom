@@ -44,6 +44,10 @@ const UserSchema = mongoose.Schema({
         type: String,
         default: null
     },
+    semester: {
+        type: String,
+        default: null
+    },
     section: {
         type: String,
         default: null

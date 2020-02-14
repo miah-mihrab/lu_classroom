@@ -6722,24 +6722,25 @@ function _signInCredentials() {
 
           case 4:
             loginResponse = _context.sent;
+            console.log(loginResponse);
             (0, _alertMessage.showAlert)('success', "Logged in successfully");
             window.setTimeout(function () {
               window.location.href = "/";
             }, 1500);
-            _context.next = 12;
+            _context.next = 13;
             break;
 
-          case 9:
-            _context.prev = 9;
+          case 10:
+            _context.prev = 10;
             _context.t0 = _context["catch"](1);
             (0, _alertMessage.showAlert)('error', _context.t0.response.data.message);
 
-          case 12:
+          case 13:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[1, 9]]);
+    }, _callee, null, [[1, 10]]);
   }));
   return _signInCredentials.apply(this, arguments);
 }

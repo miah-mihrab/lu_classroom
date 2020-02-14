@@ -13,6 +13,7 @@ export async function signInCredentials(email, password) {
                 password
             }
         });
+        console.log(loginResponse);
         showAlert('success', "Logged in successfully")
         window.setTimeout(() => {
             window.location.href = "/";

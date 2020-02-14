@@ -14,6 +14,7 @@ const signin = document.querySelector('.form--login');
 if (signin) {
   signin.addEventListener('submit', (e) => {
     e.preventDefault();
+    console.log("clicked" + signin.querySelector('#email').value)
     signInCredentials(signin.querySelector('#email').value, signin.querySelector('#password').value);
   })
 }

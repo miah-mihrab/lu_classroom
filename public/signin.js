@@ -2,7 +2,8 @@ import {
     showAlert
 } from './alertMessage';
 export async function signInCredentials(email, password) {
-    //console.log(email, password)
+
+    console.log(email, password)
     try {
         const loginResponse = await axios({
             method: "POST",

@@ -41,7 +41,12 @@
 
 
             <div class="form-group">
+                {{#if userPhoto}}
+                <img alt="user_photo" class="form__user-photo" src="data:image/jpg;base64,{{userPhoto}}" ,
+                    alt='User photo'>
+                {{else}}
                 <img alt="user_photo" class="form__user-photo" src="../images/default.jpg" , alt='User photo'>
+                {{/if}}
                 <br><br>
                 <input type="file" class="form-control-file" id="exampleFormControlFile1" accept="image/*" name="photo">
             </div>

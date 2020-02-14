@@ -6708,8 +6708,9 @@ function _signInCredentials() {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            _context.prev = 0;
-            _context.next = 3;
+            console.log(email, password);
+            _context.prev = 1;
+            _context.next = 4;
             return axios({
               method: "POST",
               url: "http://localhost:5000/signin",
@@ -6719,26 +6720,26 @@ function _signInCredentials() {
               }
             });
 
-          case 3:
+          case 4:
             loginResponse = _context.sent;
             (0, _alertMessage.showAlert)('success', "Logged in successfully");
             window.setTimeout(function () {
               window.location.href = "http://localhost:5000/";
             }, 1500);
-            _context.next = 11;
+            _context.next = 12;
             break;
 
-          case 8:
-            _context.prev = 8;
-            _context.t0 = _context["catch"](0);
+          case 9:
+            _context.prev = 9;
+            _context.t0 = _context["catch"](1);
             (0, _alertMessage.showAlert)('error', _context.t0.response.data.message);
 
-          case 11:
+          case 12:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 8]]);
+    }, _callee, null, [[1, 9]]);
   }));
   return _signInCredentials.apply(this, arguments);
 }
@@ -7015,6 +7016,7 @@ var signin = document.querySelector('.form--login'); // SIGNIN
 if (signin) {
   signin.addEventListener('submit', function (e) {
     e.preventDefault();
+    console.log("clicked" + signin.querySelector('#email').value);
     (0, _signin.signInCredentials)(signin.querySelector('#email').value, signin.querySelector('#password').value);
   });
 } // UPDATE INFORMATION
@@ -7090,7 +7092,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57314" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53198" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

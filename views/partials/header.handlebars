@@ -18,7 +18,12 @@
             Class</a>
         {{/if}}
         <a href="/account/{{userID}}" class="nav__el">
-            <img src="/images/default.jpg" alt="" class="nav__user-img">
+
+            {{#if userPhoto}}
+            <img src="data:image/jpg;base64,{{userPhoto}}" alt="" class="nav__user-img" width="50" height="50">
+            {{else}}
+            <img src="public/images/default.jpg" alt="" class="nav__user-img">
+            {{/if}}
             <span id="userName">{{userName}}</span>
 
         </a>

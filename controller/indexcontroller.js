@@ -48,8 +48,9 @@ exports.resizeUserPhoto = async (req, res, next) => {
       quality: 90
     }).toBuffer();
   // .toFile(`${__dirname}/../public/img/users/${req.file.filename}`) //INSIDE FOLDEr
-
-  req.photo.buffer = buffer;
+  // console.log(buffer);
+  // console.log(req.user);
+  req.user.photo = buffer
   next();
 };
 
@@ -81,13 +82,15 @@ exports.getHome = async (req, res, next) => {
           return res.render("profile", {
             allClass: classFound,
             userID: `${userID}`,
-            userName: req.user.name
+            userName: req.user.name,
+            userPhoto: UserData.photo.toString('base64')
           });
         } else {
           return res.render("profile", {
             title: "Profile",
             userID: `${userID}`,
-            userName: req.user.name
+            userName: req.user.name,
+            userPhoto: UserData.photo.toString('base64')
           });
         }
       } else {
@@ -122,17 +125,21 @@ exports.getHome = async (req, res, next) => {
           });
 
           if (classFound.length > 0) {
+            console.log(UserData.photo.toString('base64') + " adlfjsa")
             return res.render("profile", {
               allClass: classFound,
               userID: `${userID}`,
               teacher: true,
-              userName: req.user.name
+              userName: req.user.name,
+              userPhoto: UserData.photo.toString('base64')
             });
           } else {
+            console.log(UserData.photo.toString('base64') + " adlfjsa")
             return res.render("profile", {
               userID: `${userID}`,
               teacher: true,
-              userName: req.user.name
+              userName: req.user.name,
+              userPhoto: UserData.photo.toString('base64')
             });
           }
         }
@@ -140,7 +147,8 @@ exports.getHome = async (req, res, next) => {
         return res.render("profile", {
           userID: `${userID}`,
           teacher: true,
-          userName: req.user.name
+          userName: req.user.name,
+          userPhoto: UserData.photo.toString('base64')
         });
       }
     }
@@ -299,7 +307,8 @@ exports.getHome = async (req, res, next) => {
                 batch: user.batch,
                 section: user.section,
                 userID,
-                teacher: req.user.profession === "Teacher" ? true : false
+                teacher: req.user.profession === "Teacher" ? true : false,
+                userPhoto: user.photo.toString('base64')
               });
             },
 
@@ -327,7 +336,7 @@ exports.getHome = async (req, res, next) => {
                 batch,
                 section,
                 dob,
-                photo: req.photo.buffer
+                photo: req.user.photo
               }, {
                 new: true,
                 runValidators: true

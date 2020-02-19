@@ -43,7 +43,8 @@
     padding: 10%;
 }
 
-.form__photo-upload {
+.form__photo-upload,
+.form__file-upload {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -54,7 +55,8 @@
     cursor: pointer;
 }
 
-.form__photo-upload label {
+.form__photo-upload label,
+.form__file-upload label {
     cursor: pointer;
     padding: 10px;
     position: relative;

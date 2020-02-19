@@ -1,0 +1,37 @@
+{{classID}}
+<div class="modal fade" id="id{{this._id}}" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createClassLabel">Assign Your Work</h5>
+                {{!-- <button class="close" data-dismiss="modal" aria-label="Close">  </button> --}}
+                <span class="close" data-dismiss="modal">&times;</span>
+            </div>
+            <div class="body">
+                <form class="p-3" method="POST" enctype="multipart/form-data"
+                    action="/classroom/{{this.classroom}}/classwork">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="assignmentsubmission"
+                            value="Assignment Submission" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="assignmentname">Assignment Name</label>
+                        <input type="text" class="form-control" name="assignmentname" placeholder="Assignment Name"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="details">Details</label>
+                        <input type="text" class="form-control" name="details" placeholder="Section">
+                    </div>
+                    <div class="form-group form__file-upload">
+                        <input type="file" class="form__upload" id="photo" accept=".pdf, .zip, .cpp" name="file"
+                            required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Assign</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</div>

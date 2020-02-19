@@ -1,0 +1,154 @@
+{{> classroomHead}}
+{{log classID}}
+<div class="container">
+    <div class="row">
+        {{#if teacher}}
+        <div class="col-12" style="border-right: 0.5px solid #dddddd;">
+            <h3 class="text-secondary">Assign Work</h3>
+            <hr>
+            {{#if teacher}}
+            <form class="text-secondary" style="margin-top: 15px;" id="classwork_form" method="POST"
+                enctype="multipart/form-data" action="/classroom/{{classID}}/classwork">
+                <div class="form-group">
+                    <label for="assignment name">Assignment Name</label>
+                    <input type="text" class="form-control" name="assignmentname" id="assignmet_name"
+                        placeholder="Assignment Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Details</label>
+                    <textarea class="form-control" name="details" id="details"
+                        placeholder="Description and Last Date of Submission"></textarea>
+                </div>
+                <div class="form-group form__file-upload">
+                    <input type="file" class="form__upload" id="photo" accept=".pdf, .zip, .cpp" name="file">
+                </div>
+                <button type="submit" class="btn btn--green">Upload</button>
+            </form>
+            {{/if}}
+        </div>
+        {{/if}}
+
+        <div class="col-12">
+
+            {{#if classWorks}}
+            <div class="container">
+
+                <table class="table table-striped table-dark mt-4" style="border: 0.5px solid #ddd;">
+                    <tr>
+                        <th class="text-center">Assignment Name</th>
+                        <th class="text-center">Description</th>
+                        <th class="text-center">File</th>
+                        <th class="text-center">Submission</th>
+                    </tr>
+                    {{#if teacher}}
+                    {{#each classWorks}}
+                    <tr>
+                        <td align="center">{{this.assignmentname}}</td>
+                        <td align="center">{{this.details}}</td>
+                        <td>
+                            <a class="nav-link " href="data:application/pdf;base64,{{this.file}}"
+                                download="{{this.fileName}}">{{this.fileName}}</a>
+                        </td>
+                        <td class="nav-item">
+                            <a class="" href="/classwork/{{this._id}}">
+                                <button class="btn btn-secondary">{{this.students.length}} students</button>
+                            </a>
+                        </td>
+                    </tr>
+                    {{/each}}
+                    {{else}}
+                    {{#each classWorks}}
+                    <tr>
+                        <th>{{this.assignmentname}}</th>
+                        <td align="center">{{this.details}}</td>
+                        <td align="center">
+                            <a href="data:application/pdf;base64,{{this.file}}"
+                                download="{{this.fileName}}">{{this.fileName}}</a>
+                        </td>
+                        <td>
+                            <button class="btn btn--green" data-assignmentID="{{this._id}}" data-toggle="modal"
+                                data-target="#id{{this._id}}" style="width: 200px">Submit
+                                Assignment</button>
+                            {{> submit-assignment}}
+                        </td>
+                    </tr>
+                    {{/each}}
+                    {{/if}}
+                </table>
+                {{!-- <div class="row">
+
+                    {{#if teacher}}
+                    {{#each classWorks}}
+                    <div class="col-12 pt-2 pb-2" style="border-bottom: 0.5px solid #dddddd;">
+
+                        <span>
+                            <h6 style="font-size: 1rem !important; display:inline-block"><u>Assignment name: </u></h6>
+                            {{this.assignmentname}}
+                        </span><br>
+                        <span>
+                            <h6 style="font-size: 1rem !important; display:inline-block"><u>Description: </u></h6>
+                            {{this.details}}
+                        </span><br>
+                        <span>
+                            <h6 style="font-size: 1rem !important; display:inline-block"><u>File: </u></h6>&nbsp;<a
+                                href="data:application/pdf;base64,{{this.file}}"
+                                download="{{this.fileName}}">{{this.fileName}}</a>
+                        </span><br>
+                        {{log this.students.length}}
+                        <p>Submitted by: {{this.students.length}} students</p>
+                    </div>
+
+                    {{/each}}
+
+                    {{else}}
+                    {{#each classWorks}}
+                    <div class="col-12 pt-2 pb-2" style="border-bottom: 0.5px solid #dddddd;">
+                        <span>
+                            <h6 style="font-size: 1rem !important; "><u>Assignment name: </u></h6>
+                            {{this.assignmentname}}
+                        </span>
+                        <span>
+                            <h6 style="font-size: 1rem !important; "><u>Description: </u></h6>{{this.description}}
+                        </span>
+                        <span>
+                            <h6 style="font-size: 1rem !important; display:inline-block"><u>File: </u></h6>&nbsp;<a
+                                href="data:application/pdf;base64,{{this.file}}"
+                                download="{{this.fileName}}">{{this.fileName}}</a>
+                        </span><br>
+                        <button class="btn btn--green" data-assignmentID="{{this._id}}" data-toggle="modal"
+                            data-target="#id{{this._id}}" style="width: 200px">Submit
+                            Assignment</button>
+                        {{log this._id}}
+                        {{> submit-assignment}}
+                    </div>
+
+                    {{/each}}
+                    {{/if}}
+
+
+                </div> --}}
+
+            </div>
+            {{/if}}
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    console.log(document.querySelector('.abcd'))
+    document.querySelector('.abcd').addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log(e.target.dataset.fileid)
+        function debugBase64(base64URL) {
+            var win = window.open();
+            win.document.write('<iframe src="' + base64URL + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
+        }
+
+        // e.g This will open an image in a new window
+        debugBase64(`data:application/pdf;base64,${e.target.dataset.fileid}`);
+    })
+
+</script>

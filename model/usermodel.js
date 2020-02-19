@@ -86,6 +86,7 @@ UserSchema.statics.findByCredentials = async (email, password) => {
         "email": user.email,
         "firstname": user.firstname,
         "lastname": user.lastname,
+        "id": user.id,
         "profession": user.profession
     };
 

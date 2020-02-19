@@ -1,10 +1,4 @@
-<div class="d-flex justify-content-center border border-bt-primary p-3">
-    <a class="nav-item nav-link active text-secondary" href="#">Stream <span class="sr-only">(current)</span></a>
-    <a class="nav-item nav-link text-secondary" href="#">Classwork</a>
-    <a class="nav-item nav-link text-secondary" href="#">People</a>
-    <a class="nav-item nav-link text-secondary" href="#">Grades</a>
-</div>
-
+{{> classroomHead}}
 
 <div class="container">
     <div class="banner">
@@ -13,7 +7,7 @@
                 <div class="top-left">
                     <h1>{{classname}}</h1>
                     <h3>section</h3>
-                    <span>Room Code:{{_id}}</span>
+                    <span>Room Code:{{classID}}</span>
                 </div>
                 <div class="bottom-right">
                     <a href="">Change Banner</a>
@@ -27,7 +21,7 @@
 </div>
 
 <div class="container mt-5 mb-3">
-    <form class="" id="classroomForm" style="overflow: hidden;" enctype="multipart/form-data" data-id="{{_id}}">
+    <form class="" id="classroomForm" style="overflow: hidden;" enctype="multipart/form-data" data-id="{{classID}}">
         <div class="form-group">
             <label for="createPost" class="text-secondary" style="font-weight: 700;">Create Post</label>
             <textarea class="form-control" id="post" rows="3"></textarea>

@@ -6723,7 +6723,7 @@ function _signInCredentials() {
           case 4:
             loginResponse = _context.sent;
             console.log(loginResponse);
-            (0, _alertMessage.showAlert)('success', "Logged in successfully");
+            (0, _alertMessage.showAlert)("success", "Logged in successfully");
             window.setTimeout(function () {
               window.location.href = "/";
             }, 1500);
@@ -6733,7 +6733,7 @@ function _signInCredentials() {
           case 10:
             _context.prev = 10;
             _context.t0 = _context["catch"](1);
-            (0, _alertMessage.showAlert)('error', _context.t0.response.data.message);
+            (0, _alertMessage.showAlert)("error", _context.t0.response.data.message);
 
           case 13:
           case "end":
@@ -7093,7 +7093,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53198" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55809" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

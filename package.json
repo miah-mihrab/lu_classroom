@@ -7,7 +7,7 @@
     "start": "node server",
     "nodemon": "set NODE_ENV=development&&nodemon server.js",
     "watch:js": "parcel watch ./public/index.js --out-dir ./public/ --out-file bundle.js",
-    "build:js": "parcel build ./public/index.js --out-dir ./public/ --out-file bundle.js"
+    "build:js": "parcel watch ./public/index.js --out-dir ./public/ --out-file bundle.js"
   },
   "engines": {
     "node": "10.16.3"
@@ -35,6 +35,7 @@
     "parcel-bundler": "^1.12.4",
     "sharp": "^0.23.4",
     "socket.io": "^2.3.0",
+    "streamifier": "^0.1.1",
     "validator": "^11.1.0",
     "winston": "^3.2.1",
     "xmlhttprequest": "^1.8.0"

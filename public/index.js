@@ -5,7 +5,9 @@ import {
 import {
   signInCredentials
 } from "./signin";
-
+import{
+  getStudentsAssignments
+} from "./assignmentSubmission";
 const updateBasic = document.querySelector("#update_form");
 const signin = document.querySelector('.form--login');
 
@@ -67,4 +69,30 @@ if (updateBasic) {
   //   //   section
   //   // });
   // });
+
+}
+
+//EDIT PROFILE
+const editProfile = document.querySelector('#edit-profile');
+
+if(editProfile){
+  editProfile.addEventListener('click', (e)=>{
+    e.preventDefault();
+    const accountInfo = document.querySelectorAll('.form-control');
+    accountInfo.forEach(e=>{
+      e.disabled = false
+    });
+  });
+}
+
+
+//Check students who submitted assignments
+const studentAssignments = document.querySelectorAll('.student-assignments');
+if(studentAssignments){
+    studentAssignments.forEach(e=>{
+      e.addEventListener('click', ()=>{
+          // console.log(e.dataset.assignmentid)   
+          getStudentsAssignments(e.dataset.assignmentid);    
+      })
+    })
 }

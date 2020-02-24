@@ -6,40 +6,40 @@
             enctype="multipart/form-data" action="/account/{{userID}}?_method=PATCH">
             <div class="form-group">
                 <label for="fname">First Name</label>
-                <input type="text" class="form-control" name="firstname" id="fname" value="{{firstname}}">
+                <input type="text" class="form-control" name="firstname" id="fname" value="{{firstname}}" disabled>
             </div>
 
             <div class="form-group">
                 <label for="lname">Last Name</label>
-                <input type="text" class="form-control" name="lastname" id="lname" value="{{lastname}}">
+                <input type="text" class="form-control" name="lastname" id="lname" value="{{lastname}}" disabled>
             </div>
             <div class="form-group">
                 <label for="id">ID</label>
-                <input type="text" class="form-control" name="id" id="id" value="{{id}}">
+                <input type="text" class="form-control" name="id" id="id" value="{{id}}" disabled>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="text" class="form-control" name="email" id="email" value="{{email}}">
+                <input type="text" class="form-control" name="email" id="email" value="{{email}}" disabled>
             </div>
 
             {{#unless teacher}}
             <div class="form-group">
                 <label for="dob">Date Of Birth</label>
                 <input type="text" class="form-control" name="dob" placeholder="Format: yyyy/mm/dd" autocomplete="off"
-                    id="dob" value="{{dob}}">
+                    id="dob" value="{{dob}}" disabled>
 
             </div>
             <div class="form-group">
                 <label for="batch">Batch</label>
-                <input type="text" class="form-control" name="batch" id="batch" value="{{batch}}">
+                <input type="text" class="form-control" name="batch" id="batch" value="{{batch}}" disabled>
             </div>
             <div class="form-group">
                 <label for="semester">Semester</label>
-                <input type="text" class="form-control" name="semester" id="semester" value="{{semester}}">
+                <input type="text" class="form-control" name="semester" id="semester" value="{{semester}}" disabled>
             </div>
             <div class="form-group">
                 <label for="section">Section</label>
-                <input type="text" class="form-control" name="section" id="section" value="{{section}}">
+                <input type="text" class="form-control" name="section" id="section" value="{{section}}" disabled>
             </div>
             {{/unless}}
 
@@ -53,7 +53,6 @@
                 {{/if}}
                 <input type="file" class="form__upload" id="photo" accept="image/*" name="photo" hidden>
                 <label for="photo" class="">Choose Profile Image</label>
-
             </div>
             <div class="custom-file">
 
@@ -65,7 +64,6 @@
                 </button>
             </div>
         </form>
-
     </div>
     <hr>
     <div class="password_portion mt-4">

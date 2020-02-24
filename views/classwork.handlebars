@@ -8,7 +8,7 @@
             <hr>
             {{#if teacher}}
             <form class="text-secondary" style="margin-top: 15px;" id="classwork_form" method="POST"
-                enctype="multipart/form-data" action="/classroom/{{classID}}/classwork">
+                enctype="multipart/form-data" action="/classroom/{{classID}}/classwork" data-classId="{{classID}}">
                 <div class="form-group">
                     <label for="assignment name">Assignment Name</label>
                     <input type="text" class="form-control" name="assignmentname" id="assignmet_name"
@@ -50,8 +50,8 @@
                                 download="{{this.fileName}}">{{this.fileName}}</a>
                         </td>
                         <td class="nav-item">
-                            <a class="" href="/classwork/{{this._id}}">
-                                <button class="btn btn-secondary">{{this.students.length}} students</button>
+                            <a href="/classwork/{{this._id}}">
+                                <button class="btn btn-secondary student-assignments" data-assignmentID="{{this._id}}">{{this.students.length}} students</button>
                             </a>
                         </td>
                     </tr>

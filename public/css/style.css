@@ -1,5 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Baloo+Da+2&display=swap');
 * {
   box-sizing: border-box;
+/* font-family: 'Roboto', sans-serif; */
+font-family: 'Baloo Da 2', cursive;
+
 }
 
 body {
@@ -52,48 +56,7 @@ body {
   z-index: 4 !important;
   min-width: 70% !important;
   margin: auto;
-  /*   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid red; */
 }
-
-form {
-  /* background: rgba(0, 0, 0, 0.4); */
-  /* width: 100%; */
-  /* border: 1px solid yellow; */
-}
-
-h6 {
-  font-size: 70% !important;
-}
-
-/* .form {
-    width: 100%;
-}
-
-input[type=text],
-input[type=password] {
-    width: 100%;
-    margin: 5px 0 10px 0;
-    display: inline-block;
-    border: none;
-    background: #f1f1f1;
-}
-
-/* Add a background color when the inputs get focus */
-
-/* #auth-form input[type="text"]:focus,
-#auth-form input[type="email"]:focus,
-#auth-form input[type="number"]:focus,
-#auth-form input[type="password"]:focus {
-  color: white;
-  outline: none;
-  position: relative;
-} */
-
-/* .form-group {} */
 
 
 /* Set a style for all buttons */
@@ -209,3 +172,5 @@ th {
   }
 
 }
+
+

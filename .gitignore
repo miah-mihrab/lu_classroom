@@ -1,5 +1,4 @@
 /node_modules
-/config/dev.js
 /views/classroom.html
 /playground
 .cache

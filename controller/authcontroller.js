@@ -25,6 +25,7 @@ const catchErrorAsync = fn => {
     title: "Sign In"
   });
 }),
+  
 //GET REGISTRATION PAGE
 (exports.getReg = async (req, res) => {
   if (res.cookie("jwt")) {
@@ -35,7 +36,8 @@ const catchErrorAsync = fn => {
   res.status(200).render("registration", {
     title: "Register Here"
   });
-}),
+  }),
+  
 // POST CREDENTIALS & VERIFY
 (exports.postSignIn = catchErrorAsync(async (req, res, next) => {
   console.log(req.body)
@@ -48,8 +50,10 @@ const catchErrorAsync = fn => {
       message: "Please fill your info."
     });
     return next(new AppError("Please provide email and password!", 400));
-  } else {
+  }
+  else {
     const user = await User.findByCredentials(email, password);
+    console.log(user)
     if (!user) {
       return next(new AppError("Please provide valid information", 401));
     } else if (user) {

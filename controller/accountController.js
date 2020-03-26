@@ -27,9 +27,9 @@ exports.getAccount = async (req, res, next) => {
 
     // UPDATE ACCOUNT
     exports.patchAccount = async (req, res, next) => {
-        const userID = await req.user._id;
-        const UserData = await User.findById(userID);
-
+    console.log(req.body)
+    const userID = await req.user._id;
+    const UserData = await User.findById(userID);
         let {
             firstname,
             lastname,
@@ -39,8 +39,9 @@ exports.getAccount = async (req, res, next) => {
             batch,
             semester,
             section
-        } = req.body;
-        console.log(req.body)
+    } = await req.body;
+    
+    console.log(firstname, lastname, email, id)
         let date = dob ? dob.split("-") : null;
         dob = date ? date.join("/") : null;
         await User.findByIdAndUpdate({

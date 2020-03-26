@@ -7,6 +7,8 @@ const User = require("../model/usermodel");
 const Post = require("../model/classroommodel");
 const Comment = require("../model/comment");
 
+const moment = require('moment');
+
 const AppError = require("../utils/appError");
 
 // GET RESULT
@@ -151,15 +153,19 @@ const AppError = require("../utils/appError");
     }
   }),
   (exports.getClassWork = async (req, res, next) => {
-    const getClasswork = await Classwork.find({
+    let getClasswork = await Classwork.find({
       classroom: req.params.id
     });
+    let submittedAssignments = await AssignmentSubmission.find().where({ classroom: req.params.id })
     res.render("classwork", {
       classID: req.params.id,
       classWorks: getClasswork,
+      submittedAssignments: getClasswork.submittedAssignments,
       teacher: req.user.profession === "Teacher" ? true : false
     });
+  
   }),
+
   (exports.postClassWork = async (req, res, next) => {
     const base64 = req.user.file
       ? await req.user.file.toString("base64")
@@ -180,8 +186,7 @@ const AppError = require("../utils/appError");
       const getAssignmentId = await Classwork.findOne({
         assignmentname: req.body.assignmentname
       });
-      console.log("ID: " + req.user.id);
-      const submitAssignment = await new AssignmentSubmission({
+      const submitAssignment = {
         details: req.body.details,
         id: req.user.id,
         classroom: req.params.id,
@@ -189,23 +194,26 @@ const AppError = require("../utils/appError");
         file: req.file.buffer.toString("base64"),
         fileName: req.file.filename,
         assignmentname: req.body.assignmentname,
-        assignmentId: getAssignmentId._id
-      });
+        assignmentId: getAssignmentId._id,
+        date: moment().format("MMMM Do YYYY, h:mm a")
+      };
 
       const updateClasswork = await Classwork.findOne({
         assignmentname: submitAssignment.assignmentname
-      });
+      })
       if (updateClasswork.students.includes(req.user._id)) {
-        await submitAssignment.save();
-        return res.redirect(`/classroom/${req.params.id}/classwork`);
-      }
+        res.json({
+          error: "You already submitted the assignment. Please contact with your supervisor if you want to submit again"
+        })
+      } else {
       await Classwork.findOneAndUpdate(
         {
           assignmentname: submitAssignment.assignmentname
         },
         {
           $push: {
-            students: req.user._id
+            students: req.user._id,
+            submitted: submitAssignment 
           }
         },
         {
@@ -213,16 +221,15 @@ const AppError = require("../utils/appError");
           runValidators: true
         }
       );
-      await submitAssignment.save();
       res.redirect(`/classroom/${req.params.id}/classwork`);
+        
+      }
     }
   }),
   (exports.getAssignmentSubmission = async (req, res, next) => {
     const assignment_details = await AssignmentSubmission.find({
       assignmentId: req.params.id
     });
-    // console.log(assignment_details[0].file)
-    // res.send(assignment_details);
     res.render("assignmentSubmission", {
       assignment_details
     });

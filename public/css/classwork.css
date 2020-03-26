@@ -1,0 +1,13 @@
+.modal-content{
+    background-color: rgba(0, 0,0, 0.5);
+}
+.btn{
+    outline: auto;
+    border-radius: 0;
+}
+@media (min-width: 576px)
+{
+  .modal-dialog {
+        max-width: 80%;
+    }
+}

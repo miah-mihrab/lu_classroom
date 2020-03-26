@@ -4,7 +4,8 @@ module.exports = (err, req, res, next) => {
     let error = {
         ...err
     };
-    console.log(error);
+
+    console.log(error, "HERE");
 
     error.message = err.message;
 

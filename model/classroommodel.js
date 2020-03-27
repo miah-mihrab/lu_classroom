@@ -39,14 +39,14 @@ const PostSchema = new mongoose.Schema({
       time: {
         type: String,
         required: true,
-        default: moment().format("MMMM Do, h:mm a")
+        default: moment().format("MMM Do, h:mm a")
       }
     }
   ]
 });
 
 PostSchema.pre("save", function() {
-  this.time = moment().format("MMMM Do YYYY, h:mm a");
+  this.time = moment().format("MMM Do YYYY, h:mm a");
 });
 
 const Post = mongoose.model("Post", PostSchema);

@@ -32,7 +32,8 @@ router
   .route("/classroom/:id")
   .get(auth, indexcontroller.getClassroom)
   .post(auth, indexcontroller.postClassroom)
-  .patch(auth, indexcontroller.patchClassroom);
+  .patch(auth, indexcontroller.patchClassroom)
+  .delete(auth, indexcontroller.deleteClassPost);
 
 // CLASSWORK ROUTE
 router
@@ -42,9 +43,6 @@ router
     fileController.fileUpload,
     fileController.fileMulterResize,
     indexcontroller.postClassWork);
-
-router.get('/classwork/:id', indexcontroller.getAssignmentSubmission);
-
 
 router.get("/delete-class/:id", auth, indexcontroller.deleteClass);
 router.get("/result/:id", auth, indexcontroller.getResult);

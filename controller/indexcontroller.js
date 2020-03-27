@@ -1,7 +1,6 @@
 const _Class = require("../model/classmodel");
 const _ClassPosts = require("../model/classroommodel");
 const Classwork = require("../model/classworkmodel");
-const AssignmentSubmission = require("../model/assignmentSubmissionModel");
 
 const User = require("../model/usermodel");
 const Post = require("../model/classroommodel");
@@ -59,27 +58,29 @@ const AppError = require("../utils/appError");
   // GET CLASSROOM
   (exports.getClassroom = async (_req, res, next) => {
     let classID = _req.params.id;
-
+    
     try {
       const _class = await _Class.findById(classID);
-      const { _id, students, classname, section, subjectname } = _class;
+      const { _id, students, classname, section, subjectname, student } = _class;
       const ClassPosts = await _ClassPosts.find({
         class: classID
       });
-
-      // console.log(ClassPosts)
+      res.locals.teacher = (_req.user.profession === 'Teacher') ? true : false;
       await res.render("classroom", {
         classID: _id,
         students,
         classname,
         section,
         subjectname,
+        student,
+        teacher: (_req.user.profession === 'Teacher') ? true : false,
         ClassPosts
       });
     } catch (err) {
       res.send(err);
     }
   }),
+  
   // POST CLASSROOM
   (exports.postClassroom = async (req, res) => {
     if (req.body.comment) {
@@ -116,6 +117,10 @@ const AppError = require("../utils/appError");
       }
     );
     res.send(updatePostWithComment);
+  }),
+  (exports.deleteClassPost = async (req, res, next) => {
+  await Post.findOneAndDelete({ _id: req.body.postId })
+   next(res.status(200))
   }),
   // DELETE CLASS
   (exports.deleteClass = async (req, res, next) => {
@@ -156,7 +161,6 @@ const AppError = require("../utils/appError");
     let getClasswork = await Classwork.find({
       classroom: req.params.id
     });
-    let submittedAssignments = await AssignmentSubmission.find().where({ classroom: req.params.id })
     res.render("classwork", {
       classID: req.params.id,
       classWorks: getClasswork,
@@ -225,12 +229,4 @@ const AppError = require("../utils/appError");
         
       }
     }
-  }),
-  (exports.getAssignmentSubmission = async (req, res, next) => {
-    const assignment_details = await AssignmentSubmission.find({
-      assignmentId: req.params.id
-    });
-    res.render("assignmentSubmission", {
-      assignment_details
-    });
-  });
+  })

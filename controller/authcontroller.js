@@ -40,7 +40,6 @@ const catchErrorAsync = fn => {
   
 // POST CREDENTIALS & VERIFY
 (exports.postSignIn = catchErrorAsync(async (req, res, next) => {
-  console.log(req.body)
   let {
     email,
     password
@@ -53,7 +52,6 @@ const catchErrorAsync = fn => {
   }
   else {
     const user = await User.findByCredentials(email, password);
-    console.log(user)
     if (!user) {
       return next(new AppError("Please provide valid information", 401));
     } else if (user) {
@@ -66,6 +64,7 @@ const catchErrorAsync = fn => {
         JWT_SECRET
       );
       if (token) {
+        res.locals.teacher = user.profession === 'Student' ? false : true;
         await res.cookie("jwt", token);
         return res.status(200).redirect("/");
       }
@@ -104,7 +103,6 @@ const catchErrorAsync = fn => {
       try {
         await user.save();
         console.log("Saved");
-
         const token = await jwt.sign({
             _id: user._id,
             name: user.firstname + " " + user.lastname,
@@ -113,9 +111,9 @@ const catchErrorAsync = fn => {
           JWT_SECRET
         );
         if (token) {
+        res.locals.teacher = user.profession === 'Student' ? false: true;
           await res.cookie("jwt", token);
           return res.status(200).redirect("/");
-          // res.redirect('/');
         }
         res.status(307).redirect("/"); //Temporary Redirected
       } catch (err) {
@@ -124,4 +122,3 @@ const catchErrorAsync = fn => {
     });
   });
 });
-//}

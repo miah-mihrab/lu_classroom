@@ -1,11 +1,30 @@
-::-webkit-scrollbar {
-  width: 0;
-  height: 0;
+/* ::-webkit-scrollbar {
+  width: 5px;
+  height: 10px;
+} */
+#style-10::-webkit-scrollbar
+{
+	width: 10px;
+  background-color: #F5F5F5;
 }
 
+#style-10::-webkit-scrollbar-thumb
+{
+	background-color: #AAA;
+	border-radius: 10px;
+	background-image: -webkit-linear-gradient(
+                        90deg,
+											  rgb(3, 2, 88, 0.5) 100%,
+											  transparent
+                        )
+}
+
+.classroom-container{
+  width: 68%;
+}
 .banner {
   overflow: hidden;
-  height: 30vw;
+  height: 20vw;
   width: 100%;
   margin-top: 5%;
   border-radius: 16px;
@@ -21,7 +40,6 @@
   overflow: hidden;
   position: relative;
   padding: 2%;
-  border: 1px solid green;
 }
 
 .banner-body .top-left {
@@ -50,36 +68,21 @@
   border-radius: 16px;
   margin-bottom: 3%;
   position: relative;
-}
-
-.post-number {
-  position: absolute;
-  top: -15px;
-  left: -15px;
-  background-color: #ffffff;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin-top: 20px;
 }
 
 .post-head {
-  background-color: #444444;
   padding: 2%;
-  color: #dddddd;
+  font-weight: bolder;
 }
 
 .post-body {
-  padding: 2%;
-  background-color: #eeeeee;
   font-size: 1.2rem;
+  margin-top: 10px;
 }
 
 .comment-section {
   padding: 2%;
-  background-color: #eeeeee;
   overflow: auto;
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
@@ -99,7 +102,6 @@
 }
 
 .comment {
-  border: 0.5px solid #dddddd;
   border-radius: 16px;
   background-color: rgba(255, 255, 255, 0.7) !important;
   display: inline-block;
@@ -128,8 +130,34 @@
   }
 }
 
-/* form {
-    box-shadow: 0px 0px 7px 0px #dddddd;
-    padding: 2%;
-    border-radius: 16px;
-} */
+.option_menu{
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  width: 300px;
+}
+.dot{
+ width: 5px;
+ height: 5px;
+ border-radius: 50%;
+ border: 3px solid;
+ margin-top: 2px;
+ float: right;
+
+}
+.dropdown-content{
+  background-color: #444444;
+  position: absolute;
+  right: 0;
+  /* text-align: right; */
+  margin-top: 10px;
+  padding: 20px;
+}
+.dropdown:hover .dropdown-content {display: block;}
+
+.input-comment{
+  height: 10vh;
+  border-radius: 20px;
+  padding: 10px;
+  outline: 0;
+}

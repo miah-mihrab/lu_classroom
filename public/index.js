@@ -1,14 +1,11 @@
 import "@babel/polyfill";
 import {
-  update
-} from "./updateAccount";
-import {
   signInCredentials
 } from "./signin";
+import { deleteClassPost } from "./deleteClassPost";
 import{
   getStudentsAssignments
 } from "./assignmentSubmission";
-const updateBasic = document.querySelector("#update_form");
 const signin = document.querySelector('.form--login');
 
 
@@ -21,67 +18,16 @@ if (signin) {
   })
 }
 
-// UPDATE INFORMATION
-if (updateBasic) {
-  // updateBasic.addEventListener("submit", async e => {
-  //   e.preventDefault();
-
-  //   const dob = document.querySelector("#dob") ? document.querySelector("#batch").value.toString() : null;
-  //   const batch = document.querySelector("#batch") ? document.querySelector("#batch").value.toString() : null;
-  //   const section = document.querySelector("#section") ? document.querySelector("#batch").value.toString() : null;
-
-  //   const formData = new FormData();
-  //   // const formdata = await new FormData();
-  //   formData.append('firstname', (document.querySelector("#fname").value).toString());
-  //   formData.append('lastname', document.querySelector("#lname").value.toString());
-  //   formData.append('id', document.querySelector("#id").value.toString());
-  //   formData.append('email', document.querySelector("#email").value.toString())
-  //   formData.append('dob', dob);
-  //   formData.append('batch', batch);
-  //   formData.append('section', section);
-  //   formData.append('photo', document.getElementById('photo').files[0]);
-
-
-  //   //console.log(document.getElementById('photo').files[0])
-
-  //   // const firstname = document.querySelector("#fname").value;
-  //   // const lastname = document.querySelector("#lname").value;
-  //   // const id = document.querySelector("#id").value;
-  //   // const email = document.querySelector("#email").value;
-  //   // const dob = document.querySelector("#dob") ?
-  //   //   document.querySelector("#dob").value :
-  //   //   null;
-  //   // const batch = document.querySelector("#batch") ?
-  //   //   document.querySelector("#batch").value :
-  //   //   null;
-  //   // const section = document.querySelector("#section") ?
-  //   //   document.querySelector("#batch").value :
-  //   //   null;
-  //   //console.log(JSON.stringify(Array.from(form)));
-  //   update(formData)
-  //   // update({
-  //   //   firstname,
-  //   //   lastname,
-  //   //   id,
-  //   //   email,
-  //   //   dob,
-  //   //   batch,
-  //   //   section
-  //   // });
-  // });
-
-}
-
 //EDIT PROFILE
 const editProfile = document.querySelector('#edit-profile');
-
 if(editProfile){
-  editProfile.addEventListener('click', (e)=>{
+    editProfile.addEventListener('click', (e)=>{
     e.preventDefault();
     const accountInfo = document.querySelectorAll('.form-control');
     accountInfo.forEach(e=>{
       e.disabled = false
     });
+    document.getElementById('updateBasic').disabled = false
   });
 }
 
@@ -90,9 +36,21 @@ if(editProfile){
 const studentAssignments = document.querySelectorAll('.student-assignments');
 if(studentAssignments){
     studentAssignments.forEach(e=>{
-      e.addEventListener('click', ()=>{
-          // console.log(e.dataset.assignmentid)   
-          getStudentsAssignments(e.dataset.assignmentid);    
+      e.addEventListener('click', ()=>{  
+        getStudentsAssignments(e.dataset.assignmentid)
+        
       })
     })
+}
+
+//Delete class post
+const delete_post = document.querySelectorAll('#delete')
+if (delete_post) {
+  delete_post.forEach(e => {
+    e.addEventListener('click', () => {
+      console.log()  
+      let data_id = e.getAttribute('data-id').split('+')
+      deleteClassPost(data_id[0], data_id[1],e.parentElement.parentElement.parentElement.parentElement)
+    })
+  })
 }

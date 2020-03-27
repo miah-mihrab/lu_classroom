@@ -4,31 +4,31 @@
     <div class="area">
 
         <div class="class mt-5">
-
             {{#if allClass}}
             <div class="row">
                 {{#each allClass}}
-                <div class="card" style="width: 18rem; margin:auto">
-                    <div class="card-head">
-                        <img src="../images/lu1.jpg" class="card-img-top" alt="...">
-                        <div class="card-head-content">
-                            <h5 class="card-title" style="max-width: 200px;">{{this.classname}}</h5>
+                    <div class="col-lg-4 col-md-6 col-sm-12 mt-2">
+                        <div class="card" style="width: 100%;">
+                            <div class="card-head">
+                                <img src="../images/lu1.jpg" class="card-img-top" alt="...">
+                                <div class="card-head-content">
+                                    <h5 class="card-title" style="max-width: 200px;">{{this.classname}}</h5>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {{this.classname}}
+                                <div class="mt-3"><i class="fas fa-chalkboard-teacher mr-2"></i>{{this.author}}</div>
+                                <div class="mt-2"><i class="fas fa-users mr-2"></i>{{this.student.length}} students</div>
+                                <div class="mt-2"><i class="fas fa-key mr-2"></i>{{this._id}}</div>
+                            </div>
+                            <div class="card-foot p-2">
+                                <a href="/delete-class/{{this._id}}" class="btn btn-danger float-right">Delete</a>
+                                <a href="/classroom/{{this._id}}" class="btn btn-primary float-right mr-2">Enter</a>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="mt-3"><i class="fas fa-chalkboard-teacher mr-2"></i>{{this.author}}</div>
-                        <div class="mt-2"><i class="fas fa-users mr-2"></i>{{this.students}} students</div>
-                        <div class="mt-2"><i class="fas fa-key mr-2"></i>{{this._id}}</div>
-                    </div>
-                    <div class="card-foot p-2">
-                        <a href="/delete-class/{{this._id}}" class="btn btn-danger float-right">Delete</a>
-                        <a href="/classroom/{{this._id}}" class="btn btn-primary float-right mr-2">Enter</a>
-                    </div>
-                </div>
 
                 {{/each}}
-            </div>
-
             {{else}}
             <div class="noClass">
                 <h1>You have no class yet 😐</h1>

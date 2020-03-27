@@ -7,7 +7,7 @@
 }
 @media (min-width: 576px)
 {
-  .modal-dialog {
+  table .modal-dialog {
         max-width: 80%;
     }
 }

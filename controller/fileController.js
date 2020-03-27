@@ -1,15 +1,6 @@
 const multer = require("multer");
 const sharp = require("sharp");
 const AppError = require("../utils/appError");
-// const multerStorage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, `${__dirname}/../public/img/users`);
-//   },
-//   filename: (req, file, cb) => {
-//     const ext = file.mimetype.split('/')[1];
-//     cb(null, `${file.originalname}-${Date.now()}.${ext}`);
-//   }
-// });
 
 const multerStorage = multer.memoryStorage();
 
@@ -38,13 +29,11 @@ exports.resizeUserPhoto = async (req, res, next) => {
             quality: 90
         })
         .toBuffer();
-    //.toFile(`${__dirname}/../public/img/users/${req.file.filename}`) //INSIDE FOLDEr
     req.user.photo = buffer;
     next();
 };
 
 // Multer for HOMEWORK FILES
-
 const fileMulterFilter = (req, file, cb) => {
     console.log(file);
     const fileMimeType = file.mimetype;
@@ -60,16 +49,6 @@ const fileMulterFilter = (req, file, cb) => {
         );
     }
 };
-// const fileStorage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     console.log(file + " abcd");
-//     cb(null, `${__dirname}/../public/img/users`);
-//   },
-//   filename: (req, file, cb) => {
-//     const ext = file.mimetype.split("/")[1];
-//     cb(null, `${file.originalname}-${Date.now()}.${ext}`);
-//   }
-// });
 const fileStorage = multer.memoryStorage();
 const fileMulterUpload = multer({
     storage: fileStorage,

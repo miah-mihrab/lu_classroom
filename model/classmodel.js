@@ -26,7 +26,8 @@ const _Class = mongoose.model("Class", new mongoose.Schema({
     author_name: {
         type: String,
         required: true
-    }
+    },
+    student:[String]
 }))
 
 module.exports = _Class;

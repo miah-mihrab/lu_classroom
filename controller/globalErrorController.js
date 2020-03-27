@@ -5,8 +5,6 @@ module.exports = (err, req, res, next) => {
         ...err
     };
 
-    console.log(error, "HERE");
-
     error.message = err.message;
 
     if (err.message === "Please provide valid University ID & Date of Birth!") {

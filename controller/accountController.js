@@ -27,7 +27,6 @@ exports.getAccount = async (req, res, next) => {
 
     // UPDATE ACCOUNT
     exports.patchAccount = async (req, res, next) => {
-    console.log(req.body)
     const userID = await req.user._id;
     const UserData = await User.findById(userID);
         let {
@@ -41,7 +40,6 @@ exports.getAccount = async (req, res, next) => {
             section
     } = await req.body;
     
-    console.log(firstname, lastname, email, id)
         let date = dob ? dob.split("-") : null;
         dob = date ? date.join("/") : null;
         await User.findByIdAndUpdate({
@@ -71,20 +69,6 @@ exports.getAccount = async (req, res, next) => {
             //res.header("x-auth-token", token);
             await res.clearCookie("jwt");
             await res.cookie("jwt", token);
-            //console.log(token);
             return res.status(200).redirect(`/account/${req.params.id}`);
-            // return res.status(200).render('accountInfos', {
-            //   title: "Profile",
-            //   firstname,
-            //   lastname,
-            //   email,
-            //   id,
-            //   batch,
-            //   section,
-            //   dob,
-            //   userID,
-            //   teacher: req.user.profession === "Teacher" ? true : false
-            // });
         }
-        //res.status(307).redirect('/'); //Temporary Redirected
     }

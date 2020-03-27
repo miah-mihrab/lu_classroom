@@ -17,16 +17,17 @@ const AppError = require("../utils/appError");
         if (findClass) {
           classFound.push({
             _id: `${findClass._id}`,
-            students: findClass.students,
             classname: findClass.classname,
             section: findClass.section,
             subjectname: findClass.subjectname,
-            author: findClass.author_name
+            author: findClass.author_name,
+            student: findClass.student
           });
         }
       }
       if (classFound.length > 0) {
         // CLASS FOUND
+        res.locals.teacher = false;
         return res.render("profile", {
           allClass: classFound,
           userID: `${userID}`,
@@ -58,14 +59,15 @@ const AppError = require("../utils/appError");
         filteredByAuthor.forEach(e => {
           classFound.push({
             _id: `${e._id}`,
-            students: e.students,
             classname: e.classname,
             section: e.section,
             subjectname: e.subjectname,
-            author: name
+            author: name,
+            student: e.student
           });
         });
         if (classFound.length > 0) {
+          res.locals.teacher = true;
           return res.render("profile", {
             allClass: classFound,
             userID: `${userID}`,
@@ -101,54 +103,59 @@ const AppError = require("../utils/appError");
     }
   }
 }),
-  // POST FROM HOME
-  (exports.postHome = async (req, res, next) => {
-    if (req.body.roomcode) {
-      const roomcode = req.body.roomcode;
-      _Class.findById(roomcode, (err, _data) => {
-        if (!err) {
-          User.findById(req.user._id, (err, data) => {
-            if (!err) {
-              if (!data.Classes.includes(roomcode)) {
-                data.Classes.push(roomcode);
-                data.save().then(() => {
-                  res.redirect("/");
-                });
-              } else {
+// POST FROM HOME
+(exports.postHome = async (req, res, next) => {
+  if (req.body.roomcode) {
+    const roomcode = req.body.roomcode;
+    _Class.findById(roomcode, (err, _data) => {
+      if (!err) {
+        User.findById(req.user._id, (err, data) => {
+          if (!err) {
+            if (!data.Classes.includes(roomcode)) {
+              data.Classes.push(roomcode);
+              data.save().then(async () => {
+                await _Class.findOneAndUpdate({
+                  _id: roomcode
+                }, {
+                  $push: {
+                    student: `${data.firstname} ${data.lastname} (${data.id})`
+                  }
+                }, {
+                  new: true,
+                  runValidators: true
+                })
                 res.redirect("/");
-              }
+              });
             } else {
-              // const err = new Error("User may not authorized!");
-              // err.status = "Unauthorized";
-              // err.statusCode = 401;
-              next(new AppError("User may not authorized", 401));
+              res.redirect("/");
             }
-          });
-        } else {
-          // const err = new Error("Room may not available");
-          // err.status = "Not Found";
-          // err.statusCode = 404;
-          next(new AppError("Room may not available", 404));
-        }
-      });
-    } else {
-      const { classname, section, subject } = req.body;
-      const author = req.user._id;
-      try {
-        const cls = await new _Class({
-          classname: classname,
-          section: section,
-          subjectname: subject,
-          author: author,
-          author_name: req.user.name
+          } else {
+            next(new AppError("User may not authorized", 401));
+          }
         });
-        await cls.save();
-        await res.redirect("/");
-      } catch {
-        // const err = new Error("Class not saved");
-        // err.status = "Database Error";
-        // err.statusCode = 500;
-        next(new AppError("Something went wrong while saving class!", 500));
+      } else {
+        next(new AppError("Room may not available", 404));
       }
+    });
+  } else {
+    const {
+      classname,
+      section,
+      subject
+    } = req.body;
+    const author = req.user._id;
+    try {
+      const cls = await new _Class({
+        classname: classname,
+        section: section,
+        subjectname: subject,
+        author: author,
+        author_name: req.user.name
+      });
+      await cls.save();
+      await res.redirect("/");
+    } catch {
+      next(new AppError("Something went wrong while saving class!", 500));
     }
-  });
+  }
+});

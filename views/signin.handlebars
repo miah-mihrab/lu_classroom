@@ -1,31 +1,11 @@
-<title>{{title}}</title>
 
+<title>{{title}}</title>
 <header class="v-header cont">
     <div class="fullscreen-video-wrap">
         <video src="../images/lu1.mp4" autoplay muted loop></video>
     </div>
     <div class="header-overlay"></div>
     <div class="header-content col-lg-6 col-md-8 col-sm-12">
-
-        {{!-- <form autocomplete="off" method="POST" action="/signin" id="auth-form">
-            <h1>Sign In</h1>
-            <h6 class="lead">Please authenticate yourself</h6>
-            {{> message}}
-            <hr>
-            <div class="form-row">
-                <div class="form-group col-lg-12">
-                    <input type="email" class="form-control" name="email" placeholder="Email" autocomplete="off">
-                </div>
-                <div class="form-group col-lg-12 ">
-                    <input type="password" class="form-control" name="password" placeholder="password"
-                        autocomplete="off">
-                </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Sign In</button>
-        </form> <br> --}}
-
-
         {{#if errMessage}}
         <h3>{{errMessage}}</h3>
         {{/if}}

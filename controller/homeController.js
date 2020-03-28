@@ -4,6 +4,8 @@ const AppError = require("../utils/appError");
 
 // GET HOME
 (exports.getHome = async (req, res, next) => {
+  res.locals.loading = true;
+
   const userID = req.user._id;
   if (req.user.profession && req.user.profession.trim() === "Student") {
     const UserData = await User.findById(userID);
@@ -27,6 +29,7 @@ const AppError = require("../utils/appError");
       }
       if (classFound.length > 0) {
         // CLASS FOUND
+        res.locals.loading = false;
         res.locals.teacher = false;
         return res.render("profile", {
           allClass: classFound,

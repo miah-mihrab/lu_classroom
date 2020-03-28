@@ -12,7 +12,7 @@ const catchErrorAsync = fn => {
   };
 };
 
-//module.exports = {
+
 
 //GET SIGNIN PAGE
 (exports.getSignIn = async (req, res) => {

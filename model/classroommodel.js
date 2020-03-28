@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const User = require("./usermodel");
 const moment = require("moment");
 
 const PostSchema = new mongoose.Schema({

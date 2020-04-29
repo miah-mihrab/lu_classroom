@@ -38,6 +38,7 @@ const AppError = require("../utils/appError");
           userPhoto: UserData.photo ? UserData.photo.toString("base64") : null
         });
       } else {
+        res.locals.loading = false;
         return res.render("profile", {
           title: "Profile",
           userID: `${userID}`,
@@ -70,6 +71,7 @@ const AppError = require("../utils/appError");
           });
         });
         if (classFound.length > 0) {
+          res.locals.loading = false;
           res.locals.teacher = true;
           return res.render("profile", {
             allClass: classFound,
@@ -88,6 +90,7 @@ const AppError = require("../utils/appError");
         }
       } else {
         const UserData = await User.findById(req.user._id);
+        res.locals.loading = false;
         return res.render("profile", {
           userID: `${userID}`,
           teacher: true,

@@ -10,17 +10,16 @@ const accountController = require('../controller/accountController');
 const fileController = require('../controller/fileController');
 // HOME ROUTE
 router
-  .route("")
-  .get(auth, homeController.getHome)
-  .post(auth, homeController.postHome);
+  .route("/home")
+  .post(homeController.postHome);
 
+  router.get('/home/:id', homeController.getHome)
 
 // ACCOUNT ROUTE
 router
-  .route("/account/:id")
-  .get(auth, accountController.getAccount)
+  .route("/profile/:id")
+  .get(accountController.getAccount)
   .patch(
-    auth,
     fileController.uploadUserPhoto,
     fileController.resizeUserPhoto,
     accountController.patchAccount)
@@ -30,23 +29,25 @@ router
 // CLASSROOM ROUTE
 router
   .route("/classroom/:id")
-  .get(auth, indexcontroller.getClassroom)
-  .post(auth, indexcontroller.postClassroom)
-  .patch(auth, indexcontroller.patchClassroom)
-  .delete(auth, indexcontroller.deleteClassPost);
+  .get(indexcontroller.getClassroom)
+  .post(indexcontroller.postClassroom)
+  .patch(indexcontroller.patchClassroom)
+  .delete(indexcontroller.deleteClassPost);
 
 // CLASSWORK ROUTE
 router
   .route("/classroom/:id/classwork")
-  .get(auth, indexcontroller.getClassWork)
-  .post(auth,
+  .get(indexcontroller.getClassWork)
+  .post(
     fileController.fileUpload,
     fileController.fileMulterResize,
-    indexcontroller.postClassWork);
+    indexcontroller.postClassWork)
+  .delete(indexcontroller.deleteClasswork)
+  
 
-router.get("/delete-class/:id", auth, indexcontroller.deleteClass);
-router.get("/result/:id", auth, indexcontroller.getResult);
-router.get('/routine/:id', auth, indexcontroller.getRoutine);
+router.get("/delete-class/:id", indexcontroller.deleteClass);
+router.get("/result/:id", indexcontroller.getResult);
+router.get('/routine/:id', indexcontroller.getRoutine);
 
 
 module.exports = router;

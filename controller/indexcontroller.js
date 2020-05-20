@@ -58,57 +58,59 @@ const AppError = require("../utils/appError");
   // GET CLASSROOM
   (exports.getClassroom = async (_req, res, next) => {
     let classID = _req.params.id;
-    
+
     try {
       const _class = await _Class.findById(classID);
       const { _id, students, classname, section, subjectname, student } = _class;
       const ClassPosts = await _ClassPosts.find({
         class: classID
       });
-      res.locals.teacher = (_req.user.profession === 'Teacher') ? true : false;
-      await res.render("classroom", {
+
+      return res.send({
         classID: _id,
         students,
         classname,
         section,
         subjectname,
         student,
-        teacher: (_req.user.profession === 'Teacher') ? true : false,
         ClassPosts
       });
     } catch (err) {
       res.send(err);
     }
   }),
-  
+
   // POST CLASSROOM
   (exports.postClassroom = async (req, res) => {
     if (req.body.comment) {
       const newComment = await Comment.create({
         comment: req.body.comment,
         post: req.body.post,
-        author: req.user.name
+        author: req.user.name,
+        photo: req.body.photo
       });
-      res.send(newComment);
+      return res.send(newComment);
     } else {
       const newPost = await Post.create({
         content: req.body.content,
         class: req.params.id,
-        author: req.user.name
+        author: req.body.author,
+        photo: req.body.photo
       });
-      res.send(newPost);
+      return res.send(newPost);
     }
   }),
   // UPDATE CLASSROOM FOR COMMENTS
   (exports.patchClassroom = async (req, res) => {
     const updatePostWithComment = await Post.findByIdAndUpdate(
-      req.body.post,
+      req.body.postID,
       {
         $push: {
           comments: {
             comment: req.body.comment,
-            post: req.body.post,
-            author: req.user.name
+            post: req.body.postID,
+            author: req.body.author,
+            photo: req.body.photo
           }
         }
       },
@@ -118,9 +120,11 @@ const AppError = require("../utils/appError");
     );
     res.send(updatePostWithComment);
   }),
+
+
   (exports.deleteClassPost = async (req, res, next) => {
-  await Post.findOneAndDelete({ _id: req.body.postId })
-   next(res.status(200))
+    await Post.findOneAndDelete({ _id: req.body.postId })
+    next(res.status(200))
   }),
   // DELETE CLASS
   (exports.deleteClass = async (req, res, next) => {
@@ -157,36 +161,38 @@ const AppError = require("../utils/appError");
       );
     }
   }),
+
   (exports.getClassWork = async (req, res, next) => {
     let getClasswork = await Classwork.find({
       classroom: req.params.id
     });
-    res.render("classwork", {
+    res.send({
+
       classID: req.params.id,
       classWorks: getClasswork,
-      submittedAssignments: getClasswork.submittedAssignments,
-      teacher: req.user.profession === "Teacher" ? true : false
+      submittedAssignments: getClasswork.submittedAssignments
     });
-  
+
   }),
 
   (exports.postClassWork = async (req, res, next) => {
-    const base64 = req.user.file
-      ? await req.user.file.toString("base64")
-      : null;
-    if (req.user.profession === "Teacher") {
+    // const base64 = req.file
+    //   ? await req.user.file.toString("base64")
+    // : null;
+
+    if (req.body.profession === "Teacher") {
       const newClasswork = await Classwork.create({
         classroom: req.params.id,
-        authorName: req.user.name,
+        authorName: req.body.author,
         file: req.file.buffer.toString("base64"),
         fileName: req.file.filename,
         assignmentname: req.body.assignmentname,
         details: req.body.details
       });
-
-      console.log("Classwork sent");
-      res.redirect(`/classroom/${req.params.id}/classwork`);
+      return res.send(newClasswork);
+      // res.redirect(`/classroom/${req.params.id}/classwork`);
     } else {
+      console.log("STUDENT HERE")
       const getAssignmentId = await Classwork.findOne({
         assignmentname: req.body.assignmentname
       });
@@ -210,23 +216,29 @@ const AppError = require("../utils/appError");
           error: "You already submitted the assignment. Please contact with your supervisor if you want to submit again"
         })
       } else {
-      await Classwork.findOneAndUpdate(
-        {
-          assignmentname: submitAssignment.assignmentname
-        },
-        {
-          $push: {
-            students: req.user._id,
-            submitted: submitAssignment 
+        await Classwork.findOneAndUpdate(
+          {
+            assignmentname: submitAssignment.assignmentname
+          },
+          {
+            $push: {
+              students: req.user._id,
+              submitted: submitAssignment
+            }
+          },
+          {
+            new: true,
+            runValidators: true
           }
-        },
-        {
-          new: true,
-          runValidators: true
-        }
-      );
-      res.redirect(`/classroom/${req.params.id}/classwork`);
-        
+        );
+        res.redirect(`/classroom/${req.params.id}/classwork`);
+
       }
     }
+  }),
+  (exports.deleteClasswork = async (req, res, next) => {
+    await Classwork.findByIdAndDelete({ _id: req.params.id })
+  return res.send({
+      success: true
+    })
   })

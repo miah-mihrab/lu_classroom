@@ -11,6 +11,9 @@ const CommentSchema = new mongoose.Schema({
     author: {
         type: String
     },
+    photo: {
+        type: String
+    },
     time: {
         type: Date,
         required: true,

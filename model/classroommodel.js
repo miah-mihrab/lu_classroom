@@ -21,9 +21,14 @@ const PostSchema = new mongoose.Schema({
   attachment: {
     type: Buffer
   },
-
+  photo: {
+        type: String,
+  },
   comments: [
     {
+      photo: {
+        type: String
+      },
       comment: {
         type: String,
         required: true

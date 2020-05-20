@@ -45,10 +45,7 @@ const catchErrorAsync = fn => {
     password
   } = await req.body;
   if (!email || !password) {
-    res.render("signin", {
-      message: "Please fill your info."
-    });
-    return next(new AppError("Please provide email and password!", 400));
+    next(new AppError("Please provide email and password!", 400));
   }
   else {
     const user = await User.findByCredentials(email, password);
@@ -66,9 +63,12 @@ const catchErrorAsync = fn => {
       if (token) {
         res.locals.teacher = user.profession === 'Student' ? false : true;
         await res.cookie("jwt", token);
-        return res.status(200).redirect("/");
+        return res.send((user))
+        // return res.status(200).redirect("/");
+
       }
-      res.status(307).redirect("/"); //Temporary Redirected
+      // res.status(307).redirect("/");
+       //Temporary Redirected
     } else {
       next(new AppError("Please provide correct info", 401));
     }

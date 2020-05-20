@@ -6,8 +6,11 @@ const AppError = require("../utils/appError");
 (exports.getHome = async (req, res, next) => {
   res.locals.loading = true;
 
-  const userID = req.user._id;
-  if (req.user.profession && req.user.profession.trim() === "Student") {
+  let profession = req.query.profession;
+
+  const userID = req.params.id;
+
+  if (profession.trim() === "Student") {
     const UserData = await User.findById(userID);
     if (UserData) {
       let _allClasses = UserData.Classes;
@@ -73,16 +76,15 @@ const AppError = require("../utils/appError");
         if (classFound.length > 0) {
           res.locals.loading = false;
           res.locals.teacher = true;
-          return res.render("profile", {
+          return res.send({
             allClass: classFound,
             userID: `${userID}`,
             teacher: true,
-            userName: req.user.name,
             userPhoto: UserData.photo ? UserData.photo.toString("base64") : null
           });
         } else {
           res.locals.loading = false;
-          return res.render("profile", {
+          return res.send({
             userID: `${userID}`,
             teacher: true,
             userName: req.user.name,
@@ -91,9 +93,9 @@ const AppError = require("../utils/appError");
         }
       } else {
         res.locals.loading = false;
-        const UserData = await User.findById(req.user._id);
+        const UserData = await User.findById(userID);
         res.locals.loading = false;
-        return res.render("profile", {
+        return res.send({
           userID: `${userID}`,
           teacher: true,
           userName: req.user.name,
@@ -102,11 +104,10 @@ const AppError = require("../utils/appError");
       }
     } else {
       res.locals.loading = false;
-      const UserData = await User.findById(req.user._id);
-      return res.render("profile", {
+      const UserData = await User.findById(userID);
+      return res.send({
         userID: `${userID}`,
         teacher: true,
-        userName: req.user.name,
         userPhoto: UserData.photo ? UserData.photo.toString("base64") : null
       });
     }
@@ -150,19 +151,26 @@ const AppError = require("../utils/appError");
     const {
       classname,
       section,
-      subject
+      subject,
+      author_name,
+      author_id
     } = req.body;
-    const author = req.user._id;
+    const author = author_id;
     try {
-      const cls = await new _Class({
+      const cls = new _Class({
         classname: classname,
         section: section,
         subjectname: subject,
         author: author,
-        author_name: req.user.name
+        author_name: author_name
       });
+      
       await cls.save();
-      await res.redirect("/");
+      // Change
+        // await res.redirect("/");
+      return res.send(cls)
+      // END
+      
     } catch {
       next(new AppError("Something went wrong while saving class!", 500));
     }

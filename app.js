@@ -7,10 +7,11 @@ const cookieparser = require("cookie-parser");
 const AppError = require('./utils/appError');
 const globarErrorControl = require('./controller/globalErrorController');
 const methodOverride = require('method-override');
-
+const cors = require('cors')
 //winston.add(winston.transports.File, { filename: "logfile.log" });
 
 //Body parse middleware
+app.use(cors('*'))
 app.use(express.json());
 app.use(
   express.urlencoded({

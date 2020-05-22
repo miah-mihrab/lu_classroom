@@ -12,6 +12,7 @@ const AppError = require("../utils/appError");
 
   if (profession.trim() === "Student") {
     const UserData = await User.findById(userID);
+    
     if (UserData) {
       let _allClasses = UserData.Classes;
       let classFound = [];
@@ -19,6 +20,7 @@ const AppError = require("../utils/appError");
         // FIND THE CLASS
         const findClass = await _Class.findById(_allClasses[i]);
 
+    console.log(findClass)
         if (findClass) {
           classFound.push({
             _id: `${findClass._id}`,
@@ -32,22 +34,27 @@ const AppError = require("../utils/appError");
       }
       if (classFound.length > 0) {
         // CLASS FOUND
-        res.locals.loading = false;
-        res.locals.teacher = false;
-        return res.render("profile", {
+        
+        return res.send({
           allClass: classFound,
           userID: `${userID}`,
-          userName: req.user.name,
+          teacher: false,
           userPhoto: UserData.photo ? UserData.photo.toString("base64") : null
         });
       } else {
+        
         res.locals.loading = false;
-        return res.render("profile", {
-          title: "Profile",
-          userID: `${userID}`,
-          userName: req.user.name,
-          userPhoto: UserData.photo ? UserData.photo.toString("base64") : null
-        });
+        
+        UserData['photo'] = UserData.photo ? UserData.photo.toString('base64') : null
+        return res.send({
+          photo: UserData.photo ? UserData.photo.toString('base64') : null
+        })
+        // return res.render("profile", {
+        //   title: "Profile",
+        //   userID: `${userID}`,
+        //   userName: req.user.name,
+        //   userPhoto: UserData.photo ? UserData.photo.toString("base64") : null
+        // });
       }
     } else {
       // USER NOT FOUND PLEASE LOG IN AGAIN
@@ -55,6 +62,7 @@ const AppError = require("../utils/appError");
     }
   } else {
     // IF TEACHER
+    console.log("TEACHER")
     const getClasses = await _Class.find();
     if (getClasses.length > 0) {
       // FITER CLASS BY AUTHOR
@@ -74,8 +82,8 @@ const AppError = require("../utils/appError");
           });
         });
         if (classFound.length > 0) {
-          res.locals.loading = false;
-          res.locals.teacher = true;
+          console.log("TEACHER HERE")
+          
           return res.send({
             allClass: classFound,
             userID: `${userID}`,
@@ -117,9 +125,10 @@ const AppError = require("../utils/appError");
 (exports.postHome = async (req, res, next) => {
   if (req.body.roomcode) {
     const roomcode = req.body.roomcode;
+    console.log(roomcode)
     _Class.findById(roomcode, (err, _data) => {
       if (!err) {
-        User.findById(req.user._id, (err, data) => {
+        User.findById(req.body._id, (err, data) => {
           if (!err) {
             if (!data.Classes.includes(roomcode)) {
               data.Classes.push(roomcode);
@@ -134,10 +143,11 @@ const AppError = require("../utils/appError");
                   new: true,
                   runValidators: true
                 })
-                res.redirect("/");
+                res.send({success: true})
               });
             } else {
-              res.redirect("/");
+              console.log("HERE")
+              return next("You are already registered to the class")
             }
           } else {
             next(new AppError("User may not authorized", 401));

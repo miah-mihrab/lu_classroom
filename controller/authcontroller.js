@@ -111,11 +111,12 @@ const catchErrorAsync = fn => {
           JWT_SECRET
         );
         if (token) {
-        res.locals.teacher = user.profession === 'Student' ? false: true;
-          await res.cookie("jwt", token);
-          return res.status(200).redirect("/");
+        // res.locals.teacher = user.profession === 'Student' ? false: true;
+          // await res.cookie("jwt", token);
+          // return res.status(200).redirect("/");
+          return res.status(200).send(user)
         }
-        res.status(307).redirect("/"); //Temporary Redirected
+        res.status(307).send(user); //Temporary Redirected
       } catch (err) {
         next(err);
       }

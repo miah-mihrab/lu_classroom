@@ -13,7 +13,8 @@ router
   .route("/home")
   .post(homeController.postHome);
 
-  router.get('/home/:id', homeController.getHome)
+router
+  .get('/home/:id', homeController.getHome)
 
 // ACCOUNT ROUTE
 router
@@ -45,7 +46,7 @@ router
   .delete(indexcontroller.deleteClasswork)
   
 
-router.get("/delete-class/:id", indexcontroller.deleteClass);
+router.delete("/delete-class/:id", indexcontroller.deleteClass);
 router.get("/result/:id", indexcontroller.getResult);
 router.get('/routine/:id', indexcontroller.getRoutine);
 

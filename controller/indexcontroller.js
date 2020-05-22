@@ -128,10 +128,11 @@ const AppError = require("../utils/appError");
   }),
   // DELETE CLASS
   (exports.deleteClass = async (req, res, next) => {
-    if (req.user.profession === "Student") {
-      User.update(
+  console.log(req.query.user, req.params.id)
+  if (req.query.profession === "Student") {
+      User.updateOne(
         {
-          _id: req.user._id
+          _id: req.query.user
         },
         {
           $pull: {
@@ -139,14 +140,16 @@ const AppError = require("../utils/appError");
           }
         },
         (err, data) => {
+          console.log(data)
           if (err) {
-            console.log(err);
+            return next({ success: false })
           } else {
-            return res.redirect("/");
+            return res.send({success: true})
           }
         }
       );
     } else {
+      console.log("DELETING")
       _Class.findOneAndRemove(
         {
           _id: req.params.id
@@ -155,7 +158,7 @@ const AppError = require("../utils/appError");
           if (err) {
             console.log(err);
           } else {
-            res.redirect("/");
+            res.send(data)
           }
         }
       );

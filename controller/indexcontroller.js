@@ -1,7 +1,7 @@
 const _Class = require("../model/classmodel");
 const _ClassPosts = require("../model/classroommodel");
 const Classwork = require("../model/classworkmodel");
-
+const SubmitAssignment = require('../model/assignmentSubmissionModel')
 const User = require("../model/usermodel");
 const Post = require("../model/classroommodel");
 const Comment = require("../model/comment");
@@ -170,7 +170,6 @@ const AppError = require("../utils/appError");
       classroom: req.params.id
     });
     res.send({
-
       classID: req.params.id,
       classWorks: getClasswork,
       submittedAssignments: getClasswork.submittedAssignments
@@ -196,36 +195,36 @@ const AppError = require("../utils/appError");
       // res.redirect(`/classroom/${req.params.id}/classwork`);
     } else {
       console.log("STUDENT HERE")
-      const getAssignmentId = await Classwork.findOne({
-        assignmentname: req.body.assignmentname
-      });
+      // const getAssignmentId = await Classwork.findOne({
+      //   assignmentname: req.body.assignmentname
+      // });
       const submitAssignment = {
         details: req.body.details,
-        id: req.user.id,
+        id: req.body.studentId,
         classroom: req.params.id,
-        studentname: req.user.name,
+        studentname: req.body.name,
         file: req.file.buffer.toString("base64"),
         fileName: req.file.filename,
         assignmentname: req.body.assignmentname,
-        assignmentId: getAssignmentId._id,
+        assignmentId: req.body.assignmentId,
         date: moment().format("MMMM Do YYYY, h:mm a")
       };
 
       const updateClasswork = await Classwork.findOne({
-        assignmentname: submitAssignment.assignmentname
+        _id: req.body.assignmentId
       })
-      if (updateClasswork.students.includes(req.user._id)) {
+      if (updateClasswork.students.includes(req.body.userId)) {
         res.json({
           error: "You already submitted the assignment. Please contact with your supervisor if you want to submit again"
         })
       } else {
         await Classwork.findOneAndUpdate(
           {
-            assignmentname: submitAssignment.assignmentname
+            _id: req.body.assignmentId
           },
           {
             $push: {
-              students: req.user._id,
+              students: req.body.userId,
               submitted: submitAssignment
             }
           },
@@ -233,9 +232,8 @@ const AppError = require("../utils/appError");
             new: true,
             runValidators: true
           }
-        );
-        res.redirect(`/classroom/${req.params.id}/classwork`);
-
+        ).then(()=>res.status(200).send({message:"You submitted your assignment."}));
+        // res.redirect(`/classroom/${req.params.id}/classwork`);
       }
     }
   }),

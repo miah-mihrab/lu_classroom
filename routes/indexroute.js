@@ -25,6 +25,8 @@ router
     fileController.resizeUserPhoto,
     accountController.patchAccount)
 
+router.patch('/profile/update-password/:id', accountController.updatePassword)
+
 
 
 // CLASSROOM ROUTE

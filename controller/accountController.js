@@ -1,6 +1,7 @@
 const User = require("../model/usermodel");
 const jwt = require("jsonwebtoken");
 const cloudinary = require("cloudinary").v2;
+const bcrypt = require("bcrypt");
 
 const { JWT_SECRET } = require("../config/secrets");
 
@@ -35,8 +36,8 @@ const { JWT_SECRET } = require("../config/secrets");
       section,
     } = await req.body;
 
-         let date = dob ? dob.split("-") : null;
-         dob = date ? date.join("/") : null;
+    let date = dob ? dob.split("-") : null;
+    dob = date ? date.join("/") : null;
 
     try {
       const user = await User.findByIdAndUpdate(
@@ -92,4 +93,27 @@ const { JWT_SECRET } = require("../config/secrets");
     //     await res.cookie("jwt", token);
     //     return res.status(200).redirect(`/account/${req.params.id}`);
     // }
-  });
+  }),
+  (exports.updatePassword = async (req, res, next) => {
+    console.log(req.body)
+
+    const user = await User.findOne({ _id: req.params.id })
+    // console.log(user)
+    bcrypt.compare(req.body.old_password, user.password, async (err, resp) => {
+      if (err) {
+        console.log(err)
+        return res.send({message: "Your old password did not match with current password"})
+      } else {
+        try {
+          let hash = await bcrypt.hash(req.body.new_password, 10);
+          await user.update({ password: hash }, {new: true});
+          return res.send({ message: "Password Updated Successfully" });
+        } catch (err) { 
+          console.log(err)
+          return res.send({error: "Something went wrong while updating password"})
+        }
+      }
+    })
+
+  })
+  ;

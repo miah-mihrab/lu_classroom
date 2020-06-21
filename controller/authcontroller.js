@@ -90,7 +90,7 @@ const catchErrorAsync = fn => {
   await bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(password, 10, async (err, hash) => {
       password = hash;
-      const user = await new User({
+      const user = new User({
         firstname,
         lastname,
         id,
@@ -102,8 +102,7 @@ const catchErrorAsync = fn => {
       });
       try {
         await user.save();
-        console.log("Saved");
-        const token = await jwt.sign({
+        const token = jwt.sign({
             _id: user._id,
             name: user.firstname + " " + user.lastname,
             profession: user.profession
@@ -114,7 +113,10 @@ const catchErrorAsync = fn => {
         // res.locals.teacher = user.profession === 'Student' ? false: true;
           // await res.cookie("jwt", token);
           // return res.status(200).redirect("/");
-          return res.status(200).send(user)
+          console.log(email, password)
+          const findUser = await User.findByCredentials(email, req.body.password);
+          console.log(findUser, "FIND")
+          return res.status(200).send(findUser)
         }
         res.status(307).send(user); //Temporary Redirected
       } catch (err) {

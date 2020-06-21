@@ -33,8 +33,8 @@ router.patch('/profile/update-password/:id', accountController.updatePassword)
 router
   .route("/classroom/:id")
   .get(indexcontroller.getClassroom)
-  .post(indexcontroller.postClassroom)
-  .patch(indexcontroller.patchClassroom)
+  .post( fileController.uploadUserPhoto,indexcontroller.postClassroom)
+  .patch( fileController.uploadUserPhoto,indexcontroller.patchClassroom)
   .delete(indexcontroller.deleteClassPost);
 
 // CLASSWORK ROUTE

@@ -12,7 +12,9 @@ const PostSchema = new mongoose.Schema({
     required: true
   },
   time: {
-    type: String
+    type: String,
+    required: true,
+    default: moment().format("MMM Do, h:mm a")
   },
   content: {
     type: String,
@@ -21,12 +23,12 @@ const PostSchema = new mongoose.Schema({
   attachment: {
     type: Buffer
   },
-  photo: {
+  userPhoto: {
         type: String,
   },
   comments: [
     {
-      photo: {
+      userPhoto: {
         type: String
       },
       comment: {

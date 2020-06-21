@@ -11,7 +11,7 @@ const CommentSchema = new mongoose.Schema({
     author: {
         type: String
     },
-    photo: {
+    userPhoto: {
         type: String
     },
     time: {

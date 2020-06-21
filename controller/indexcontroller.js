@@ -87,7 +87,7 @@ const AppError = require("../utils/appError");
         comment: req.body.comment,
         post: req.body.post,
         author: req.user.name,
-        photo: req.body.photo
+        userPhoto: req.body.userPhoto
       });
       return res.send(newComment);
     } else {
@@ -95,7 +95,7 @@ const AppError = require("../utils/appError");
         content: req.body.content,
         class: req.params.id,
         author: req.body.author,
-        photo: req.body.photo
+        userPhoto: req.body.userPhoto
       });
       return res.send(newPost);
     }

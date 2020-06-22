@@ -1,10 +1,6 @@
-const winston = require("winston");
 const mongoose = require("mongoose");
-const {
-  MONGO_URL
-} = require("../config/secrets");
 mongoose.connect(
-  MONGO_URL, {
+  process.env.MONGO_URL, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,

@@ -1,7 +1,6 @@
 const _Class = require("../model/classmodel");
 const _ClassPosts = require("../model/classroommodel");
 const Classwork = require("../model/classworkmodel");
-const SubmitAssignment = require('../model/assignmentSubmissionModel')
 const User = require("../model/usermodel");
 const Post = require("../model/classroommodel");
 const Comment = require("../model/comment");
@@ -128,7 +127,6 @@ const AppError = require("../utils/appError");
   }),
   // DELETE CLASS
   (exports.deleteClass = async (req, res, next) => {
-  console.log(req.query.user, req.params.id)
   if (req.query.profession === "Student") {
       User.updateOne(
         {
@@ -195,9 +193,6 @@ const AppError = require("../utils/appError");
       // res.redirect(`/classroom/${req.params.id}/classwork`);
     } else {
       console.log("STUDENT HERE")
-      // const getAssignmentId = await Classwork.findOne({
-      //   assignmentname: req.body.assignmentname
-      // });
       const submitAssignment = {
         details: req.body.details,
         id: req.body.studentId,
@@ -214,10 +209,12 @@ const AppError = require("../utils/appError");
         _id: req.body.assignmentId
       })
       if (updateClasswork.students.includes(req.body.userId)) {
-        res.json({
+        console.log('id included')
+        res.send({
           error: "You already submitted the assignment. Please contact with your supervisor if you want to submit again"
         })
       } else {
+        console.log("BEING SUBMITTED")
         await Classwork.findOneAndUpdate(
           {
             _id: req.body.assignmentId
@@ -232,7 +229,8 @@ const AppError = require("../utils/appError");
             new: true,
             runValidators: true
           }
-        ).then(()=>res.status(200).send({message:"You submitted your assignment."}));
+        );
+        res.send({message:"You submitted your assignment."})
         // res.redirect(`/classroom/${req.params.id}/classwork`);
       }
     }

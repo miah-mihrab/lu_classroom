@@ -2,9 +2,6 @@ const User = require("../model/usermodel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const AppError = require("../utils/appError");
-const {
-  JWT_SECRET
-} = require("../config/secrets");
 
 const catchErrorAsync = fn => {
   return (req, res, next) => {
@@ -58,7 +55,7 @@ const catchErrorAsync = fn => {
           id: user.id,
           profession: user.profession
         },
-        JWT_SECRET
+        process.env.JWT_SECRET
       );
       if (token) {
         res.locals.teacher = user.profession === 'Student' ? false : true;
@@ -107,7 +104,7 @@ const catchErrorAsync = fn => {
             name: user.firstname + " " + user.lastname,
             profession: user.profession
           },
-          JWT_SECRET
+          process.env.JWT_SECRET
         );
         if (token) {
         // res.locals.teacher = user.profession === 'Student' ? false: true;

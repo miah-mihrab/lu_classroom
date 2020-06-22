@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const cloudinary = require("cloudinary").v2;
 const bcrypt = require("bcrypt");
 
-const { JWT_SECRET } = require("../config/secrets");
 
 // USER ACCOUNT INFORMATION
 (exports.getAccount = async (req, res, next) => {

@@ -1,7 +1,4 @@
 const jwt = require('jsonwebtoken');
-const {
-    JWT_SECRET
-} = require('../config/secrets')
 
 const auth = async function (req, res, next) {
     const token = req.cookies.jwt;
@@ -9,7 +6,7 @@ const auth = async function (req, res, next) {
         return res.redirect('/signin');
     }
     if (token) {
-        const decoded = await jwt.verify(token, JWT_SECRET);
+        const decoded = await jwt.verify(token, process.env.JWT_SECRET);
         req.user = decoded;
         await next();
     } else {

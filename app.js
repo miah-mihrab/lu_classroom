@@ -1,4 +1,3 @@
-const winston = require("winston");
 const morgan = require('morgan');
 const express = require("express");
 const exphbs = require("express-handlebars");
@@ -7,7 +6,8 @@ const cookieparser = require("cookie-parser");
 const AppError = require('./utils/appError');
 const globarErrorControl = require('./controller/globalErrorController');
 const methodOverride = require('method-override');
-const cors = require('cors')
+const dotenv = require('dotenv')
+const cors = require('cors');
 //winston.add(winston.transports.File, { filename: "logfile.log" });
 
 //Body parse middleware
@@ -18,6 +18,7 @@ app.use(
     extended: false
   })
 );
+
 app.use(cookieparser());
 app.use(methodOverride('_method'))
 

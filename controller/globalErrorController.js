@@ -19,7 +19,7 @@ module.exports = (err, req, res, next) => {
             error = new AppError(message, 404);
         }
 
-        // Mongoose duplicate key
+        // Mongoose duplicate key 
         if (err.code === 11000) {
             const message = "Duplicate key entered";
             error = new AppError(message, 400);

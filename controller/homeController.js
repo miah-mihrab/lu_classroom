@@ -125,9 +125,8 @@ const AppError = require("../utils/appError");
 (exports.postHome = async (req, res, next) => {
   if (req.body.roomcode) {
     const roomcode = req.body.roomcode;
-    console.log(roomcode)
     _Class.findById(roomcode, (err, _data) => {
-      if (!err) {
+      if (!err && _data) {
         User.findById(req.body._id, (err, data) => {
           if (!err) {
             if (!data.Classes.includes(roomcode)) {
@@ -143,20 +142,23 @@ const AppError = require("../utils/appError");
                   new: true,
                   runValidators: true
                 })
-                res.send({success: true})
+                return res.send({success: true, class: _data})
               });
             } else {
               console.log("HERE")
-              return next("You are already registered to the class")
+              return res.send({success: false, message: "You are already registered to the class"})
             }
           } else {
-            next(new AppError("User may not authorized", 401));
+            return res.status(401).send({ success: false, message: "User may not authorized" });
           }
         });
       } else {
-        next(new AppError("Room may not available", 404));
+        console.log("NO ROOM")
+        res.status(201).send({ success: false, message: 'Room may not available'})
       }
     });
+
+
   } else {
     const {
       classname,
@@ -176,10 +178,7 @@ const AppError = require("../utils/appError");
       });
       
       await cls.save();
-      // Change
-        // await res.redirect("/");
-      return res.send(cls)
-      // END
+      return res.send(cls);
       
     } catch {
       next(new AppError("Something went wrong while saving class!", 500));

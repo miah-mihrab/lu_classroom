@@ -11,7 +11,7 @@ const AppError = require("../utils/appError");
 
 // GET RESULT
 (exports.getResult = async (req, res, next) => {
-  // const id = req.user._id;
+  
   res.locals.userID = req.user._id;
   const user = await User.findById(req.params.id);
   if (user.id == null || user.dob == null) {
@@ -29,7 +29,7 @@ const AppError = require("../utils/appError");
 }),
   // GET ROUTINE
   (exports.getRoutine = async (req, res, next) => {
-    // const id = req.user._id;
+  
     res.locals.userID = req.user._id;
     const user = await User.findById(req.params.id);
     if (
@@ -176,9 +176,6 @@ const AppError = require("../utils/appError");
   }),
 
   (exports.postClassWork = async (req, res, next) => {
-    // const base64 = req.file
-    //   ? await req.user.file.toString("base64")
-    // : null;
 
     if (req.body.profession === "Teacher") {
       const newClasswork = await Classwork.create({
@@ -190,7 +187,7 @@ const AppError = require("../utils/appError");
         details: req.body.details
       });
       return res.send(newClasswork);
-      // res.redirect(`/classroom/${req.params.id}/classwork`);
+      
     } else {
       console.log("STUDENT HERE")
       const submitAssignment = {
@@ -231,7 +228,6 @@ const AppError = require("../utils/appError");
           }
         );
         res.send({message:"You submitted your assignment."})
-        // res.redirect(`/classroom/${req.params.id}/classwork`);
       }
     }
   }),

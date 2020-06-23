@@ -21,7 +21,6 @@ exports.uploadUserPhoto = upload.single("photo");
 
 exports.resizeUserPhoto = async (req, res, next) => {
     if (!req.file) return next();
-    // console.log(req.file);
     req.file.filename = `${req.file.originalname}-${Date.now()}.jpeg`;
     const buffer = await sharp(req.file.buffer)
         .resize(500, 500)
@@ -59,9 +58,6 @@ const fileMulterUpload = multer({
 exports.fileUpload = fileMulterUpload.single("file");
 exports.fileMulterResize = async (req, res, next) => {
     if (!req.file) return next();
-    // if (req.file.size > 1520435) {
-    //     return next(new AppError('We are currently accepting file less than 1.5mb! We are working on this', 500))
-    // }
     let extension = req.file.originalname.split('.');
     extension = extension[extension.length - 1];
     let originalName = req.file.originalname.split('.');

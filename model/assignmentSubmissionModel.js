@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const moment = require('moment');
 
 const AssignmentSubmissionSchema = new mongoose.Schema({
     assignmentId: {

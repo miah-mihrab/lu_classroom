@@ -1,6 +1,4 @@
 const User = require("../model/usermodel");
-const jwt = require("jsonwebtoken");
-const cloudinary = require("cloudinary").v2;
 const bcrypt = require("bcrypt");
 
 
@@ -83,26 +81,12 @@ const bcrypt = require("bcrypt");
     } catch (err) {
       return res.send({ success: false });
     }
-
-    // const token = await jwt.sign({
-    //         _id: userID,
-    //         name: firstname + " " + lastname,
-    //         profession: req.user.profession
-    //     },
-    //     JWT_SECRET
-    // );
-    // if (token) {
-    //     //res.header("x-auth-token", token);
-    //     await res.clearCookie("jwt");
-    //     await res.cookie("jwt", token);
-    //     return res.status(200).redirect(`/account/${req.params.id}`);
-    // }
   }),
   (exports.updatePassword = async (req, res, next) => {
     console.log(req.body)
 
-    const user = await User.findOne({ _id: req.params.id })
-    // console.log(user)
+  const user = await User.findOne({ _id: req.params.id })
+  
   bcrypt.compare(req.body.old_password, user.password, async (err, resp) => {
       console.log(resp, "RESP")
       if (err) {

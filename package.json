@@ -5,9 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production node server",
-    "dev": "cross-env NODE_ENV=development nodemon server",
-    "watch:js": "parcel watch ./public/index.js --out-dir ./public/ --out-file bundle.js",
-    "build:js": "parcel watch ./public/index.js --out-dir ./public/ --out-file bundle.js"
+    "dev": "cross-env NODE_ENV=development nodemon server"
   },
   "engines": {
     "node": "10.16.3"
@@ -18,29 +16,19 @@
   "dependencies": {
     "@babel/polyfill": "^7.8.3",
     "bcrypt": "^3.0.6",
-    "cloudinary": "^1.21.0",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "express-handlebars": "^3.1.0",
     "express-session": "^1.17.0",
-    "gridfs-stream": "^1.1.1",
     "jsonwebtoken": "^8.5.1",
-    "method-override": "^3.0.0",
     "moment": "^2.24.0",
     "mongoose": "^5.7.5",
     "morgan": "^1.9.1",
     "multer": "^1.4.2",
-    "multer-gridfs-storage": "^4.0.2",
     "nodemon": "^1.19.3",
-    "parcel-bundler": "^1.12.4",
     "sharp": "^0.25.2",
-    "socket.io": "^2.3.0",
-    "streamifier": "^0.1.1",
-    "validator": "^11.1.0",
-    "winston": "^3.2.1",
-    "xmlhttprequest": "^1.8.0"
+    "validator": "^11.1.0"
   }
 }

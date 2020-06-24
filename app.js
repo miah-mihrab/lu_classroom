@@ -10,7 +10,7 @@ const helmet = require("helmet");
 
 
 // USE HELMET
-app.use(helmet());
+// app.use(helmet());
 
 // CROSS ORIGIN
 app.use(cors('*'))

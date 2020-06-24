@@ -1,16 +1,14 @@
 const morgan = require('morgan');
 const express = require("express");
-const exphbs = require("express-handlebars");
 const app = express();
 const cookieparser = require("cookie-parser");
 const globarErrorControl = require('./controller/globalErrorController');
-const methodOverride = require('method-override');
 const cors = require('cors');
 const helmet = require("helmet");
 
 
 // USE HELMET
-// app.use(helmet());
+app.use(helmet());
 
 // CROSS ORIGIN
 app.use(cors('*'))

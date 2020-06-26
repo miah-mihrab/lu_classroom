@@ -176,7 +176,6 @@ const AppError = require("../utils/appError");
   }),
 
   (exports.postClassWork = async (req, res, next) => {
-
     if (req.body.profession === "Teacher") {
       const newClasswork = await Classwork.create({
         classroom: req.params.id,

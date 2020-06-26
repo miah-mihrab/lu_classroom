@@ -9,6 +9,12 @@ const moment = require('moment');
 
 const AppError = require("../utils/appError");
 
+const catchErrorAsync = fn => {
+  return (req, res, next) => {
+    fn(req, res, next).catch(next);
+  };
+};
+
 // GET RESULT
 (exports.getResult = async (req, res, next) => {
   
@@ -175,11 +181,9 @@ const AppError = require("../utils/appError");
 
   }),
 
-  (exports.postClassWork = async (req, res, next) => {
-  if (req.body.profession === "Teacher") {
-      
-    try {
-       const newClasswork = await Classwork.create({
+  (exports.postClassWork = catchErrorAsync(async (req, res, next) => {
+    if (req.body.profession === "Teacher") {
+      const newClasswork = await Classwork.create({
         classroom: req.params.id,
         authorName: req.body.author,
         file: req.file.buffer.toString("base64"),
@@ -188,16 +192,9 @@ const AppError = require("../utils/appError");
         details: req.body.details
       });
       return res.send(newClasswork);
-    } catch (err) {
       
-      console.log(err);
-      return res.send({success: false, message: "Something went wrong"});
-    }
-     
-      
-  } else {
-    try {
-         console.log("STUDENT HERE")
+    } else {
+      console.log("STUDENT HERE")
       const submitAssignment = {
         details: req.body.details,
         id: req.body.studentId,
@@ -237,14 +234,8 @@ const AppError = require("../utils/appError");
         );
         res.send({message:"You submitted your assignment."})
       }
-    } catch (err) {
-      
-      console.log(err);
-      return res.send({success: false, message: "Something went wrong"});
     }
-   
-    }
-  }),
+  })),
   (exports.deleteClasswork = async (req, res, next) => {
     await Classwork.findByIdAndDelete({ _id: req.params.id })
   return res.send({

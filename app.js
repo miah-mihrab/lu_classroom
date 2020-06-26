@@ -7,11 +7,12 @@ const cors = require('cors');
 const helmet = require("helmet");
 
 
+// CROSS ORIGIN
+app.use(cors('*'));
+
 // USE HELMET
 app.use(helmet());
 
-// CROSS ORIGIN
-app.use(cors('*'))
 
 //Body parse middleware
 app.use(express.json());

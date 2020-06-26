@@ -18,7 +18,7 @@ const ClassworkSchema = new mongoose.Schema({
     assignmentname: {
         type: String,
         required: true,
-        unique: [true, "Assignment with this name is already uploaded."]
+        unique: true
     },
     details: {
         type: String

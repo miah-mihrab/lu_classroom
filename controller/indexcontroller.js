@@ -153,7 +153,6 @@ const catchErrorAsync = fn => {
         }
       );
     } else {
-      console.log("DELETING")
       _Class.findOneAndRemove(
         {
           _id: req.params.id
@@ -182,8 +181,10 @@ const catchErrorAsync = fn => {
   }),
 
   (exports.postClassWork = catchErrorAsync(async (req, res, next) => {
+    console.log(req.body.profession, req.params.id, req.body.assignmentname, req.body.details, req.file.filename)
     if (req.body.profession === "Teacher") {
-      const newClasswork = await Classwork.create({
+      try {
+      const newClasswork = await Classwork({
         classroom: req.params.id,
         authorName: req.body.author,
         file: req.file.buffer.toString("base64"),
@@ -191,10 +192,15 @@ const catchErrorAsync = fn => {
         assignmentname: req.body.assignmentname,
         details: req.body.details
       });
-      return res.send(newClasswork);
+      await newClasswork.save()
+      return res.send(newClasswork);  
+      } catch (err) {
+        console.log(err)
+        return res.send({success: false, message: "Something went wrong"})
+      }
+      
       
     } else {
-      console.log("STUDENT HERE")
       const submitAssignment = {
         details: req.body.details,
         id: req.body.studentId,
@@ -211,12 +217,10 @@ const catchErrorAsync = fn => {
         _id: req.body.assignmentId
       })
       if (updateClasswork.students.includes(req.body.userId)) {
-        console.log('id included')
         res.send({
           error: "You already submitted the assignment. Please contact with your supervisor if you want to submit again"
         })
       } else {
-        console.log("BEING SUBMITTED")
         await Classwork.findOneAndUpdate(
           {
             _id: req.body.assignmentId

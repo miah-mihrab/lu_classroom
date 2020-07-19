@@ -75,16 +75,9 @@ UserSchema.statics.findByCredentials = async (email, password) => {
   if (!user) return false;
 
   const matchPass = await bcrypt.compare(password, user.password);
-  console.log(matchPass);
+  
   if (!matchPass) return false;
 
-  //   batch: user.batch,
-  //       semester: user.semester,
-  //       dob: user.dob,
-  //       photo: user.photo ? user.photo.toString('base64') : null,
-  //       classes: user.classes,
-  //       department: user.department,
-    console.log(user.Classes)
   return {
     _id: user._id,
     email: user.email,

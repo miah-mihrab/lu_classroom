@@ -4,7 +4,10 @@ const {
     getSignIn,
     getReg,
     postSignIn,
-    postReg
+    postReg,
+    forgotPassword,
+    resetPassword,
+    validateTokenCheck
 
 } = require('../controller/authcontroller');
 
@@ -18,6 +21,7 @@ router.get("/registration", getReg);
 //Post
 router.post("/signin", postSignIn);
 router.post("/registration", postReg);
-
-
+router.post("/forgot-password", forgotPassword);
+router.post('/validate-reset-token', validateTokenCheck);
+router.patch('/reset-password', resetPassword);
 module.exports = router;

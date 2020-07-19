@@ -12,8 +12,7 @@ const ClassworkSchema = new mongoose.Schema({
     },
     file: [String],
     fileName: {
-        type: String,
-        required: true
+        type: String
     },
     assignmentname: {
         type: String,

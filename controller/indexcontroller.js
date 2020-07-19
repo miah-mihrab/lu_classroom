@@ -187,8 +187,8 @@ const catchErrorAsync = fn => {
       const newClasswork = await Classwork({
         classroom: req.params.id,
         authorName: req.body.author,
-        file: req.file.buffer.toString("base64"),
-        fileName: req.file.filename,
+        file: req.file ? req.file.buffer.toString("base64") : null ,
+        fileName: req.file?req.file.filename: null,
         assignmentname: req.body.assignmentname,
         details: req.body.details
       });

@@ -2,6 +2,8 @@ const User = require("../model/usermodel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const AppError = require("../utils/appError");
+const sg = require('@sendgrid/mail');
+sg.setApiKey("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");
 
 const catchErrorAsync = fn => {
   return (req, res, next) => {
@@ -116,4 +118,71 @@ const catchErrorAsync = fn => {
       }
     });
   });
-});
+
+  }),
+  exports.forgotPassword = async (req, res, next) => {
+  console.log(req.body)
+  let user = await User.findOne({email:req.body.email}, 'email firstname');
+  console.log(user)
+  if (user) {
+    let token = jwt.sign({
+      exp: Math.floor(Date.now() / 1000) + (60 * 30), //Expires in 30 minute
+      data: user
+    }, process.env.JWT_SECRET);
+
+    console.log(token)
+    try {
+  const msg = {
+  "to": user.email,
+  "from": 'miah.mihrab@gmail.com',
+  "subject": 'Password Reset Request',
+  "template_id": "d-f08df053220b4ba4a117de314d5fb408",
+  "dynamic_template_data": {
+    "username": user.firstname,
+    "resetLink": `http://localhost:4200/user/reset-password/${token}`
+    }
+    };
+    await sg.send(msg);
+    console.log("message sent successfully")
+    return res.send({ status: 'success' });  
+    } catch (err) {
+      console.log(err.response.body.errors)
+      res.send({status: 'failed'})
+    }
+  }
+  },
+  exports.validateTokenCheck = async (req, res, next) => {
+  try {
+    let data = jwt.verify(req.body.token, process.env.JWT_SECRET);
+    if (data.exp < Date.now() && data.data._id) {
+    let user = await User.findOne({ _id: data.data._id }).select('email');
+    if (user) {
+      return res.send({ status: 'valid', email: user.email });
+    } else {
+      return res.send({ status: 'invalid' });
+    }
+  }  
+  } catch (err) {
+  console.log(err)
+  return res.send({ status: 'invalid' });  
+  }
+  
+  
+  },
+  exports.resetPassword = async (req, res, next) => {
+  await bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(req.body.password, 10, async (err, hash) => {
+      password = hash;
+      try {
+        let change = await User.updateOne({ email: req.body.email }, { $set: { password } });
+        console.log(change.nModified);
+        if(change.nModified===1)
+          return res.send({ status: 'success' });
+        return res.send({ status: 'failed' });
+      } catch (err) {
+        return res.send({ status: 'failed' });
+      }
+    });
+  });
+      
+  };

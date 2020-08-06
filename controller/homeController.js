@@ -9,88 +9,99 @@ const AppError = require("../utils/appError");
   let profession = req.query.profession;
 
   const userID = req.params.id;
-
-  if (profession.trim() === "Student") {
-    const UserData = await User.findById(userID);
+  try {
+    if (profession.trim() === "Student") {
+      const UserData = await User.findById(userID);
     
-    if (UserData) {
-      let _allClasses = UserData.Classes;
-      let classFound = [];
-      for (let i = 0; i < _allClasses.length; i++) {
-        // FIND THE CLASS
-        const findClass = await _Class.findById(_allClasses[i]);
-
-    console.log(findClass)
-        if (findClass) {
-          classFound.push({
-            _id: `${findClass._id}`,
-            classname: findClass.classname,
-            section: findClass.section,
-            subjectname: findClass.subjectname,
-            author: findClass.author_name,
-            student: findClass.student
-          });
-        }
-      }
-      if (classFound.length > 0) {
-        // CLASS FOUND
-        
-        return res.send({
-          allClass: classFound,
-          userID: `${userID}`,
-          teacher: false,
-          userPhoto: UserData.photo ? UserData.photo.toString("base64") : null
-        });
-      } else {
-        
-        res.locals.loading = false;
-        
-        UserData['photo'] = UserData.photo ? UserData.photo.toString('base64') : null
-        return res.send({
-          photo: UserData.photo ? UserData.photo.toString('base64') : null
-        })
-        // return res.render("profile", {
-        //   title: "Profile",
-        //   userID: `${userID}`,
-        //   userName: req.user.name,
-        //   userPhoto: UserData.photo ? UserData.photo.toString("base64") : null
-        // });
-      }
-    } else {
-      // USER NOT FOUND PLEASE LOG IN AGAIN
-      next(new AppError("User Not Found. Please Login Again!", 401));
-    }
-  } else {
-    // IF TEACHER
-    console.log("TEACHER")
-    const getClasses = await _Class.find();
-    if (getClasses.length > 0) {
-      // FITER CLASS BY AUTHOR
-      let filteredByAuthor = getClasses.filter(value => value.author == userID);
-      if (filteredByAuthor.length > 0) {
-        const UserData = await User.findById(userID); //filteredByAuthor[0].author
-        let name = `${UserData.firstname} ${UserData.lastname}`;
+      if (UserData) {
+        let _allClasses = UserData.Classes;
         let classFound = [];
-        filteredByAuthor.forEach(e => {
-          classFound.push({
-            _id: `${e._id}`,
-            classname: e.classname,
-            section: e.section,
-            subjectname: e.subjectname,
-            author: name,
-            student: e.student
-          });
-        });
+        for (let i = 0; i < _allClasses.length; i++) {
+          // FIND THE CLASS
+          const findClass = await _Class.findById(_allClasses[i]);
+
+          console.log(findClass)
+          if (findClass) {
+            classFound.push({
+              _id: `${findClass._id}`,
+              classname: findClass.classname,
+              section: findClass.section,
+              subjectname: findClass.subjectname,
+              author: findClass.author_name,
+              student: findClass.student
+            });
+          }
+        }
         if (classFound.length > 0) {
-          console.log("TEACHER HERE")
-          
+          // CLASS FOUND
+        
           return res.send({
             allClass: classFound,
             userID: `${userID}`,
-            teacher: true,
+            teacher: false,
             userPhoto: UserData.photo ? UserData.photo.toString("base64") : null
           });
         } else {
+        
+          res.locals.loading = false;
+        
+          UserData['photo'] = UserData.photo ? UserData.photo.toString('base64') : null
+          return res.send({
+            photo: UserData.photo ? UserData.photo.toString('base64') : null
+          })
+          // return res.render("profile", {
+          //   title: "Profile",
+          //   userID: `${userID}`,
+          //   userName: req.user.name,
+          //   userPhoto: UserData.photo ? UserData.photo.toString("base64") : null
+          // });
+        }
+      } else {
+        // USER NOT FOUND PLEASE LOG IN AGAIN
+        next(new AppError("User Not Found. Please Login Again!", 401));
+      }
+    } else {
+      // IF TEACHER
+      console.log("TEACHER")
+      const getClasses = await _Class.find();
+      if (getClasses.length > 0) {
+        // FITER CLASS BY AUTHOR
+        let filteredByAuthor = getClasses.filter(value => value.author == userID);
+        if (filteredByAuthor.length > 0) {
+          const UserData = await User.findById(userID); //filteredByAuthor[0].author
+          let name = `${UserData.firstname} ${UserData.lastname}`;
+          let classFound = [];
+          filteredByAuthor.forEach(e => {
+            classFound.push({
+              _id: `${e._id}`,
+              classname: e.classname,
+              section: e.section,
+              subjectname: e.subjectname,
+              author: name,
+              student: e.student
+            });
+          });
+          if (classFound.length > 0) {
+            console.log("TEACHER HERE")
+          
+            return res.send({
+              allClass: classFound,
+              userID: `${userID}`,
+              teacher: true,
+              userPhoto: UserData.photo ? UserData.photo.toString("base64") : null
+            });
+          } else {
+            res.locals.loading = false;
+            return res.send({
+              userID: `${userID}`,
+              teacher: true,
+              userName: req.user.name,
+              userPhoto: UserData.photo ? UserData.photo.toString("base64") : null
+            });
+          }
+        } else {
+          res.locals.loading = false;
+          const UserData = await User.findById(userID);
           res.locals.loading = false;
           return res.send({
             userID: `${userID}`,
@@ -102,23 +113,15 @@ const AppError = require("../utils/appError");
       } else {
         res.locals.loading = false;
         const UserData = await User.findById(userID);
-        res.locals.loading = false;
         return res.send({
           userID: `${userID}`,
           teacher: true,
-          userName: req.user.name,
           userPhoto: UserData.photo ? UserData.photo.toString("base64") : null
         });
       }
-    } else {
-      res.locals.loading = false;
-      const UserData = await User.findById(userID);
-      return res.send({
-        userID: `${userID}`,
-        teacher: true,
-        userPhoto: UserData.photo ? UserData.photo.toString("base64") : null
-      });
     }
+  }catch (err) {
+      return res.send(err)
   }
 }),
 // POST FROM HOME

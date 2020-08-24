@@ -198,6 +198,7 @@ const catchErrorAsync = fn => {
       });
     });
 
+<<<<<<< HEAD
   },
 
    exports.emailVerification = async (req, res, next) => {
@@ -216,3 +217,6 @@ const catchErrorAsync = fn => {
     }
 
   }
+=======
+  };
+>>>>>>> 00d06d2817ef8f89708871bd3e946a43fe1de23a

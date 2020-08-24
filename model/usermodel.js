@@ -59,6 +59,10 @@ const UserSchema = mongoose.Schema({
     type: Buffer,
     default: null,
   },
+  emailVerified: {
+    type: Boolean,
+    default: false
+  },
   Classes: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -91,6 +95,7 @@ UserSchema.statics.findByCredentials = async (email, password) => {
     photo: user.photo ? user.photo.toString("base64") : null,
     classes: user.classes,
     department: user.department,
+    emailVerified: user.emailVerified,
     allClass: user.Classes,
   };
 };

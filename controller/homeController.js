@@ -34,19 +34,20 @@ const AppError = require("../utils/appError");
         }
         if (classFound.length > 0) {
           // CLASS FOUND
-        
           return res.send({
             allClass: classFound,
             userID: `${userID}`,
             teacher: false,
+            emailVerified: UserData.emailVerified,
             userPhoto: UserData.photo ? UserData.photo.toString("base64") : null
           });
         } else {
-        
-          res.locals.loading = false;
-        
+                
           UserData['photo'] = UserData.photo ? UserData.photo.toString('base64') : null
           return res.send({
+            userID: `${userID}`,
+            teacher: false,
+            emailVerified: UserData.emailVerified,
             photo: UserData.photo ? UserData.photo.toString('base64') : null
           })
           // return res.render("profile", {
@@ -88,34 +89,34 @@ const AppError = require("../utils/appError");
               allClass: classFound,
               userID: `${userID}`,
               teacher: true,
+              emailVerified: UserData.emailVerified,
               userPhoto: UserData.photo ? UserData.photo.toString("base64") : null
             });
           } else {
-            res.locals.loading = false;
             return res.send({
               userID: `${userID}`,
               teacher: true,
               userName: req.user.name,
+              emailVerified: UserData.emailVerified,
               userPhoto: UserData.photo ? UserData.photo.toString("base64") : null
             });
           }
         } else {
-          res.locals.loading = false;
           const UserData = await User.findById(userID);
-          res.locals.loading = false;
           return res.send({
             userID: `${userID}`,
             teacher: true,
             userName: req.user.name,
+            emailVerified: UserData.emailVerified,
             userPhoto: UserData.photo ? UserData.photo.toString("base64") : null
           });
         }
       } else {
-        res.locals.loading = false;
         const UserData = await User.findById(userID);
         return res.send({
           userID: `${userID}`,
           teacher: true,
+          emailVerified: UserData.emailVerified,
           userPhoto: UserData.photo ? UserData.photo.toString("base64") : null
         });
       }

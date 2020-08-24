@@ -5,6 +5,23 @@ const User = require("../model/usermodel");
 const Post = require("../model/classroommodel");
 const Comment = require("../model/comment");
 
+
+const server = require('socket.io');
+// console.log(io)
+// const io = require('socket.io')(server);
+// io.on('connection', socket => {
+//     console.log("User connected")
+//     socket.on('join-room', (userId) => {
+//         console.log("user connected")
+//     })
+
+//     socket.emit('test', "Some data")
+
+// })
+
+
+
+
 const moment = require('moment');
 
 const AppError = require("../utils/appError");
@@ -181,7 +198,7 @@ const catchErrorAsync = fn => {
   }),
 
   (exports.postClassWork = catchErrorAsync(async (req, res, next) => {
-    console.log(req.body.profession, req.params.id, req.body.assignmentname, req.body.details, req.file.filename)
+    // console.log(req.body.profession, req.params.id, req.body.assignmentname, req.body.details, req.file.filename)
     if (req.body.profession === "Teacher") {
       try {
       const newClasswork = await Classwork({
@@ -206,8 +223,8 @@ const catchErrorAsync = fn => {
         id: req.body.studentId,
         classroom: req.params.id,
         studentname: req.body.name,
-        file: req.file.buffer.toString("base64"),
-        fileName: req.file.filename,
+        file: req.file.buffer ? req.file.buffer.toString("base64"): null,
+        fileName: req.file ? req.file.filename: null,
         assignmentname: req.body.assignmentname,
         assignmentId: req.body.assignmentId,
         date: moment().format("MMMM Do YYYY, h:mm a")

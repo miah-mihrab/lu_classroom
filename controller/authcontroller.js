@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const AppError = require("../utils/appError");
 const sg = require('@sendgrid/mail');
-sg.setApiKey("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");
+sg.setApiKey("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");
 
 const catchErrorAsync = fn => {
   return (req, res, next) => {
@@ -106,6 +106,19 @@ const catchErrorAsync = fn => {
           },
             process.env.JWT_SECRET
           );
+
+        const msg = {
+          "to": email,
+          "from": 'miah.mihrab@gmail.com',
+          "subject": 'Email verification mail',
+          "template_id": "d-56f6a341589945db9e02ef93e957ebe1",
+          "dynamic_template_data": {
+            "link": `http://localhost:4200/user/verification/${token}`
+          }
+        };
+        await sg.send(msg);
+        console.log("message sent successfully")
+          
           if (token) {
             console.log(email, password)
             const findUser = await User.findByCredentials(email, req.body.password);
@@ -185,4 +198,22 @@ const catchErrorAsync = fn => {
       });
     });
 
-  };
+  },
+
+   exports.emailVerification = async (req, res, next) => {
+     try {
+      let data = jwt.verify(req.body.token, process.env.JWT_SECRET);
+        let user = await User.findOne({ _id: data._id }).select('email');
+        if (user) {
+          await user.updateOne({ emailVerfied: true });
+          return res.send({ email: "verified" });
+        } else {
+          return res.send({ status: false });
+        }
+    } catch (err) {
+      console.log(err)
+      return res.send({ status: 'invalid' });
+    }
+
+  };;
+  

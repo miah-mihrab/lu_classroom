@@ -5,6 +5,7 @@ const {
     getReg,
     postSignIn,
     postReg,
+    emailVerification,
     forgotPassword,
     resetPassword,
     validateTokenCheck
@@ -21,6 +22,7 @@ router.get("/registration", getReg);
 //Post
 router.post("/signin", postSignIn);
 router.post("/registration", postReg);
+router.post('/email/verification', emailVerification)
 router.post("/forgot-password", forgotPassword);
 router.post('/validate-reset-token', validateTokenCheck);
 router.patch('/reset-password', resetPassword);

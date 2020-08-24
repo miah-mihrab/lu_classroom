@@ -34,8 +34,7 @@ const ClassworkSchema = new mongoose.Schema({
     }],
     submitted: [{
         id: {
-        type: String,
-        required: true
+        type: String
     },
     studentname: {
         type: String,

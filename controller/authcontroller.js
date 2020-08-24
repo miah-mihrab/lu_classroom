@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const AppError = require("../utils/appError");
 const sg = require('@sendgrid/mail');
-sg.setApiKey("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");
+sg.setApiKey("Process.env.SG_KEY");
 
 const catchErrorAsync = fn => {
   return (req, res, next) => {
@@ -215,5 +215,4 @@ const catchErrorAsync = fn => {
       return res.send({ status: 'invalid' });
     }
 
-  };;
-  
+  }

@@ -1,3 +1,8 @@
+const dotenv = require('dotenv');
+
+// LOAD DOTENV
+dotenv.config({ path: './config/config.env' });
+
 const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require("helmet");

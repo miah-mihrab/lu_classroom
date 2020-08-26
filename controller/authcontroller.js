@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const AppError = require("../utils/appError");
 const sg = require('@sendgrid/mail');
-sg.setApiKey(process.env.SENDGRID_API_KEY);
+sg.setApiKey("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");
 
 const catchErrorAsync = fn => {
   return (req, res, next) => {
@@ -109,9 +109,9 @@ const catchErrorAsync = fn => {
 
         const msg = {
           "to": email,
-          "from": 'miah.mihrab@gmail.com',
+          "from": 'mehrabmehadi@hotmail.com',
           "subject": 'Email verification mail',
-          "template_id": "d-56f6a341589945db9e02ef93e957ebe1",
+          "template_id": "d-dd63ac2aef3b4bb59c0a2c2cfb9d6383",
           "dynamic_template_data": {
             "link": `http://localhost:4200/user/verification/${token}`
           }
@@ -149,7 +149,7 @@ const catchErrorAsync = fn => {
           "to": user.email,
           "from": 'miah.mihrab@gmail.com',
           "subject": 'Password Reset Request',
-          "template_id": "d-f08df053220b4ba4a117de314d5fb408",
+          "template_id": "d-e192d6f0e1c14b51acc140550c9b1928",
           "dynamic_template_data": {
             "username": user.firstname,
             "resetLink": `http://localhost:4200/user/reset-password/${token}`
@@ -202,10 +202,13 @@ const catchErrorAsync = fn => {
 
    exports.emailVerification = async (req, res, next) => {
      try {
-      let data = jwt.verify(req.body.token, process.env.JWT_SECRET);
-        let user = await User.findOne({ _id: data._id }).select('email');
+       let data = jwt.verify(req.body.token, process.env.JWT_SECRET);
+       console.log(data)
+       let user = await User.findOne({ _id: data._id }).select('email emailVerified');
+       console.log(user)
         if (user) {
-          await user.updateOne({ emailVerfied: true });
+          await user.updateOne({ emailVerified: true });
+          console.log("VERIFIED")
           return res.send({ email: "verified" });
         } else {
           return res.send({ status: false });

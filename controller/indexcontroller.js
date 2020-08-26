@@ -6,21 +6,6 @@ const Post = require("../model/classroommodel");
 const Comment = require("../model/comment");
 
 
-const server = require('socket.io');
-// console.log(io)
-// const io = require('socket.io')(server);
-// io.on('connection', socket => {
-//     console.log("User connected")
-//     socket.on('join-room', (userId) => {
-//         console.log("user connected")
-//     })
-
-//     socket.emit('test', "Some data")
-
-// })
-
-
-
 
 const moment = require('moment');
 
@@ -201,16 +186,18 @@ const catchErrorAsync = fn => {
     // console.log(req.body.profession, req.params.id, req.body.assignmentname, req.body.details, req.file.filename)
     if (req.body.profession === "Teacher") {
       try {
+        console.log(req.body)
       const newClasswork = await Classwork({
         classroom: req.params.id,
         authorName: req.body.author,
         file: req.file ? req.file.buffer.toString("base64") : null ,
         fileName: req.file?req.file.filename: null,
-        assignmentname: req.body.assignmentname,
+        assignmentname: req.body.assignmentname ? req.body.assignmentname : null,
         details: req.body.details
       });
-      await newClasswork.save()
-      return res.send(newClasswork);  
+        await newClasswork.save()
+        console.log(newClasswork)
+        return res.send(newClasswork);  
       } catch (err) {
         console.log(err)
         return res.send({success: false, message: "Something went wrong"})
@@ -225,7 +212,7 @@ const catchErrorAsync = fn => {
         studentname: req.body.name,
         file: req.file.buffer ? req.file.buffer.toString("base64"): null,
         fileName: req.file ? req.file.filename: null,
-        assignmentname: req.body.assignmentname,
+        assignmentname: req.body.assignmentname ? req.body.assignmentname : null,
         assignmentId: req.body.assignmentId,
         date: moment().format("MMMM Do YYYY, h:mm a")
       };
@@ -258,6 +245,7 @@ const catchErrorAsync = fn => {
     }
   })),
   (exports.deleteClasswork = async (req, res, next) => {
+  console.log(req.params.id)
     await Classwork.findByIdAndDelete({ _id: req.params.id })
   return res.send({
       success: true

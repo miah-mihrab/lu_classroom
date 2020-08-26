@@ -16,8 +16,7 @@ const ClassworkSchema = new mongoose.Schema({
     },
     assignmentname: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     details: {
         type: String
@@ -27,38 +26,34 @@ const ClassworkSchema = new mongoose.Schema({
     },
     students: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        validate: (value => {
-            console.log(this.students);
-        })
+        ref: "User"
     }],
     submitted: [{
         id: {
-        type: String
-    },
-    studentname: {
-        type: String,
-        required: true
-    },
-    classroom: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Post'
-    },
+            type: String
+        },
+        studentname: {
+            type: String,
+            required: true
+        },
+        classroom: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Classroom'
+        },
 
-    file: [String],
-    fileName: {
-        type: String,
-        required: true
-    },
-    assignmentname: {
-        type: String,
-        required: true,
-        unique: [true, "You already submitted this assignment, If you want to upload updated file just try 'assignmentname-updated'"]
-    },
-    date: {
-        type: String,
-    },
-    details: String
+        file: [String],
+        fileName: {
+            type: String
+        },
+        assignmentname: {
+            type: String
+        },
+        date: {
+            type: String,
+        },
+        details: {
+            type: String
+        }
     }]
 });
 

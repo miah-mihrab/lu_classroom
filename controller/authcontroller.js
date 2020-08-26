@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const AppError = require("../utils/appError");
 const sg = require('@sendgrid/mail');
-sg.setApiKey("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");
+sg.setApiKey(process.env.SENDGRID_API_KEY);
 
 const catchErrorAsync = fn => {
   return (req, res, next) => {
@@ -111,7 +111,7 @@ const catchErrorAsync = fn => {
           "to": email,
           "from": 'mehrabmehadi@hotmail.com',
           "subject": 'Email verification mail',
-          "template_id": "d-dd63ac2aef3b4bb59c0a2c2cfb9d6383",
+          "template_id": "d-0b41df1c129c41e5832898f4a455e497",
           "dynamic_template_data": {
             "link": `https://lu-classroom.miah-mihrab.vercel.app/user/verification/${token}`
           }
@@ -149,7 +149,7 @@ const catchErrorAsync = fn => {
           "to": user.email,
           "from": 'miah.mihrab@gmail.com',
           "subject": 'Password Reset Request',
-          "template_id": "d-e192d6f0e1c14b51acc140550c9b1928",
+          "template_id": "d-62eff4c23d314749ab429b565de6e044",
           "dynamic_template_data": {
             "username": user.firstname,
             "resetLink": `https://lu-classroom.miah-mihrab.vercel.app/user/reset-password/${token}`

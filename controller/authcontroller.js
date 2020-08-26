@@ -113,7 +113,7 @@ const catchErrorAsync = fn => {
           "subject": 'Email verification mail',
           "template_id": "d-dd63ac2aef3b4bb59c0a2c2cfb9d6383",
           "dynamic_template_data": {
-            "link": `http://localhost:4200/user/verification/${token}`
+            "link": `https://lu-classroom.miah-mihrab.vercel.app/user/verification/${token}`
           }
         };
         await sg.send(msg);
@@ -152,7 +152,7 @@ const catchErrorAsync = fn => {
           "template_id": "d-e192d6f0e1c14b51acc140550c9b1928",
           "dynamic_template_data": {
             "username": user.firstname,
-            "resetLink": `http://localhost:4200/user/reset-password/${token}`
+            "resetLink": `https://lu-classroom.miah-mihrab.vercel.app/user/reset-password/${token}`
           }
         };
         await sg.send(msg);

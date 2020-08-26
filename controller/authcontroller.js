@@ -147,7 +147,7 @@ const catchErrorAsync = fn => {
       try {
         const msg = {
           "to": user.email,
-          "from": 'miah.mihrab@gmail.com',
+          "from": 'rocio.batz63@ethereal.email',
           "subject": 'Password Reset Request',
           "template_id": "d-62eff4c23d314749ab429b565de6e044",
           "dynamic_template_data": {

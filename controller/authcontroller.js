@@ -109,7 +109,7 @@ const catchErrorAsync = fn => {
 
         const msg = {
           "to": email,
-          "from": 'mehrabmehadi@hotmail.com',
+          "from": 'rocio.batz63@ethereal.email',
           "subject": 'Email verification mail',
           "template_id": "d-0b41df1c129c41e5832898f4a455e497",
           "dynamic_template_data": {
